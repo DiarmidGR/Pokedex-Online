@@ -1,0 +1,30 @@
+.pokedex-container{
+    border: 2px solid var(--accent-color);
+    display:grid;
+    grid-template-columns: repeat(auto-fit, 120px);
+    border-radius:20px;
+    justify-content: center;
+    gap:5px;
+    overflow-y:auto;
+    height:430px;
+}
+
+.pokedex-item{
+    width: 120px;
+    height:140px;
+    text-align: center;
+    background-color:#f2f6fa;
+    border-radius: 20px;
+}
+
+.pokedex-item:hover{
+    background-color:#dadde0;
+}
+
+.pokemon-name{
+    margin: 4px;
+}
+
+.pokemon-number{
+    margin:4px;
+}
