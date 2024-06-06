@@ -1,6 +1,8 @@
 import "./App.css";
-import data from "./data/pokedex-data.json";
-import MenuItem from "./components/MenuItem";
+import data from "./data/dashboard-items.json";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "./components/Home";
+import TrackingPage from "./components/TrackingPage";
 
 interface Pokemon {
   number: string;
@@ -19,11 +21,18 @@ const App: React.FC = () => {
   const myData: DataType = data;
 
   return (
-    <div className="grid-container">
-      {Object.entries(myData).map(([gameVersion]) => (
-        <MenuItem key={gameVersion} gameVersion={gameVersion} />
-      ))}
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />}></Route>
+        {Object.entries(myData).map(([gameVersion]) => (
+          <Route
+            key={gameVersion}
+            path={`/${gameVersion}`}
+            element={<TrackingPage gameVersion={gameVersion} />}
+          />
+        ))}
+      </Routes>
+    </Router>
   );
 };
 
