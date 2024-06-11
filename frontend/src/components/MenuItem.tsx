@@ -2,19 +2,19 @@ import "./MenuItem.css";
 import { useNavigate } from "react-router-dom";
 
 interface MenuItemProps {
-  gameVersion: string;
+  gameGroup: string;
 }
 
-const MenuItem: React.FC<MenuItemProps> = ({ gameVersion }) => {
+const MenuItem: React.FC<MenuItemProps> = ({ gameGroup }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate("/" + gameVersion);
+    navigate("/" + gameGroup);
   };
 
   return (
     <div className="grid-item" onClick={handleClick}>
-      <img src={"/thumbnails/" + gameVersion + ".png"} alt={gameVersion} />
+      <img src={"/thumbnails/" + gameGroup + ".png"} alt={gameGroup} />
     </div>
   );
 };

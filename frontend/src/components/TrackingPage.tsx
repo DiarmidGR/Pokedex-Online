@@ -1,10 +1,10 @@
 import React from "react";
-import RegionalDexData from "../data/regional_pokedex_data.json";
+import PokedexData from "../data/pokedex_data.json";
 import "./TrackingPage.css";
 
 // interface for game region string passed to component (ex: 'rby' or 'gsc')
 interface TrackingPageProps {
-  gameVersion: string;
+  gameGroup: string;
 }
 
 // interface for pokemon data stored in regional_pokedex_data.json
@@ -14,18 +14,18 @@ interface Pokemon {
 }
 
 //interface to access regional dex data imported from regional_pokedex_data.json
-interface Region {
-  [regionName: string]: Pokemon[];
+interface PokedexData {
+  [name: string]: Pokemon[];
 }
 
-const TrackingPage: React.FC<TrackingPageProps> = ({ gameVersion }) => {
-  const data: Region = RegionalDexData as Region;
+const TrackingPage: React.FC<TrackingPageProps> = ({ gameGroup }) => {
+  const pokedexData: PokedexData = PokedexData as PokedexData;
   const sprites_path = "pokemon-sprites/";
 
   return (
     <div className="tracker-layout">
       <div className="pokedex-container">
-        {data[gameVersion].map((pokemon) => (
+        {pokedexData[gameGroup].map((pokemon) => (
           <div key={pokemon.number} className="pokedex-item">
             <p className="pokemon-name">{pokemon.name}</p>
             <p className="pokemon-number">{pokemon.number}</p>
@@ -46,6 +46,10 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ gameVersion }) => {
             />
           </div>
         ))}
+      </div>
+      <div className="controls-container">
+        <h2>Controls</h2>
+        <div className="controls-route"></div>
       </div>
     </div>
   );
