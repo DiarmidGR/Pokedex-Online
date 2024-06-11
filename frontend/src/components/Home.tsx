@@ -1,26 +1,17 @@
-import data from "../data/dashboard-items.json";
+import data from "../data/game_versions.json";
 import MenuItem from "./MenuItem";
 
-interface Pokemon {
-  number: string;
-  name: string;
-}
-
-interface Region {
-  [regionName: string]: Pokemon[];
-}
-
-interface DataType {
-  [key: string]: Region;
+interface Data {
+  [key: string]: {};
 }
 
 const Home: React.FC = () => {
-  const myData: DataType = data;
+  const myData: Data = data;
 
   return (
     <div className="grid-container">
-      {Object.entries(myData).map(([gameVersion]) => (
-        <MenuItem key={gameVersion} gameVersion={gameVersion} />
+      {Object.entries(myData).map(([gameGroup]) => (
+        <MenuItem key={gameGroup} gameGroup={gameGroup} />
       ))}
     </div>
   );

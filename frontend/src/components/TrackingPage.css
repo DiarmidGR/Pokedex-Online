@@ -9,6 +9,12 @@
     height:430px;
 }
 
+.controls-container{
+    border: 2px solid var(--accent-color);
+    border-radius:20px;
+    background-color:#f2f6fa;
+}
+
 .pokedex-item{
     width: 120px;
     height:140px;
