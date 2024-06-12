@@ -15,6 +15,7 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
   const versionId = version_id;
   return (
     <div className="tracker-layout">
+      <h2>Choose a location from the dropdown below</h2>
       <LocationDropdown
         versionId={version_id}
         onLocationChange={setSelectedLocation}

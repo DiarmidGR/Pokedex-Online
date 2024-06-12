@@ -31,13 +31,12 @@ app.get('/locations', (req, res) => {
     }
 
     const query = `
-        SELECT l.identifier 
+        SELECT l.identifier as identifier, l.id as location_id
         FROM encounters e
         INNER JOIN location_areas la ON e.location_area_id = la.id
         INNER JOIN locations l ON la.location_id = l.id
         WHERE e.version_id = ?
-        GROUP BY l.identifier
-        ORDER BY l.identifier;
+        GROUP BY l.identifier, location_id;
     `;
 
     db.query(query, [versionId], (error, results) => {

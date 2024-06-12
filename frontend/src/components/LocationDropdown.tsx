@@ -1,7 +1,6 @@
-// src/components/LocationDropdown.tsx
-
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import "./LocationDropdown.css";
 
 interface Location {
   identifier: string;
@@ -39,13 +38,13 @@ const LocationDropdown: React.FC<LocationDropdownProps> = ({
 
   return (
     <div>
-      <label htmlFor="location-select">Choose a location:</label>
       <select
         id="location-select"
         value={selectedLocation}
         onChange={handleChange}
+        className="location-select"
       >
-        <option value="">--Please choose an option--</option>
+        <option value="">Please choose a location</option>
         {locations.map((location) => (
           <option key={location.identifier} value={location.identifier}>
             {location.identifier}
