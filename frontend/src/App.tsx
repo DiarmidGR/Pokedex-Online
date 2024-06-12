@@ -1,29 +1,38 @@
 import "./App.css";
-import data from "./data/game_versions.json";
+import versionsData from "./data/versions.json";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./components/Home";
 import TrackingPage from "./components/TrackingPage";
+import { useState, useEffect } from "react";
 
-interface Versions {
-  versions?: string[];
-}
-
-interface Data {
-  [key: string]: Versions;
+interface Version {
+  id: number;
+  version_group_id: number;
+  identifier: string;
 }
 
 const App: React.FC = () => {
-  const myData: Data = data;
+  const [versions, setVersions] = useState<Version[]>([]);
+
+  useEffect(() => {
+    // Load versions data
+    setVersions(versionsData);
+  }, []);
 
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Home />}></Route>
-        {Object.entries(myData).map(([gameGroup]) => (
+        {versions.map((version) => (
           <Route
-            key={gameGroup}
-            path={`/${gameGroup}`}
-            element={<TrackingPage gameGroup={gameGroup} />}
+            key={version.id}
+            path={`/${version.identifier}`}
+            element={
+              <TrackingPage
+                version={version.identifier}
+                version_id={version.id.toString()}
+              />
+            }
           />
         ))}
       </Routes>

@@ -13,6 +13,15 @@
     border: 2px solid var(--accent-color);
     border-radius:20px;
     background-color:#f2f6fa;
+    margin-top:20px;
+    display:flex;
+    padding:20px;
+}
+
+.version-div{
+    width:150px;
+    margin:10px;
+    border: 2px solid var(--accent-color);
 }
 
 .pokedex-item{
@@ -27,10 +36,10 @@
     background-color:#dadde0;
 }
 
-.pokemon-name{
+.pokedex-name{
     margin: 4px;
 }
 
-.pokemon-number{
+.pokedex-number{
     margin:4px;
 }

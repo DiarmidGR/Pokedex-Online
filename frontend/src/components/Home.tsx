@@ -1,17 +1,25 @@
-import data from "../data/game_versions.json";
+import versionsData from "../data/versions.json";
 import MenuItem from "./MenuItem";
+import { useState, useEffect } from "react";
 
-interface Data {
-  [key: string]: {};
+interface Version {
+  id: number;
+  version_group_id: number;
+  identifier: string;
 }
 
 const Home: React.FC = () => {
-  const myData: Data = data;
+  const [versions, setVersions] = useState<Version[]>([]);
+
+  useEffect(() => {
+    // Load versions data
+    setVersions(versionsData);
+  }, []);
 
   return (
     <div className="grid-container">
-      {Object.entries(myData).map(([gameGroup]) => (
-        <MenuItem key={gameGroup} gameGroup={gameGroup} />
+      {versions.map((version) => (
+        <MenuItem key={version.id} version={version.identifier} />
       ))}
     </div>
   );
