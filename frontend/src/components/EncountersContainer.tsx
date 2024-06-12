@@ -24,6 +24,7 @@ const EncountersContainer: React.FC<EncountersContainerProps> = ({
     []
   );
   const spritesPath = "/pokemon-sprites/";
+  const [storedItems, setStoredItems] = useState<string[]>([]);
 
   useEffect(() => {
     if (locationIdentifier) {
@@ -44,26 +45,63 @@ const EncountersContainer: React.FC<EncountersContainerProps> = ({
     }
   }, [versionId, locationIdentifier]);
 
+  useEffect(() => {
+    // Load stored items from local storage on component mount
+    const stored = JSON.parse(localStorage.getItem("storedItems") || "[]");
+    setStoredItems(stored);
+  }, []);
+
+  const handlePokemonClick = (item: string) => {
+    let storageString = versionId + "_" + item;
+    let updatedStoredItems;
+    if (storedItems.includes(storageString)) {
+      updatedStoredItems = storedItems.filter(
+        (storedItem) => storedItem !== storageString
+      );
+    } else {
+      updatedStoredItems = [...storedItems, storageString];
+    }
+    setStoredItems(updatedStoredItems);
+    localStorage.setItem("storedItems", JSON.stringify(updatedStoredItems));
+    console.log(storageString);
+  };
+
+  const isItemStored = (item: string) => {
+    let storageString = versionId + "_" + item;
+    return storedItems.includes(storageString);
+  };
+
   return (
-    <div>
+    <>
       <h2>Encounter Details</h2>
       {encounterDetails.length > 0 ? (
         <div className="pokedex-container">
           {encounterDetails.map((detail, index) => (
-            <div className="pokedex-item" key={index}>
-              <p className="pokedex-name">{detail.Pokemon}</p>
-              <img src={spritesPath + detail.Pokemon + ".png"} alt="" />
-              <p className="pokedex-details">
-                Levels: {detail.min_level} - {detail.max_level}
-              </p>
-              <p className="pokedex-details">{detail.Method}</p>
+            <div
+              className="pokedex-item"
+              key={index}
+              style={{
+                backgroundColor: isItemStored(detail.Pokemon)
+                  ? "#af3049"
+                  : "#cfd9e6",
+                cursor: "pointer",
+              }}
+              onClick={() => handlePokemonClick(detail.Pokemon)}
+            >
+              <p className="pokedex-details">{detail.Pokemon}</p>
+              <img
+                src={spritesPath + detail.Pokemon + ".png"}
+                alt=""
+                className="pokedex-details"
+              />
+              <p>{detail.Method}</p>
             </div>
           ))}
         </div>
       ) : (
         <p>No encounter details available.</p>
       )}
-    </div>
+    </>
   );
 };
 
