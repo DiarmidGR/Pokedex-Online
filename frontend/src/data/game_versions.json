@@ -1,36 +1,5 @@
 {
   "rby": {
-  },
-  "gsc": {
-  },
-  "rse": {
-  },
-  "frlg": {
-  },
-  "dppt": {
-  },
-  "hgss": {
-  },
-  "bw": {
-  },
-  "b2w2": {
-  },
-  "xy": {
-  },
-  "oras": {
-  },
-  "sm": {
-  },
-  "usum": {
-  },
-  "lgpe": {
-  },
-  "swsh": {
-  },
-  "bdsp": {
-  },
-  "arceus": {
-  },
-  "sv": {
+    "versions": ["red", "blue", "yellow"]
   }
 }

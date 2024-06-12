@@ -2,20 +2,23 @@ import "./MenuItem.css";
 import { useNavigate } from "react-router-dom";
 
 interface MenuItemProps {
-  gameGroup: string;
+  version: string;
 }
 
-const MenuItem: React.FC<MenuItemProps> = ({ gameGroup }) => {
+const MenuItem: React.FC<MenuItemProps> = ({ version }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate("/" + gameGroup);
+    navigate("/" + version);
   };
 
   return (
-    <div className="grid-item" onClick={handleClick}>
-      <img src={"/thumbnails/" + gameGroup + ".png"} alt={gameGroup} />
-    </div>
+    <img
+      src={"/boxart/" + version + ".png"}
+      alt=""
+      className="grid-item"
+      onClick={handleClick}
+    />
   );
 };
 
