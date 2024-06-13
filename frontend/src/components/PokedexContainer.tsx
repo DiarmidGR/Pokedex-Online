@@ -32,7 +32,10 @@ const PokedexContainer: React.FC<PokedexContainerProps> = ({
           import.meta.env.VITE_API_ENDPOINT + `pokedex?version_id=${versionId}`
         )
         .then((response) => {
-          setPokemonDetails(response.data);
+          const filteredData = response.data.filter(
+            (detail: PokemonDetail) => detail.pokemonName !== null
+          );
+          setPokemonDetails(filteredData);
         })
         .catch((error) => {
           console.error(
