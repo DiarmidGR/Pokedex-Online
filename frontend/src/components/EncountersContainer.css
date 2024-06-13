@@ -1,4 +1,4 @@
-.pokedex-container{
+.encounters-container{
     border: solid #af3049 2px;
     border-radius:10px;
     display:grid;
@@ -12,7 +12,7 @@
     margin-top:40px;
 }
 
-.pokedex-item{
+.encounters-item{
     width:120px;
     height:120px;
     align-items: center;
@@ -24,10 +24,10 @@
     border: 2px solid transparent;
 }
 
-.pokedex-item:hover{
+.encounters-item:hover{
     border:var(--accent-color) 2px solid;
 }
 
-p.pokedex-details{
+p.encounters-details{
     margin:0px;
 }

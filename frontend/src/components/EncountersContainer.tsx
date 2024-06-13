@@ -14,17 +14,20 @@ interface EncounterDetail {
 interface EncountersContainerProps {
   versionId: string;
   locationIdentifier: string;
+  storedItems: string[];
+  handlePokemonClick: (versionId: string, item: string) => void;
 }
 
 const EncountersContainer: React.FC<EncountersContainerProps> = ({
   versionId,
   locationIdentifier,
+  storedItems,
+  handlePokemonClick,
 }) => {
   const [encounterDetails, setEncounterDetails] = useState<EncounterDetail[]>(
     []
   );
   const spritesPath = "/pokemon-sprites/";
-  const [storedItems, setStoredItems] = useState<string[]>([]);
 
   useEffect(() => {
     if (locationIdentifier) {
@@ -46,26 +49,6 @@ const EncountersContainer: React.FC<EncountersContainerProps> = ({
     }
   }, [versionId, locationIdentifier]);
 
-  useEffect(() => {
-    // Load stored items from local storage on component mount
-    const stored = JSON.parse(localStorage.getItem("storedItems") || "[]");
-    setStoredItems(stored);
-  }, []);
-
-  const handlePokemonClick = (item: string) => {
-    let storageString = versionId + "_" + item;
-    let updatedStoredItems;
-    if (storedItems.includes(storageString)) {
-      updatedStoredItems = storedItems.filter(
-        (storedItem) => storedItem !== storageString
-      );
-    } else {
-      updatedStoredItems = [...storedItems, storageString];
-    }
-    setStoredItems(updatedStoredItems);
-    localStorage.setItem("storedItems", JSON.stringify(updatedStoredItems));
-  };
-
   const isItemStored = (item: string) => {
     let storageString = versionId + "_" + item;
     return storedItems.includes(storageString);
@@ -74,10 +57,10 @@ const EncountersContainer: React.FC<EncountersContainerProps> = ({
   return (
     <>
       {encounterDetails.length > 0 ? (
-        <div className="pokedex-container">
+        <div className="encounters-container">
           {encounterDetails.map((detail, index) => (
             <div
-              className="pokedex-item"
+              className="encounters-item"
               key={index}
               style={{
                 backgroundColor: isItemStored(detail.pokemonName)
@@ -85,15 +68,15 @@ const EncountersContainer: React.FC<EncountersContainerProps> = ({
                   : "#cfd9e6",
                 cursor: "pointer",
               }}
-              onClick={() => handlePokemonClick(detail.pokemonName)}
+              onClick={() => handlePokemonClick(versionId, detail.pokemonName)}
             >
-              <p className="pokedex-details">{detail.pokemonName}</p>
+              <p className="encounters-details">{detail.pokemonName}</p>
               <img
                 src={spritesPath + detail.pokemonName.toLowerCase() + ".png"}
                 alt=""
-                className="pokedex-details"
+                className="encounters-details"
               />
-              <p className="pokedex-details">#{detail.pokemonId}</p>
+              <p className="encounters-details">#{detail.pokemonId}</p>
             </div>
           ))}
         </div>
