@@ -1,14 +1,33 @@
-.controls-container{
-    border: 2px solid var(--accent-color);
-    border-radius:20px;
-    background-color:#f2f6fa;
-    margin-top:20px;
-    display:flex;
-    padding:20px;
-}
-
 .version-div{
     width:150px;
     margin:10px;
     border: 2px solid var(--accent-color);
+}
+
+.home-button{
+    background-color: #cfd9e6;
+    color: #30323a;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    padding: 0.6em 1.2em;
+    cursor:pointer;
+    transition: border-color 0.25s;
+    font-size: 1em;
+    font-weight: 500;
+    font-family: inherit;
+}
+
+.home-button:hover{
+    border-color: var(--accent-color);
+}
+
+.encounters-nav{
+    position: absolute;
+    top:10px;
+    left:10px;
+    display: flex;
+}
+
+.encounters-nav-child{
+    margin: 6px;
 }
