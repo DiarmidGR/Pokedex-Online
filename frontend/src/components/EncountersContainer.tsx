@@ -7,8 +7,8 @@ import "./EncountersContainer.css";
 interface EncounterDetail {
   min_level: number;
   max_level: number;
-  Pokemon: string;
-  Method: string;
+  pokemonName: string;
+  pokemonId: string;
 }
 
 interface EncountersContainerProps {
@@ -81,20 +81,20 @@ const EncountersContainer: React.FC<EncountersContainerProps> = ({
               className="pokedex-item"
               key={index}
               style={{
-                backgroundColor: isItemStored(detail.Pokemon)
+                backgroundColor: isItemStored(detail.pokemonName)
                   ? "#af3049"
                   : "#cfd9e6",
                 cursor: "pointer",
               }}
-              onClick={() => handlePokemonClick(detail.Pokemon)}
+              onClick={() => handlePokemonClick(detail.pokemonName)}
             >
-              <p className="pokedex-details">{detail.Pokemon}</p>
+              <p className="pokedex-details">{detail.pokemonName}</p>
               <img
-                src={spritesPath + detail.Pokemon + ".png"}
+                src={spritesPath + detail.pokemonName + ".png"}
                 alt=""
                 className="pokedex-details"
               />
-              <p>{detail.Method}</p>
+              <p className="pokedex-details">#{detail.pokemonId}</p>
             </div>
           ))}
         </div>
