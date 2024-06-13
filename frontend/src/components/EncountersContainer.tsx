@@ -73,7 +73,6 @@ const EncountersContainer: React.FC<EncountersContainerProps> = ({
 
   return (
     <>
-      <h2>Encounter Details</h2>
       {encounterDetails.length > 0 ? (
         <div className="pokedex-container">
           {encounterDetails.map((detail, index) => (
@@ -90,7 +89,7 @@ const EncountersContainer: React.FC<EncountersContainerProps> = ({
             >
               <p className="pokedex-details">{detail.pokemonName}</p>
               <img
-                src={spritesPath + detail.pokemonName + ".png"}
+                src={spritesPath + detail.pokemonName.toLowerCase() + ".png"}
                 alt=""
                 className="pokedex-details"
               />
