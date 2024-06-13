@@ -4,14 +4,16 @@ const cors = require('cors');
 
 const app = express();
 const port = 3000;
-
+  
 app.use(cors());
 
+require('dotenv').config();
+
 const db = mysql.createConnection({
-    host: '192.168.1.80',
-    user: 'root', // replace with your MySQL username
-    password: 'Diarmid143687171303193Ee', // replace with your MySQL password
-    database: 'pokemon_db'
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    database: process.env.DB_NAME
 });
 
 db.connect(err => {
