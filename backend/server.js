@@ -78,6 +78,34 @@ app.get('/encounter-details', (req, res) => {
     });
 });
 
+// Endpoint to access pokedex by version_id
+app.get('/pokedex', (req, res) => {
+    const versionId = req.query.version_id;
+
+    // return error code 400 if version_id is missing
+    if (!versionId)
+    {
+        return res.status(400).send({ error: 'version_id is required' });
+    }
+
+    // query to select pokedex for specific version
+    const query = `
+        SELECT (SELECT psn.name FROM pokemon_species_names psn WHERE psn.pokemon_species_id = pgi.pokemon_id and psn.local_language_id = 9) AS pokemonName,
+        pgi.pokemon_id AS pokemonId
+        FROM pokemon_game_indices pgi
+        WHERE pgi.version_id = ?;
+    `;
+
+    // send query to db
+    db.query(query, [versionId], (error, results) => {
+        if (error) {
+            return res.status(500).send({ error: error.message });
+        }
+
+        res.send(results);
+    });
+});
+
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
