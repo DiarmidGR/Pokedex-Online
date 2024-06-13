@@ -81,7 +81,7 @@ const EncountersContainer: React.FC<EncountersContainerProps> = ({
           ))}
         </div>
       ) : (
-        <p>No encounter details available.</p>
+        <h2>Choose a location from the dropdown menu</h2>
       )}
     </>
   );

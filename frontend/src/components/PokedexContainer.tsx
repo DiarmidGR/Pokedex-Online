@@ -75,7 +75,7 @@ const PokedexContainer: React.FC<PokedexContainerProps> = ({
           ))}
         </div>
       ) : (
-        <p>No encounter details available.</p>
+        <p></p>
       )}
     </>
   );
