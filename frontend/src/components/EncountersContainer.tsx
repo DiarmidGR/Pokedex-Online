@@ -31,7 +31,8 @@ const EncountersContainer: React.FC<EncountersContainerProps> = ({
       // Fetch encounter details from the API
       axios
         .get(
-          `http://localhost:3000/encounter-details?version_id=${versionId}&location_identifier=${locationIdentifier}`
+          import.meta.env.VITE_API_ENDPOINT +
+            `encounter-details?version_id=${versionId}&location_identifier=${locationIdentifier}`
         )
         .then((response) => {
           setEncounterDetails(response.data);
@@ -63,7 +64,6 @@ const EncountersContainer: React.FC<EncountersContainerProps> = ({
     }
     setStoredItems(updatedStoredItems);
     localStorage.setItem("storedItems", JSON.stringify(updatedStoredItems));
-    console.log(storageString);
   };
 
   const isItemStored = (item: string) => {

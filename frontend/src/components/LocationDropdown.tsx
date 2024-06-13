@@ -21,7 +21,9 @@ const LocationDropdown: React.FC<LocationDropdownProps> = ({
   useEffect(() => {
     // Fetch locations from the API
     axios
-      .get(`http://localhost:3000/locations?version_id=${versionId}`)
+      .get(
+        import.meta.env.VITE_API_ENDPOINT + `locations?version_id=${versionId}`
+      )
       .then((response) => {
         setLocations(response.data);
       })
