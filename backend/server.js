@@ -60,16 +60,14 @@ app.get('/encounter-details', (req, res) => {
     }
 
     const query = `
-        SELECT MIN(e.min_level) as min_level, MAX(e.max_level) as max_level, p.identifier as Pokemon, em.identifier as Method
+        SELECT MIN(e.min_level) as min_level, MAX(e.max_level) as max_level, p.identifier as pokemonName, p.species_id as pokemonId
         FROM encounters e
         INNER JOIN versions v ON e.version_id = v.id
         INNER JOIN pokemon p ON e.pokemon_id = p.id
         INNER JOIN location_areas la ON e.location_area_id = la.id
         INNER JOIN locations l ON la.location_id = l.id
-        INNER JOIN encounter_slots es ON e.encounter_slot_id = es.id
-        INNER JOIN encounter_methods em ON es.encounter_method_id = em.id
         WHERE v.id = ? AND l.identifier = ?
-        GROUP BY Pokemon, Method;
+        GROUP BY pokemonName, pokemonId;
     `;
 
     db.query(query, [versionId, locationIdentifier], (error, results) => {
