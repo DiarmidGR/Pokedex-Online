@@ -4,6 +4,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./components/Home";
 import TrackingPage from "./components/TrackingPage";
 import { useState, useEffect } from "react";
+import Login from "./components/Login";
+import PrivateRoute from "./components/PrivateRoute";
 
 interface Version {
   id: number;
@@ -22,7 +24,8 @@ const App: React.FC = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home />}></Route>
+        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Home />} />
         {versions.map((version) => (
           <Route
             key={version.id}
@@ -35,6 +38,21 @@ const App: React.FC = () => {
             }
           />
         ))}
+        {/* <Route path="/" element={<PrivateRoute />}>
+          <Route path="/" element={<Home />} />
+          {versions.map((version) => (
+            <Route
+              key={version.id}
+              path={`/${version.identifier}`}
+              element={
+                <TrackingPage
+                  version={version.identifier}
+                  version_id={version.id.toString()}
+                />
+              }
+            />
+          ))}
+        </Route> */}
       </Routes>
     </Router>
   );
