@@ -2,19 +2,25 @@
     width:15%;
     display:flex;
     flex-wrap: wrap;
-    background-color:#cfd9e6;
+    background-color:#e6f1ff;
     justify-content: center;
-    border-left:2px #af3049 solid;
-    padding:8px;
+    border-left:8px #af3049 solid;
     position:absolute;
-    right:0px;
+    right: -15%;
     top:0px;
     bottom:0px;
     overflow-y:scroll;
+    transition: right 0.3s ease;
+}
+
+.pokedex-container.visible{
+    right: 0;
 }
 
 .pokedex-item{
     display: flex;
     justify-content: center;
     align-items: center;
+    margin:0;
+    padding:0;
 }

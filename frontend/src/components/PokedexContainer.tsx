@@ -23,6 +23,28 @@ const PokedexContainer: React.FC<PokedexContainerProps> = ({
   const [pokemonDetails, setPokemonDetails] = useState<PokemonDetail[]>([]);
   const spritesPath = "/pokemon-sprites/";
 
+  // State for if PokedexContainer is offscreen or not
+  const [isVisible, setIsVisible] = useState(false);
+
+  // Mouse boundary check
+  useEffect(() => {
+    const handleMouseMove = (event: MouseEvent) => {
+      const screenWidth = window.innerWidth;
+      const cursorFromRight = screenWidth - event.clientX;
+
+      if (cursorFromRight < 50) {
+        setIsVisible(true);
+      } else if (cursorFromRight > 0.15 * screenWidth) {
+        setIsVisible(false);
+      }
+    };
+
+    document.addEventListener("mousemove", handleMouseMove);
+    return () => {
+      document.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, []);
+
   // fetch data from API using versionId
   useEffect(() => {
     if (versionId) {
@@ -56,7 +78,7 @@ const PokedexContainer: React.FC<PokedexContainerProps> = ({
   return (
     <>
       {pokemonDetails.length > 0 ? (
-        <div className="pokedex-container">
+        <div className={`pokedex-container ${isVisible ? "visible" : ""}`}>
           {pokemonDetails.map((detail, index) => (
             <div
               className="pokedex-item"
