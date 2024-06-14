@@ -31,6 +31,10 @@ RUN npm install \
     @fortawesome/free-solid-svg-icons \
     @fortawesome/react-fontawesome
 
+RUN npm install bcryptjs
+
+RUN npm install jsonwebtoken
+
 EXPOSE 8080
 
 CMD [ "npm", "run", "preview" ]

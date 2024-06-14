@@ -7,13 +7,80 @@ const port = 3000;
 
 const authRoutes = require('./routes/auth.route');
 
+const verifyToken = require('./middleware/auth.middleware');
+
 const db = require('./config/db.config');
   
 app.use(cors(),express.json());
 
 app.use('/api/', authRoutes);
+// app.use('/api/', verifyToken);
 
 require('dotenv').config();
+
+app.post('/api/user-pokemon/insert',verifyToken,  async (req, res) => {
+    const { pokemon_id, version_id, user_id } = req.body;
+
+    if (!pokemon_id || !version_id) {
+        return res.status(400).json({ error: 'pokemon_id and version_id are required' });
+    }
+
+    const query = `
+      INSERT IGNORE INTO users_pokemon (user_id, pokemon_id, version_id) VALUES (?, ?, ?)`;
+    db.query(query, [user_id, pokemon_id, version_id], (error, results) => {
+        if (error) {
+            return res.status(500).json({ error: error.message });
+        }
+        res.status(201).json({ message: 'Pokemon added successfully', id: results.insertId });
+    });
+});
+
+app.post('/api/user-pokemon/delete',verifyToken,  async (req, res) => {
+    const { pokemon_id, version_id, user_id } = req.body;
+
+    if (!pokemon_id || !version_id) {
+        return res.status(400).json({ error: 'pokemon_id and version_id are required' });
+    }
+
+    const query = `
+      DELETE FROM users_pokemon
+      WHERE user_id = ? AND pokemon_id = ? AND version_id = ?`;
+      db.query(query, [user_id, pokemon_id, version_id], (error, results) => {
+        if (error) {
+            return res.status(500).json({ error: error.message });
+        }
+        if (results.affectedRows === 0) {
+            return res.status(404).json({ message: 'No entry found to delete' });
+        }
+        res.status(200).json({ message: 'Pokemon removed successfully' });
+    });
+});
+
+// Endpoint to get a users caught pokemon by user_id and version_id
+app.get('/api/user-pokemon', (req, res) => {
+    const { version_id, user_id } = req.query;
+
+    // Validate presence of version_id and user_id
+    if (!version_id || !user_id) {
+        return res.status(400).send({ error: 'version_id and user_id are required' });
+    }
+
+    // MySQL query to select pokemon_id for a specific user and version
+    const query = `
+        SELECT pokemon_id
+        FROM users_pokemon
+        WHERE version_id = ? AND user_id = ?;
+    `;
+
+    // Execute the query with version_id and user_id as parameters
+    db.query(query, [version_id, user_id], (error, results) => {
+        if (error) {
+            return res.status(500).send({ error: error.message });
+        }
+
+        res.send(results);
+    });
+});
 
 // Endpoint to get location identifiers by version_id
 app.get('/api/locations', (req, res) => {

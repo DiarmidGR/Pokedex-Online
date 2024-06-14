@@ -3,6 +3,7 @@ import axios from "axios";
 import "./PokedexContainer.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { getToken } from "./Auth";
 
 // interface for pokemon data received from api
 interface PokemonDetail {
@@ -14,7 +15,7 @@ interface PokemonDetail {
 interface PokedexContainerProps {
   versionId: string;
   storedItems: string[];
-  handlePokemonClick: (versionId: string, item: string) => void;
+  handlePokemonClick: (versionId: string, item: number) => void;
 }
 
 const PokedexContainer: React.FC<PokedexContainerProps> = ({
@@ -54,7 +55,12 @@ const PokedexContainer: React.FC<PokedexContainerProps> = ({
       // Fetch pokedex details from the API
       axios
         .get(
-          import.meta.env.VITE_API_ENDPOINT + `pokedex?version_id=${versionId}`
+          import.meta.env.VITE_API_ENDPOINT + `pokedex?version_id=${versionId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${getToken()}`, // Include JWT token in the headers
+            },
+          }
         )
         .then((response) => {
           const filteredData = response.data.filter(
@@ -73,7 +79,7 @@ const PokedexContainer: React.FC<PokedexContainerProps> = ({
 
   // function to check whether a pokemon is stored in localStorage already
   // is used to determine background color of pokedex item
-  const isItemStored = (item: string) => {
+  const isItemStored = (item: number) => {
     let storageString = versionId + "_" + item;
     return storedItems.includes(storageString);
   };
@@ -109,14 +115,12 @@ const PokedexContainer: React.FC<PokedexContainerProps> = ({
                 className="pokedex-item"
                 key={index}
                 style={{
-                  backgroundColor: isItemStored(detail.pokemonName)
+                  backgroundColor: isItemStored(detail.pokemonId)
                     ? "#af3049"
                     : "transparent",
                   cursor: "pointer",
                 }}
-                onClick={() =>
-                  handlePokemonClick(versionId, detail.pokemonName)
-                }
+                onClick={() => handlePokemonClick(versionId, detail.pokemonId)}
               >
                 <img
                   src={spritesPath + detail.pokemonName.toLowerCase() + ".png"}

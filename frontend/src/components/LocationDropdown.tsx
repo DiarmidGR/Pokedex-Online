@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./LocationDropdown.css";
+import { getToken } from "./Auth";
 
 interface Location {
   identifier: string;
@@ -22,7 +23,12 @@ const LocationDropdown: React.FC<LocationDropdownProps> = ({
     // Fetch locations from the API
     axios
       .get(
-        import.meta.env.VITE_API_ENDPOINT + `locations?version_id=${versionId}`
+        import.meta.env.VITE_API_ENDPOINT + `locations?version_id=${versionId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${getToken()}`, // Include JWT token in the headers
+          },
+        }
       )
       .then((response) => {
         setLocations(response.data);
