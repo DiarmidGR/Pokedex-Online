@@ -4,25 +4,16 @@ const cors = require('cors');
 
 const app = express();
 const port = 3000;
+
+const authRoutes = require('./routes/auth.route');
+
+const db = require('./config/db.config');
   
-app.use(cors());
+app.use(cors(),express.json());
+
+app.use('/api/', authRoutes);
 
 require('dotenv').config();
-
-const db = mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASS,
-    database: process.env.DB_NAME
-});
-
-db.connect(err => {
-    if (err) {
-        console.error('Error connecting to the database:', err);
-        return;
-    }
-    console.log('Connected to the MySQL database.');
-});
 
 // Endpoint to get location identifiers by version_id
 app.get('/api/locations', (req, res) => {

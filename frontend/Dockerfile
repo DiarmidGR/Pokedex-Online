@@ -23,9 +23,13 @@ EXPOSE 8080
 
 COPY package.json .
 COPY vite.config.ts .
-COPY .env .env
 
 RUN npm install typescript
+
+RUN npm install \
+    @fortawesome/fontawesome-svg-core \
+    @fortawesome/free-solid-svg-icons \
+    @fortawesome/react-fontawesome
 
 EXPOSE 8080
 
