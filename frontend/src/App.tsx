@@ -5,7 +5,7 @@ import Home from "./components/Home";
 import TrackingPage from "./components/TrackingPage";
 import { useState, useEffect } from "react";
 import Login from "./components/Login";
-import PrivateRoute from "./components/PrivateRoute";
+//import PrivateRoute from "./components/PrivateRoute";
 
 interface Version {
   id: number;

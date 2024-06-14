@@ -3,19 +3,20 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./EncountersContainer.css";
+import { getToken } from "./Auth";
 
 interface EncounterDetail {
   min_level: number;
   max_level: number;
   pokemonName: string;
-  pokemonId: string;
+  pokemonId: number;
 }
 
 interface EncountersContainerProps {
   versionId: string;
   locationIdentifier: string;
   storedItems: string[];
-  handlePokemonClick: (versionId: string, item: string) => void;
+  handlePokemonClick: (versionId: string, item: number) => void;
 }
 
 const EncountersContainer: React.FC<EncountersContainerProps> = ({
@@ -35,7 +36,12 @@ const EncountersContainer: React.FC<EncountersContainerProps> = ({
       axios
         .get(
           import.meta.env.VITE_API_ENDPOINT +
-            `encounter-details?version_id=${versionId}&location_identifier=${locationIdentifier}`
+            `encounter-details?version_id=${versionId}&location_identifier=${locationIdentifier}`,
+          {
+            headers: {
+              Authorization: `Bearer ${getToken()}`, // Include JWT token in the headers
+            },
+          }
         )
         .then((response) => {
           setEncounterDetails(response.data);
@@ -49,7 +55,7 @@ const EncountersContainer: React.FC<EncountersContainerProps> = ({
     }
   }, [versionId, locationIdentifier]);
 
-  const isItemStored = (item: string) => {
+  const isItemStored = (item: number) => {
     let storageString = versionId + "_" + item;
     return storedItems.includes(storageString);
   };
@@ -68,13 +74,13 @@ const EncountersContainer: React.FC<EncountersContainerProps> = ({
               className="encounters-item"
               key={index}
               style={{
-                backgroundColor: isItemStored(detail.pokemonName)
+                backgroundColor: isItemStored(detail.pokemonId)
                   ? "#af3049"
                   : "#cfd9e6",
                 cursor: "pointer",
               }}
               onContextMenu={handleRightClick}
-              onClick={() => handlePokemonClick(versionId, detail.pokemonName)}
+              onClick={() => handlePokemonClick(versionId, detail.pokemonId)}
             >
               <p className="encounters-details">{detail.pokemonName}</p>
               <img
