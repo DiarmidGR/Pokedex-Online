@@ -55,13 +55,6 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
             Home
           </button>
         </div>
-
-        <div className="encounters-nav-child">
-          <LocationDropdown
-            versionId={version_id}
-            onLocationChange={setSelectedLocation}
-          ></LocationDropdown>
-        </div>
       </div>
 
       <PokedexContainer
@@ -69,6 +62,10 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
         storedItems={storedItems}
         handlePokemonClick={handlePokemonClick}
       ></PokedexContainer>
+      <LocationDropdown
+        versionId={version_id}
+        onLocationChange={setSelectedLocation}
+      ></LocationDropdown>
       <EncountersContainer
         versionId={versionId}
         locationIdentifier={selectedLocation}

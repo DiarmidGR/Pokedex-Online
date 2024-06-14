@@ -54,6 +54,11 @@ const EncountersContainer: React.FC<EncountersContainerProps> = ({
     return storedItems.includes(storageString);
   };
 
+  // Right click handler on encounter-item
+  const handleRightClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    event.preventDefault(); // Prevent the default context menu from appearing
+  };
+
   return (
     <>
       {encounterDetails.length > 0 ? (
@@ -68,6 +73,7 @@ const EncountersContainer: React.FC<EncountersContainerProps> = ({
                   : "#cfd9e6",
                 cursor: "pointer",
               }}
+              onContextMenu={handleRightClick}
               onClick={() => handlePokemonClick(versionId, detail.pokemonName)}
             >
               <p className="encounters-details">{detail.pokemonName}</p>
