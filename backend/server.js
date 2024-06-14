@@ -25,7 +25,7 @@ db.connect(err => {
 });
 
 // Endpoint to get location identifiers by version_id
-app.get('/locations', (req, res) => {
+app.get('/api/locations', (req, res) => {
     const versionId = req.query.version_id;
 
     if (!versionId) {
@@ -51,7 +51,7 @@ app.get('/locations', (req, res) => {
 });
 
 // Endpoint to get encounter details by version_id and location_identifier
-app.get('/encounter-details', (req, res) => {
+app.get('/api/encounter-details', (req, res) => {
     const versionId = req.query.version_id;
     const locationIdentifier = req.query.location_identifier;
 
@@ -79,7 +79,7 @@ app.get('/encounter-details', (req, res) => {
 });
 
 // Endpoint to access pokedex by version_id
-app.get('/pokedex', (req, res) => {
+app.get('/api/pokedex', (req, res) => {
     const versionId = req.query.version_id;
 
     // return error code 400 if version_id is missing

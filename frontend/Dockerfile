@@ -23,8 +23,11 @@ EXPOSE 8080
 
 COPY package.json .
 COPY vite.config.ts .
+COPY .env .env
 
 RUN npm install typescript
+
+ENV VITE_API_ENDPOINT=$VITE_API_ENDPOINT
 
 EXPOSE 8080
 
