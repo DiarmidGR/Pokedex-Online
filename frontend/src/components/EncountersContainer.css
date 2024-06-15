@@ -1,5 +1,5 @@
 .encounters-container{
-    border: solid #af3049 2px;
+    border: solid var(--primary-color) 2px;
     border-radius:10px;
     display:grid;
     grid-template-columns: repeat(auto-fit, 120px);
@@ -25,7 +25,7 @@
 }
 
 .encounters-item:hover{
-    border:var(--accent-color) 2px solid;
+    border:var(--primary-color) 2px solid;
 }
 
 p.encounters-details{

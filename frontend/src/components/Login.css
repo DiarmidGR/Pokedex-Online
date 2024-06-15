@@ -3,7 +3,7 @@
     flex-direction:column;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
     border-radius:10px;
-    border: #af3049 1px solid;
+    border: var(--primary-color) 1px solid;
     padding:2em;
     text-align: left;
     font-size:17px;
@@ -50,7 +50,7 @@
 .login-input{
     padding:0.2em;
     font-size:17px;
-    border: 1px #af3049 solid;
+    border: 1px var(--primary-color) solid;
     border-radius:5px;
     background-color: #eef5ff;
     color: #30323a;
@@ -58,9 +58,9 @@
 
 .login-input:focus{
     outline:none;
-    border-color: #af3049;
+    border-color: var(--primary-color);
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    caret-color: #af3049;
+    caret-color: var(--primary-color);
 }
 
 .text-center{
@@ -68,5 +68,5 @@
 }
 
 a{
-    color: #af3049
+    color: var(--primary-color)
 }
