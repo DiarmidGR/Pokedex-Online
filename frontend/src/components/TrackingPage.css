@@ -37,3 +37,22 @@
 .encounters-nav-child{
     margin: 6px;
 }
+
+@media only screen and (max-width: 600px) {
+    .encounters-nav{
+        right:10px;
+        justify-content: center;
+    }
+
+    .encounters-nav-child{
+        width:100%;
+    }
+
+    .home-button{
+        width:100%;
+    }
+
+    .tracker-layout{
+        padding-top:40px;
+    }
+}

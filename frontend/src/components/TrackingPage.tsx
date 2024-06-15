@@ -167,15 +167,6 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
         </div>
       </div>
 
-      <PokedexContainer
-        versionId={version_id}
-        storedItems={storedItems}
-        handlePokemonClick={
-          getToken() == null
-            ? handlePokemonClick
-            : handlePokemonClickAuthenticated
-        }
-      ></PokedexContainer>
       <LocationDropdown
         versionId={version_id}
         onLocationChange={setSelectedLocation}
@@ -190,6 +181,15 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
             : handlePokemonClickAuthenticated
         }
       ></EncountersContainer>
+      <PokedexContainer
+        versionId={version_id}
+        storedItems={storedItems}
+        handlePokemonClick={
+          getToken() == null
+            ? handlePokemonClick
+            : handlePokemonClickAuthenticated
+        }
+      ></PokedexContainer>
     </div>
   );
 };
