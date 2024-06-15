@@ -30,24 +30,24 @@ const PokedexContainer: React.FC<PokedexContainerProps> = ({
   // State for if PokedexContainer is offscreen or not
   const [isVisible, setIsVisible] = useState(false);
 
-  // Mouse boundary check
-  useEffect(() => {
-    const handleMouseMove = (event: MouseEvent) => {
-      const screenWidth = window.innerWidth;
-      const cursorFromRight = screenWidth - event.clientX;
+  // // Mouse boundary check
+  // useEffect(() => {
+  //   const handleMouseMove = (event: MouseEvent) => {
+  //     const screenWidth = window.innerWidth;
+  //     const cursorFromRight = screenWidth - event.clientX;
 
-      if (cursorFromRight < 50) {
-        setIsVisible(true);
-      } else if (cursorFromRight > 0.15 * screenWidth) {
-        setIsVisible(false);
-      }
-    };
+  //     if (cursorFromRight < 50) {
+  //       setIsVisible(true);
+  //     } else if (cursorFromRight > 0.15 * screenWidth) {
+  //       setIsVisible(false);
+  //     }
+  //   };
 
-    document.addEventListener("mousemove", handleMouseMove);
-    return () => {
-      document.removeEventListener("mousemove", handleMouseMove);
-    };
-  }, []);
+  //   document.addEventListener("mousemove", handleMouseMove);
+  //   return () => {
+  //     document.removeEventListener("mousemove", handleMouseMove);
+  //   };
+  // }, []);
 
   // fetch data from API using versionId
   useEffect(() => {
@@ -92,7 +92,8 @@ const PokedexContainer: React.FC<PokedexContainerProps> = ({
   return (
     <>
       {filteredPokemonDetails.length > 0 ? (
-        <div className={`pokedex-container ${isVisible ? "visible" : ""}`}>
+        // ${isVisible ? "visible" : ""} ADD BACK BELOW IN CLASSNAME
+        <div className={`pokedex-container`}>
           <div className="pokedex-search-bar-container">
             <FontAwesomeIcon icon={faSearch} className="search-icon" />
             <input

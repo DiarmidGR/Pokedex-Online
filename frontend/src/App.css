@@ -1,9 +1,14 @@
-
-
 #root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
   width:100%;
+
+  --primary-light:#F04037;
+  --primary-color: #a82d27;
+
+  --secondary-light:#45474e;
+  --secondary-color:#30323a;
+  --secondary-dark:#2b2d34;
 }
