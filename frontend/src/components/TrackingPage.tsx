@@ -44,7 +44,6 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
               },
             }
           );
-          console.log(convertCaughtPokemonData(response.data));
           setStoredItems(convertCaughtPokemonData(response.data)); // Assuming your API response includes 'storedItems'
         } else {
           // Load stored items from local storage if not authenticated
@@ -107,8 +106,8 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
             },
           }
         )
-        .then((response) => {
-          console.log(response);
+        .then((response: any) => {
+          console.log(response.data.message);
         })
         .catch((error) => {
           console.error(
@@ -137,8 +136,8 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
             },
           }
         )
-        .then((response) => {
-          console.log(response);
+        .then((response: any) => {
+          console.log(response.data.message);
         })
         .catch((error) => {
           console.error(
