@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 import PokedexContainer from "./PokedexContainer";
 import { getToken } from "./Auth";
 import axios from "axios";
-import PokedexDropdown from "./ui/PokedexDropdown";
 
 interface TrackingPageProps {
   version: string;
@@ -21,7 +20,6 @@ interface CaughtPokemonProps {
 
 const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
   const [selectedLocation, setSelectedLocation] = useState<string>("");
-  const [selectedPokedex, setSelectedPokedex] = useState<string>("1");
   const versionId = version_id;
 
   // State to update both Encounters and Pokedex container items together at the same time
@@ -166,13 +164,8 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
           </button>
         </div>
       </div>
-      <PokedexDropdown
-        versionId={version_id}
-        onPokedexChange={setSelectedPokedex}
-      ></PokedexDropdown>
       <PokedexContainer
-        versionId={versionId}
-        pokedexId={selectedPokedex}
+        versionId={version_id}
         storedItems={storedItems}
         handlePokemonClick={
           getToken() == null
