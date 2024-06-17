@@ -4,6 +4,7 @@ import "./styles/PokedexContainer.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { getToken } from "./Auth";
+import PokedexDropdown from "./ui/PokedexDropdown";
 
 // interface for pokemon data received from api
 interface PokemonDetails {
@@ -13,13 +14,11 @@ interface PokemonDetails {
 
 interface PokedexContainerProps {
   versionId: string;
-  pokedexId: string;
   storedItems: string[]; // array of pokemon to display passed to component in TrackingPage
   handlePokemonClick: (versionId: string, item: number) => void; // Click handler to add / remove pokemon from db storage
 }
 
 const PokedexContainer: React.FC<PokedexContainerProps> = ({
-  pokedexId,
   storedItems,
   versionId,
   handlePokemonClick,
@@ -27,6 +26,7 @@ const PokedexContainer: React.FC<PokedexContainerProps> = ({
   const [pokemonDetails, setPokemonDetails] = useState<PokemonDetails[]>([]);
   const spritesPath = "/pokemon-sprites/";
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedPokedex, setSelectedPokedex] = useState<string>("1");
 
   // fetch data from API using versionId
   useEffect(() => {
@@ -34,7 +34,8 @@ const PokedexContainer: React.FC<PokedexContainerProps> = ({
       // Fetch pokedex details from the API
       axios
         .get(
-          import.meta.env.VITE_API_ENDPOINT + `pokedex?version_id=${pokedexId}`,
+          import.meta.env.VITE_API_ENDPOINT +
+            `pokedex?version_id=${selectedPokedex}`,
           {
             headers: {
               Authorization: `Bearer ${getToken()}`, // Include JWT token in the headers
@@ -54,7 +55,7 @@ const PokedexContainer: React.FC<PokedexContainerProps> = ({
           );
         });
     }
-  }, [pokedexId]);
+  }, [selectedPokedex]);
 
   // function to check whether a pokemon is stored in localStorage already
   // is used to determine background color of pokedex item
@@ -72,6 +73,10 @@ const PokedexContainer: React.FC<PokedexContainerProps> = ({
     <>
       {filteredPokemonDetails.length > 0 ? (
         <div className={`pokedex-container`}>
+          <PokedexDropdown
+            versionId={versionId}
+            onPokedexChange={setSelectedPokedex}
+          ></PokedexDropdown>
           <div className="pokedex-search-bar-container">
             <FontAwesomeIcon icon={faSearch} className="search-icon" />
             <input
