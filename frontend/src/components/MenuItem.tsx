@@ -1,4 +1,4 @@
-import "./MenuItem.css";
+import "./styles/MenuItem.css";
 import { useNavigate } from "react-router-dom";
 
 interface MenuItemProps {

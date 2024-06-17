@@ -3,7 +3,7 @@ import MenuItem from "./MenuItem";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { removeToken } from "./Auth";
-import "./Home.css";
+import "./styles/Home.css";
 
 interface Version {
   id: number;
