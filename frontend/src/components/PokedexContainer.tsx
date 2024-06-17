@@ -26,7 +26,13 @@ const PokedexContainer: React.FC<PokedexContainerProps> = ({
   const [pokemonDetails, setPokemonDetails] = useState<PokemonDetails[]>([]);
   const spritesPath = "/pokemon-sprites/";
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedPokedex, setSelectedPokedex] = useState<string>("1");
+
+  // Check what the last pokedexId was for this version so we can initialize PokedexContainer on that pokedexId
+  const versionLastPokedexString = versionId + "_lastPokedexId";
+  const lastPokedexId = localStorage.getItem(versionLastPokedexString);
+  const [selectedPokedex, setSelectedPokedex] = useState<string>(
+    lastPokedexId != null ? lastPokedexId : "1"
+  );
 
   // fetch data from API using versionId
   useEffect(() => {
@@ -76,6 +82,7 @@ const PokedexContainer: React.FC<PokedexContainerProps> = ({
           <PokedexDropdown
             versionId={versionId}
             onPokedexChange={setSelectedPokedex}
+            defaultIndex={lastPokedexId != null ? lastPokedexId : "1"}
           ></PokedexDropdown>
           <div className="pokedex-search-bar-container">
             <FontAwesomeIcon icon={faSearch} className="search-icon" />
