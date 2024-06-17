@@ -66,6 +66,32 @@ router.get('/user-pokemon', verifyToken, (req, res) => {
     });
 });
 
+// Get pokedex ids and names by version_id
+router.get('/pokedex_versions', (req, res) => {
+    const versionId = req.query.version_id;
+
+    if (!versionId) {
+        return res.status(400).send({error: 'version_id is required to fex pokedex data.'})
+    }
+
+    const query = `
+        SELECT pvg.pokedex_id as pokedexId,
+        (SELECT pp.name from pokedex_prose pp WHERE pp.pokedex_id = pvg.pokedex_id) AS pokedexName
+        FROM pokedex_version_groups pvg
+        INNER JOIN versions v
+        ON pvg.version_group_id = v.version_group_id
+        WHERE v.id = ?;
+    `;
+
+    db.query(query, [versionId], (error, results) => {
+        if (error) {
+            return res.status(500).send({ error: error.message });
+        }
+
+        res.send(results);
+    });
+})
+
 // Get location identifiers by version_id
 router.get('/locations', (req, res) => {
     const versionId = req.query.version_id;
@@ -107,7 +133,7 @@ router.get('/encounter-details', (req, res) => {
         INNER JOIN pokemon_species_names psn ON e.pokemon_id = psn.pokemon_species_id
         INNER JOIN location_areas la ON e.location_area_id = la.id
         INNER JOIN locations l ON la.location_id = l.id
-        WHERE e.version_id = ? AND l.identifier = ? AND psn.local_language_id='9'
+        WHERE e.version_id = ? AND l.identifier = ?
         GROUP BY pokemonName, pokemonId;
     `;
 
@@ -129,10 +155,11 @@ router.get('/pokedex', (req, res) => {
     }
 
     const query = `
-        SELECT (SELECT psn.name FROM pokemon_species_names psn WHERE psn.pokemon_species_id = pgi.pokemon_id and psn.local_language_id = 9) AS pokemonName,
-        pgi.pokemon_id AS pokemonId
-        FROM pokemon_game_indices pgi
-        WHERE pgi.version_id = ?;
+        SELECT (SELECT psn.name FROM pokemon_species_names psn WHERE psn.pokemon_species_id = pdn.species_id) AS pokemonName,
+        pdn.pokedex_number AS pokemonId
+        FROM pokemon_dex_numbers pdn
+        WHERE pdn.pokedex_id = ?
+        ORDER BY pdn.pokedex_number;
     `;
 
     db.query(query, [versionId], (error, results) => {

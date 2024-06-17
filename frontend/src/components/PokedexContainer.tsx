@@ -1,61 +1,40 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "./PokedexContainer.css";
+import "./styles/PokedexContainer.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { getToken } from "./Auth";
 
 // interface for pokemon data received from api
-interface PokemonDetail {
+interface PokemonDetails {
   pokemonName: string;
   pokemonId: number;
 }
 
-// interface for versionId property passed on component initialization
 interface PokedexContainerProps {
   versionId: string;
-  storedItems: string[];
-  handlePokemonClick: (versionId: string, item: number) => void;
+  pokedexId: string;
+  storedItems: string[]; // array of pokemon to display passed to component in TrackingPage
+  handlePokemonClick: (versionId: string, item: number) => void; // Click handler to add / remove pokemon from db storage
 }
 
 const PokedexContainer: React.FC<PokedexContainerProps> = ({
-  versionId,
+  pokedexId,
   storedItems,
+  versionId,
   handlePokemonClick,
 }) => {
-  const [pokemonDetails, setPokemonDetails] = useState<PokemonDetail[]>([]);
+  const [pokemonDetails, setPokemonDetails] = useState<PokemonDetails[]>([]);
   const spritesPath = "/pokemon-sprites/";
   const [searchQuery, setSearchQuery] = useState("");
 
-  // State for if PokedexContainer is offscreen or not
-  const [isVisible, setIsVisible] = useState(false);
-
-  // // Mouse boundary check
-  // useEffect(() => {
-  //   const handleMouseMove = (event: MouseEvent) => {
-  //     const screenWidth = window.innerWidth;
-  //     const cursorFromRight = screenWidth - event.clientX;
-
-  //     if (cursorFromRight < 50) {
-  //       setIsVisible(true);
-  //     } else if (cursorFromRight > 0.15 * screenWidth) {
-  //       setIsVisible(false);
-  //     }
-  //   };
-
-  //   document.addEventListener("mousemove", handleMouseMove);
-  //   return () => {
-  //     document.removeEventListener("mousemove", handleMouseMove);
-  //   };
-  // }, []);
-
   // fetch data from API using versionId
   useEffect(() => {
-    if (versionId) {
+    if (storedItems) {
       // Fetch pokedex details from the API
       axios
         .get(
-          import.meta.env.VITE_API_ENDPOINT + `pokedex?version_id=${versionId}`,
+          import.meta.env.VITE_API_ENDPOINT + `pokedex?version_id=${pokedexId}`,
           {
             headers: {
               Authorization: `Bearer ${getToken()}`, // Include JWT token in the headers
@@ -64,7 +43,7 @@ const PokedexContainer: React.FC<PokedexContainerProps> = ({
         )
         .then((response) => {
           const filteredData = response.data.filter(
-            (detail: PokemonDetail) => detail.pokemonName !== null
+            (detail: PokemonDetails) => detail.pokemonName !== null
           );
           setPokemonDetails(filteredData);
         })
@@ -75,7 +54,7 @@ const PokedexContainer: React.FC<PokedexContainerProps> = ({
           );
         });
     }
-  }, [versionId]);
+  }, [pokedexId]);
 
   // function to check whether a pokemon is stored in localStorage already
   // is used to determine background color of pokedex item
@@ -92,7 +71,6 @@ const PokedexContainer: React.FC<PokedexContainerProps> = ({
   return (
     <>
       {filteredPokemonDetails.length > 0 ? (
-        // ${isVisible ? "visible" : ""} ADD BACK BELOW IN CLASSNAME
         <div className={`pokedex-container`}>
           <div className="pokedex-search-bar-container">
             <FontAwesomeIcon icon={faSearch} className="search-icon" />

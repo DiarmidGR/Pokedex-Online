@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "./EncountersContainer.css";
+import "./styles/EncountersContainer.css";
 import { getToken } from "./Auth";
 
 interface EncounterDetail {
