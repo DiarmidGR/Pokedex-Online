@@ -1,30 +1,10 @@
-.signout-button{
-    background-color: #cfd9e6;
-    color: #30323a;
-    border: 1px solid transparent;
-    border-radius: 8px;
-    padding: 0.6em 1.2em;
-    cursor:pointer;
-    transition: border-color 0.25s;
-    font-size: 1em;
-    font-weight: 500;
-    font-family: inherit;
-    position:absolute;
-    top:0;
-    left:0;
-    margin:10px;
-}
-
-.signout-button:hover{
-    border-color: var(--accent-color);
+.grid-container{
+    padding:50px;
 }
 
 @media only screen and (max-width: 600px) {
-    .signout-button{
-        right:0;
-    }
-
     .grid-container{
-        padding-top:30px;
+        padding:0;
+        padding-top:60px;
     }
 }

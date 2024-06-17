@@ -28,7 +28,6 @@ const PokedexDropdown: React.FC<PokedexDropdownProps> = ({
     localStorage.setItem(versionLastPokedexString, pokedexId);
     onPokedexChange(pokedexId);
   };
-  console.log(defaultIndex);
   return (
     <div>
       <select

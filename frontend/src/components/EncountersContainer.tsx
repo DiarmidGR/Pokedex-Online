@@ -82,7 +82,7 @@ const EncountersContainer: React.FC<EncountersContainerProps> = ({
             >
               <p className="encounters-details">{detail.pokemonName}</p>
               <img
-                src={spritesPath + detail.pokemonName.toLowerCase() + ".png"}
+                src={spritesPath + detail.pokemonId + ".png"}
                 alt=""
                 className="encounters-details"
               />
@@ -91,7 +91,7 @@ const EncountersContainer: React.FC<EncountersContainerProps> = ({
           ))}
         </div>
       ) : (
-        <h2>Choose a location from the dropdown menu</h2>
+        ""
       )}
     </>
   );

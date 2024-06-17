@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./EncountersPage.css";
 import LocationDropdown from "../components/LocationDropdown";
-import { useState, useEffect } from "react";
 import EncountersContainer from "../components/EncountersContainer";
 import { useNavigate } from "react-router-dom";
 import PokedexContainer from "../components/PokedexContainer";
+import PokedexDropdown from "../components/PokedexDropdown";
 import { getToken } from "../components/Auth";
 import axios from "axios";
 
@@ -24,6 +24,18 @@ const EncountersPage: React.FC<EncountersPageProps> = ({ version_id }) => {
 
   // State to update both Encounters and Pokedex container items together at the same time
   const [storedItems, setStoredItems] = useState<string[]>([]);
+
+  // State to manage the selected Pokedex
+  const versionLastPokedexString = versionId + "_lastPokedexId";
+  const lastPokedexId = localStorage.getItem(versionLastPokedexString);
+  const [selectedPokedex, setSelectedPokedex] = useState<string>(
+    lastPokedexId != null ? lastPokedexId : "1"
+  );
+
+  // Save the selected Pokedex to localStorage
+  useEffect(() => {
+    localStorage.setItem(versionLastPokedexString, selectedPokedex);
+  }, [selectedPokedex]);
 
   // Load stored items from local storage on component mount
   useEffect(() => {
@@ -156,7 +168,7 @@ const EncountersPage: React.FC<EncountersPageProps> = ({ version_id }) => {
   };
 
   return (
-    <div className="tracker-layout">
+    <div className="encounters-layout">
       <div className="encounters-nav">
         <div className="encounters-nav-child">
           <button className="home-button" onClick={handleClick}>
@@ -164,29 +176,37 @@ const EncountersPage: React.FC<EncountersPageProps> = ({ version_id }) => {
           </button>
         </div>
       </div>
-      <PokedexContainer
-        versionId={version_id}
-        storedItems={storedItems}
-        handlePokemonClick={
-          getToken() == null
-            ? handlePokemonClick
-            : handlePokemonClickAuthenticated
-        }
-      ></PokedexContainer>
-      <LocationDropdown
-        versionId={version_id}
-        onLocationChange={setSelectedLocation}
-      ></LocationDropdown>
-      <EncountersContainer
-        versionId={versionId}
-        locationIdentifier={selectedLocation}
-        storedItems={storedItems}
-        handlePokemonClick={
-          getToken() == null
-            ? handlePokemonClick
-            : handlePokemonClickAuthenticated
-        }
-      ></EncountersContainer>
+      <div className="encounters-div">
+        <PokedexDropdown
+          versionId={versionId}
+          onPokedexChange={setSelectedPokedex}
+          defaultIndex={lastPokedexId != null ? lastPokedexId : "1"}
+        />
+        <PokedexContainer
+          versionId={version_id}
+          storedItems={storedItems}
+          handlePokemonClick={
+            getToken() == null
+              ? handlePokemonClick
+              : handlePokemonClickAuthenticated
+          }
+          selectedPokedex={selectedPokedex}
+        />
+        <LocationDropdown
+          versionId={version_id}
+          onLocationChange={setSelectedLocation}
+        />
+        <EncountersContainer
+          versionId={versionId}
+          locationIdentifier={selectedLocation}
+          storedItems={storedItems}
+          handlePokemonClick={
+            getToken() == null
+              ? handlePokemonClick
+              : handlePokemonClickAuthenticated
+          }
+        />
+      </div>
     </div>
   );
 };

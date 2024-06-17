@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./PokedexContainer.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { getToken } from "./Auth";
-import PokedexDropdown from "./PokedexDropdown";
 
 // interface for pokemon data received from api
 interface PokemonDetails {
@@ -16,25 +13,19 @@ interface PokedexContainerProps {
   versionId: string;
   storedItems: string[]; // array of pokemon to display passed to component in TrackingPage
   handlePokemonClick: (versionId: string, item: number) => void; // Click handler to add / remove pokemon from db storage
+  selectedPokedex: string; // Prop for selected pokedex
 }
 
 const PokedexContainer: React.FC<PokedexContainerProps> = ({
   storedItems,
   versionId,
   handlePokemonClick,
+  selectedPokedex,
 }) => {
   const [pokemonDetails, setPokemonDetails] = useState<PokemonDetails[]>([]);
   const spritesPath = "/pokemon-sprites/";
-  const [searchQuery, setSearchQuery] = useState("");
 
-  // Check what the last pokedexId was for this version so we can initialize PokedexContainer on that pokedexId
-  const versionLastPokedexString = versionId + "_lastPokedexId";
-  const lastPokedexId = localStorage.getItem(versionLastPokedexString);
-  const [selectedPokedex, setSelectedPokedex] = useState<string>(
-    lastPokedexId != null ? lastPokedexId : "1"
-  );
-
-  // fetch data from API using versionId
+  // fetch data from API using selectedPokedex
   useEffect(() => {
     if (storedItems) {
       // Fetch pokedex details from the API
@@ -70,51 +61,25 @@ const PokedexContainer: React.FC<PokedexContainerProps> = ({
     return storedItems.includes(storageString);
   };
 
-  // Filter the pokemonDetails based on the searchQuery
-  const filteredPokemonDetails = pokemonDetails.filter((detail) =>
-    detail.pokemonName.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-
   return (
     <>
-      {filteredPokemonDetails.length > 0 ? (
+      {pokemonDetails.length > 0 ? (
         <div className={`pokedex-container`}>
-          <PokedexDropdown
-            versionId={versionId}
-            onPokedexChange={setSelectedPokedex}
-            defaultIndex={lastPokedexId != null ? lastPokedexId : "1"}
-          ></PokedexDropdown>
-          <div className="pokedex-search-bar-container">
-            <FontAwesomeIcon icon={faSearch} className="search-icon" />
-            <input
-              type="text"
-              placeholder="Search Pokémon"
-              value={searchQuery}
-              onFocus={() =>
-                document.querySelector(".search-icon")?.classList.add("hide")
-              }
-              onBlur={() =>
-                document.querySelector(".search-icon")?.classList.remove("hide")
-              }
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pokedex-search-bar"
-            />
-          </div>
           <div className="pokedex-items-wrapper">
-            {filteredPokemonDetails.map((detail, index) => (
+            {pokemonDetails.map((detail, index) => (
               <div
                 className="pokedex-item"
                 key={index}
                 style={{
                   backgroundColor: isItemStored(detail.pokemonId)
-                    ? "#af3049"
+                    ? "#a82d27"
                     : "transparent",
                   cursor: "pointer",
                 }}
                 onClick={() => handlePokemonClick(versionId, detail.pokemonId)}
               >
                 <img
-                  src={spritesPath + detail.pokemonName.toLowerCase() + ".png"}
+                  src={spritesPath + detail.pokemonId + ".png"}
                   alt=""
                   className="pokedex-details"
                 />
