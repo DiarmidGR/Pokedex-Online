@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "./styles/PokedexContainer.css";
+import "./PokedexContainer.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { getToken } from "./Auth";
-import PokedexDropdown from "./ui/PokedexDropdown";
+import PokedexDropdown from "./PokedexDropdown";
 
 // interface for pokemon data received from api
 interface PokemonDetails {

@@ -1,14 +1,14 @@
 import React from "react";
-import "./styles/TrackingPage.css";
-import LocationDropdown from "./LocationDropdown";
+import "./EncountersPage.css";
+import LocationDropdown from "../components/LocationDropdown";
 import { useState, useEffect } from "react";
-import EncountersContainer from "./EncountersContainer";
+import EncountersContainer from "../components/EncountersContainer";
 import { useNavigate } from "react-router-dom";
-import PokedexContainer from "./PokedexContainer";
-import { getToken } from "./Auth";
+import PokedexContainer from "../components/PokedexContainer";
+import { getToken } from "../components/Auth";
 import axios from "axios";
 
-interface TrackingPageProps {
+interface EncountersPageProps {
   version: string;
   version_id: string;
 }
@@ -18,7 +18,7 @@ interface CaughtPokemonProps {
   version_id: number;
 }
 
-const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
+const EncountersPage: React.FC<EncountersPageProps> = ({ version_id }) => {
   const [selectedLocation, setSelectedLocation] = useState<string>("");
   const versionId = version_id;
 
@@ -191,4 +191,4 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
   );
 };
 
-export default TrackingPage;
+export default EncountersPage;

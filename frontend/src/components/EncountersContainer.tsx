@@ -1,8 +1,6 @@
-// src/components/EncountersContainer.tsx
-
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "./styles/EncountersContainer.css";
+import "./EncountersContainer.css";
 import { getToken } from "./Auth";
 
 interface EncounterDetail {
