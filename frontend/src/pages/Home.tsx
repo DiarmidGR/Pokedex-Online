@@ -1,9 +1,9 @@
 import versionsData from "../data/versions.json";
-import MenuItem from "./MenuItem";
+import MenuItem from "../components/MenuItem";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { removeToken } from "./Auth";
-import "./styles/Home.css";
+import { removeToken } from "../components/Auth";
+import "./Home.css";
 
 interface Version {
   id: number;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "./styles/LocationDropdown.css";
+import "./LocationDropdown.css";
 import { getToken } from "./Auth";
 
 interface Location {

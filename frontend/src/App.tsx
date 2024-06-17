@@ -1,42 +1,19 @@
 import "./App.css";
-import versionsData from "./data/versions.json";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "./components/Home";
-import TrackingPage from "./components/TrackingPage";
-import { useState, useEffect } from "react";
-import Login from "./components/Login";
-
-interface Version {
-  id: number;
-  version_group_id: number;
-  identifier: string;
-}
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import { useVersions } from "./hooks/useVersion";
+import { versionRoutes } from "./routes";
 
 const App: React.FC = () => {
-  const [versions, setVersions] = useState<Version[]>([]);
-
-  useEffect(() => {
-    // Load versions data
-    setVersions(versionsData);
-  }, []);
+  const versions = useVersions();
 
   return (
     <Router>
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<Home />} />
-        {versions.map((version) => (
-          <Route
-            key={version.id}
-            path={`/${version.identifier}`}
-            element={
-              <TrackingPage
-                version={version.identifier}
-                version_id={version.id.toString()}
-              />
-            }
-          />
-        ))}
+        {versionRoutes(versions)}
       </Routes>
     </Router>
   );
