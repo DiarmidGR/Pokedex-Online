@@ -2,8 +2,10 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(128px, 1fr));
     gap: 20px;
-    width: 100%;
+    width: 80%;
     box-sizing: border-box;
+    margin-left:auto;
+    margin-right:auto;
 }
   
 .grid-item {
