@@ -156,7 +156,7 @@ router.get('/pokedex', (req, res) => {
 
     const query = `
         SELECT (SELECT psn.name FROM pokemon_species_names psn WHERE psn.pokemon_species_id = pdn.species_id) AS pokemonName,
-        pdn.pokedex_number AS pokemonId
+        pdn.species_id AS pokemonId
         FROM pokemon_dex_numbers pdn
         WHERE pdn.pokedex_id = ?
         ORDER BY pdn.pokedex_number;
