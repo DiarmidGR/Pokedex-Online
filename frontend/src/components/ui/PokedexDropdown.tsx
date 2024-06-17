@@ -54,7 +54,6 @@ const PokedexDropdown: React.FC<PokedexDropdownProps> = ({
         onChange={handleChange}
         className="location-select"
       >
-        <option value="1">National</option>
         {pokedexes.map((pokedexes) => (
           <option key={pokedexes.pokedexId} value={pokedexes.pokedexId}>
             {pokedexes.pokedexName}
