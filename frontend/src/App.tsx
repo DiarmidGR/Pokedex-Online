@@ -5,7 +5,6 @@ import Home from "./components/Home";
 import TrackingPage from "./components/TrackingPage";
 import { useState, useEffect } from "react";
 import Login from "./components/Login";
-//import PrivateRoute from "./components/PrivateRoute";
 
 interface Version {
   id: number;
@@ -38,21 +37,6 @@ const App: React.FC = () => {
             }
           />
         ))}
-        {/* <Route path="/" element={<PrivateRoute />}>
-          <Route path="/" element={<Home />} />
-          {versions.map((version) => (
-            <Route
-              key={version.id}
-              path={`/${version.identifier}`}
-              element={
-                <TrackingPage
-                  version={version.identifier}
-                  version_id={version.id.toString()}
-                />
-              }
-            />
-          ))}
-        </Route> */}
       </Routes>
     </Router>
   );
