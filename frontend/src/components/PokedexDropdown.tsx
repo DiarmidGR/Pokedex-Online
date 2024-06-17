@@ -1,63 +1,46 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import "./LocationDropdown.css";
-import { getToken } from "./Auth";
-
-interface Pokedex {
-  pokedexId: string;
-  pokedexName: string;
-}
-
+import React from "react";
+import useFetchPokedexes from "../hooks/useFetchPokedexes";
 interface PokedexDropdownProps {
   versionId: string;
+  defaultIndex: string;
   onPokedexChange: (pokedexId: string) => void;
 }
 
 const PokedexDropdown: React.FC<PokedexDropdownProps> = ({
   versionId,
+  defaultIndex,
   onPokedexChange,
 }) => {
-  const [pokedexes, setPokedexes] = useState<Pokedex[]>([]);
-  const [selectedPokedex, setSelectedPokedex] = useState<string>("1");
+  const { pokedexes, loading, error } = useFetchPokedexes(versionId);
 
-  useEffect(() => {
-    // Fetch pokedexes from the API
-    axios
-      .get(
-        import.meta.env.VITE_API_ENDPOINT +
-          `pokedex_versions?version_id=${versionId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${getToken()}`, // Include JWT token in the headers
-          },
-        }
-      )
-      .then((response) => {
-        setPokedexes(response.data);
-      })
-      .catch((error) => {
-        console.error("There was an error fetching the pokedexes!", error);
-      });
-  }, [versionId]);
+  if (loading) {
+    return <div>Loading pokedexes...</div>;
+  }
+
+  if (error) {
+    return <div>Error fetching pokedexes: {error.message}</div>;
+  }
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const pokedexId = event.target.value;
-    setSelectedPokedex(pokedexId);
+    // Save selected value to localStorage
+    const versionLastPokedexString = versionId + "_lastPokedexId";
+    localStorage.setItem(versionLastPokedexString, pokedexId);
     onPokedexChange(pokedexId);
   };
-
+  console.log(defaultIndex);
   return (
     <div>
       <select
         id="location-select"
-        value={selectedPokedex}
         onChange={handleChange}
         className="location-select"
+        value={defaultIndex}
       >
         <option value="1">National</option>
-        {pokedexes.map((pokedexes) => (
-          <option key={pokedexes.pokedexId} value={pokedexes.pokedexId}>
-            {pokedexes.pokedexName}
+        {pokedexes.map((pokedex) => (
+          <option key={pokedex.pokedexId} value={pokedex.pokedexId}>
+            {pokedex.pokedexName}
           </option>
         ))}
       </select>
