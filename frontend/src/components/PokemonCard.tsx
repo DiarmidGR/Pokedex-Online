@@ -19,7 +19,14 @@ interface EncounterData {
 const PokemonCard: React.FC<PokemonCardProps> = ({ encounter }) => {
   return (
     <>
-      <section className="pokemon-card-name">{encounter.pokemonName}</section>
+      <section className="pokemon-card-name">
+        <img
+          src={"/item-sprites/" + encounter.encounterMethod + ".png"}
+          alt=""
+          className="pokemon-card-method"
+        />
+        {encounter.pokemonName}
+      </section>
       <img
         src={"/pokemon-sprites/" + encounter.pokemonId + ".png"}
         alt={encounter.pokemonName}
@@ -30,11 +37,6 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ encounter }) => {
       <section>
         Levels: {encounter.minLevel} - {encounter.maxLevel}
       </section>
-      <img
-        src={"/item-sprites/" + encounter.encounterMethod + ".png"}
-        alt=""
-        className="pokemon-card-method"
-      />
     </>
   );
 };

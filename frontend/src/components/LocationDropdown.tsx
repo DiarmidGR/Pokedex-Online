@@ -46,7 +46,7 @@ const LocationDropdown: React.FC<LocationDropdownProps> = ({
   };
 
   return (
-    <div>
+    <>
       <select
         id="location-select"
         value={selectedLocation}
@@ -60,7 +60,7 @@ const LocationDropdown: React.FC<LocationDropdownProps> = ({
           </option>
         ))}
       </select>
-    </div>
+    </>
   );
 };
 

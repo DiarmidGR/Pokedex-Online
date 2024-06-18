@@ -1,19 +1,15 @@
 .encounters-container{
-    display:flex;
-    flex-direction:column;
-    padding:10px;
-}
-
-.encounters-list-container{
-    display:flex;
-    flex-direction:column;
+    max-height: 70vh;
+    flex:1;
+    overflow-y:auto;
 }
 
 .encounters-list{
     display:flex;
     flex-wrap:wrap;
-    align-items: center;
     justify-content: center;
+    border-top:1px solid #ADB5BF;
+    padding-top:12px;
 }
 
 .encounters-item{

@@ -1,41 +1,28 @@
 .encounters-layout{
     display:grid;
     grid-template-columns: 12% 88%;
-}
-
-.encounters-nav{
-    display: flex;
     height:100%;
 }
 
-.encounters-nav-child{
-    margin: 6px;
+.encounters-controls-container{
+    display:flex;
+    align-items: center;
 }
 
-.version-div{
-    width:150px;
-    margin:10px;
-    border: 2px solid var(--accent-color);
+p.encounters-controls-child{
+    font-size:larger;
+    font-weight:500;
 }
 
-.home-button{
-    background-color: #cfd9e6;
-    color: #30323a;
-    border: 1px solid transparent;
-    border-radius: 8px;
-    padding: 0.6em 1.2em;
-    cursor:pointer;
-    transition: border-color 0.25s;
-    font-size: 1em;
-    font-weight: 500;
-    font-family: inherit;
+.encounters-controls-child{
+    margin-left:8px;
+    margin-right:8px;
 }
 
-.home-button:hover{
-    border-color: var(--accent-color);
+.encounters-div{
+    display:flex;
+    flex-direction:column;
 }
-
-
 
 @media only screen and (max-width: 600px) {
     .encounters-nav{

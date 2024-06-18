@@ -1,0 +1,9 @@
+.pokedex-select-dropdown{
+    background-color:#f2f6fa;
+    border:none;
+    padding:10px;
+    font-size:larger;
+    color: #30323a;
+    cursor:pointer;
+    width:fit-content;
+}

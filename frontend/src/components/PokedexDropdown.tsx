@@ -1,5 +1,7 @@
 import React from "react";
 import useFetchPokedexes from "../hooks/useFetchPokedexes";
+import "./PokedexDropdown.css";
+
 interface PokedexDropdownProps {
   versionId: string;
   defaultIndex: string;
@@ -31,9 +33,8 @@ const PokedexDropdown: React.FC<PokedexDropdownProps> = ({
   return (
     <div>
       <select
-        id="location-select"
         onChange={handleChange}
-        className="location-select"
+        className="pokedex-select-dropdown"
         value={defaultIndex}
       >
         <option value="1">National</option>
