@@ -101,12 +101,13 @@ router.get('/locations', (req, res) => {
     }
 
     const query = `
-        SELECT l.identifier as identifier, l.id as location_id
+        SELECT l.identifier as identifier, l.id as location_id, ln.name as locationName
         FROM encounters e
         INNER JOIN location_areas la ON e.location_area_id = la.id
         INNER JOIN locations l ON la.location_id = l.id
+        INNER JOIN location_names ln on l.id = ln.location_id
         WHERE e.version_id = ?
-        GROUP BY l.identifier, location_id;
+        GROUP BY identifier, location_id, locationName;
     `;
 
     db.query(query, [versionId], (error, results) => {
