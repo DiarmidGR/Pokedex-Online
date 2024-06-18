@@ -1,0 +1,17 @@
+.nav-button{
+    background-color: #e6f1ff;
+    color: #30323a;
+    border: 1px solid transparent;
+    border-radius: 20px;
+    padding:12px;
+    cursor:pointer;
+    transition: background-color 0.25s;
+    font-size: 16px;
+    text-align: left;
+    align-items:center;
+    display:flex;
+}
+
+.nav-button:hover{
+    background-color:#DBE5F2;
+}

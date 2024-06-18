@@ -1,0 +1,42 @@
+.side-nav-container{
+    display: flex;
+    flex-direction:column;
+    height:100%;
+    position:relative;
+}
+
+.side-nav-header{
+    display:flex;
+    flex-direction:column;
+    align-items: center;
+    border-bottom:1px solid #ADB5BF;
+    padding-bottom:10px;
+    margin-bottom:10px;
+    padding:12px;
+}
+
+.side-nav-child{
+    display:flex;
+    width:100%;
+    height:min-content;
+    justify-content: center;
+}
+
+.side-nav-footer{
+    display:flex;
+    width:100%;
+    height:min-content;
+    justify-content: center;
+    position:absolute;
+    bottom:0;
+    padding-bottom:12px;
+}
+
+.nav-banner{
+    max-width:100%;
+    margin-bottom:10px;
+}
+
+@media only screen and (max-width: 600px) {
+
+}

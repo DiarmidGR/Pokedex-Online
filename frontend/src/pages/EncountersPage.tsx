@@ -7,9 +7,10 @@ import PokedexContainer from "../components/PokedexContainer";
 import PokedexDropdown from "../components/PokedexDropdown";
 import { getToken } from "../components/Auth";
 import axios from "axios";
+import SideNav from "../components/SideNav";
 
 interface EncountersPageProps {
-  version: string;
+  version_name: string;
   version_id: string;
 }
 
@@ -18,7 +19,10 @@ interface CaughtPokemonProps {
   version_id: number;
 }
 
-const EncountersPage: React.FC<EncountersPageProps> = ({ version_id }) => {
+const EncountersPage: React.FC<EncountersPageProps> = ({
+  version_id,
+  version_name,
+}) => {
   const [selectedLocation, setSelectedLocation] = useState<string>("");
   const versionId = version_id;
 
@@ -161,27 +165,10 @@ const EncountersPage: React.FC<EncountersPageProps> = ({ version_id }) => {
     setStoredItems(updatedStoredItems);
   };
 
-  // Click handler for home page button
-  const navigate = useNavigate();
-  const handleClick = () => {
-    navigate("/");
-  };
-
   return (
     <div className="encounters-layout">
-      <div className="encounters-nav">
-        <div className="encounters-nav-child">
-          <button className="home-button" onClick={handleClick}>
-            Home
-          </button>
-        </div>
-      </div>
+      <SideNav version_id={versionId} />
       <div className="encounters-div">
-        <PokedexDropdown
-          versionId={versionId}
-          onPokedexChange={setSelectedPokedex}
-          defaultIndex={lastPokedexId != null ? lastPokedexId : "1"}
-        />
         <PokedexContainer
           versionId={version_id}
           storedItems={storedItems}
@@ -192,10 +179,23 @@ const EncountersPage: React.FC<EncountersPageProps> = ({ version_id }) => {
           }
           selectedPokedex={selectedPokedex}
         />
-        <LocationDropdown
-          versionId={version_id}
-          onLocationChange={setSelectedLocation}
-        />
+        <div className="encounters-controls-container">
+          <p className="encounters-controls-child">{"Pokedex"}</p>
+          <div className="encounters-controls-child">
+            <PokedexDropdown
+              versionId={versionId}
+              onPokedexChange={setSelectedPokedex}
+              defaultIndex={lastPokedexId != null ? lastPokedexId : "1"}
+            />
+          </div>
+          <p className="encounters-controls-child">{"Location"}</p>
+          <div className="encounters-controls-child">
+            <LocationDropdown
+              versionId={version_id}
+              onLocationChange={setSelectedLocation}
+            />
+          </div>
+        </div>
         <EncountersContainer
           versionId={versionId}
           locationIdentifier={selectedLocation}

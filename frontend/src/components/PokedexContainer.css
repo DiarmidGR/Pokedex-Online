@@ -8,8 +8,8 @@
     top:0px;
     bottom:0px;
     align-items: center;
-    margin:10px;
     border-radius:20px;
+    padding:10px;
 }
 
 .pokedex-search-bar-container {

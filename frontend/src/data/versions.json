@@ -160,16 +160,6 @@
     "identifier": "shield"
   },
   {
-    "id": 35,
-    "version_group_id": 21,
-    "identifier": "the-isle-of-armor"
-  },
-  {
-    "id": 36,
-    "version_group_id": 22,
-    "identifier": "the-crown-tundra"
-  },
-  {
     "id": 37,
     "version_group_id": 23,
     "identifier": "brilliant-diamond"
@@ -193,15 +183,5 @@
     "id": 41,
     "version_group_id": 25,
     "identifier": "violet"
-  },
-  {
-    "id": 42,
-    "version_group_id": 26,
-    "identifier": "the-teal-mask"
-  },
-  {
-    "id": 43,
-    "version_group_id": 27,
-    "identifier": "the-indigo-disk"
   }
 ]

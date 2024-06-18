@@ -85,12 +85,14 @@ const EncountersContainer: React.FC<EncountersContainerProps> = ({
   );
 
   return (
-    <>
+    <div className="encounters-container">
       {encounterDetails.length > 0 ? (
-        <div className="encounters-container">
+        <>
           {groupedEncounters.map((group, index) => (
             <div key={group.locationArea} className="encounters-list-container">
-              <h2 className="encounters-location-area">{group.locationArea}</h2>
+              <h2 className="encounters-location-area">
+                {group.locationArea != "" ? group.locationArea : "Area"}
+              </h2>
               <div className="encounters-list">
                 {group.encounters.map((encounter) => (
                   <div
@@ -113,11 +115,11 @@ const EncountersContainer: React.FC<EncountersContainerProps> = ({
               </div>
             </div>
           ))}
-        </div>
+        </>
       ) : (
         ""
       )}
-    </>
+    </div>
   );
 };
 
