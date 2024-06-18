@@ -29,7 +29,6 @@ const EncountersContainer: React.FC<EncountersContainerProps> = ({
   handlePokemonClick,
 }) => {
   const [encounterDetails, setEncounterDetails] = useState<EncounterData[]>([]);
-  const spritesPath = "/pokemon-sprites/";
 
   useEffect(() => {
     if (locationIdentifier) {
