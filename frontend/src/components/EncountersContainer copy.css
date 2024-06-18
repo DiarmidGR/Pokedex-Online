@@ -1,0 +1,33 @@
+.encounters-container{
+    border: solid var(--primary-color) 2px;
+    border-radius:10px;
+    display:grid;
+    grid-template-columns: repeat(auto-fit, 120px);
+    grid-template-rows: repeat(auto-fit, 120px);
+    gap:8px;
+    height: 380px;
+    overflow-y:scroll;
+    width:90%;
+    padding:10px;
+    margin-top:40px;
+}
+
+.encounters-item{
+    width:120px;
+    height:120px;
+    align-items: center;
+    justify-content: center;
+    display:flex;
+    flex-direction: column;
+    border-radius:20px;
+    transition: border-color 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.encounters-item:hover{
+    border:var(--primary-color) 2px solid;
+}
+
+p.encounters-details{
+    margin:0px;
+}

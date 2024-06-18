@@ -1,0 +1,16 @@
+.pokemon-card-name{
+    font-size:x-large;
+}
+
+.pokemon-card-image{
+    width:168px;
+    image-rendering: pixelated;
+}
+
+.pokemon-card-method{
+    position:absolute;
+    top:0;
+    left:0;
+    z-index:10;
+    width:32px;
+}

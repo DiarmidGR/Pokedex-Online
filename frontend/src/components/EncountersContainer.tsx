@@ -2,12 +2,17 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./EncountersContainer.css";
 import { getToken } from "./Auth";
+import PokemonCard from "./PokemonCard";
 
-interface EncounterDetail {
-  min_level: number;
-  max_level: number;
+interface EncounterData {
+  minLevel: number;
+  maxLevel: number;
   pokemonName: string;
   pokemonId: number;
+  locationArea: string;
+  locationName: string;
+  encounterMethod: string;
+  encounterRate: string;
 }
 
 interface EncountersContainerProps {
@@ -23,9 +28,7 @@ const EncountersContainer: React.FC<EncountersContainerProps> = ({
   storedItems,
   handlePokemonClick,
 }) => {
-  const [encounterDetails, setEncounterDetails] = useState<EncounterDetail[]>(
-    []
-  );
+  const [encounterDetails, setEncounterDetails] = useState<EncounterData[]>([]);
   const spritesPath = "/pokemon-sprites/";
 
   useEffect(() => {
@@ -63,30 +66,52 @@ const EncountersContainer: React.FC<EncountersContainerProps> = ({
     event.preventDefault(); // Prevent the default context menu from appearing
   };
 
+  interface EncounterGroup {
+    locationArea: string;
+    encounters: EncounterData[];
+  }
+
+  // Group encounters by locationArea
+  const groupedEncounters = encounterDetails.reduce(
+    (acc: EncounterGroup[], encounter: EncounterData) => {
+      let group = acc.find((g) => g.locationArea === encounter.locationArea);
+      if (!group) {
+        group = { locationArea: encounter.locationArea, encounters: [] };
+        acc.push(group);
+      }
+      group.encounters.push(encounter);
+      return acc;
+    },
+    []
+  );
+
   return (
     <>
       {encounterDetails.length > 0 ? (
         <div className="encounters-container">
-          {encounterDetails.map((detail, index) => (
-            <div
-              className="encounters-item"
-              key={index}
-              style={{
-                backgroundColor: isItemStored(detail.pokemonId)
-                  ? "#af3049"
-                  : "#cfd9e6",
-                cursor: "pointer",
-              }}
-              onContextMenu={handleRightClick}
-              onClick={() => handlePokemonClick(versionId, detail.pokemonId)}
-            >
-              <p className="encounters-details">{detail.pokemonName}</p>
-              <img
-                src={spritesPath + detail.pokemonId + ".png"}
-                alt=""
-                className="encounters-details"
-              />
-              <p className="encounters-details">#{detail.pokemonId}</p>
+          {groupedEncounters.map((group, index) => (
+            <div key={group.locationArea} className="encounters-list-container">
+              <h2 className="encounters-location-area">{group.locationArea}</h2>
+              <div className="encounters-list">
+                {group.encounters.map((encounter) => (
+                  <div
+                    className="encounters-item"
+                    key={encounter.pokemonId}
+                    style={{
+                      backgroundColor: isItemStored(encounter.pokemonId)
+                        ? "#af3049"
+                        : "#e6f1ff",
+                      cursor: "pointer",
+                    }}
+                    onContextMenu={handleRightClick}
+                    onClick={() =>
+                      handlePokemonClick(versionId, encounter.pokemonId)
+                    }
+                  >
+                    <PokemonCard key={index} encounter={encounter} />
+                  </div>
+                ))}
+              </div>
             </div>
           ))}
         </div>
