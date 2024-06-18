@@ -1,33 +1,32 @@
 .encounters-container{
-    border: solid var(--primary-color) 2px;
-    border-radius:10px;
-    display:grid;
-    grid-template-columns: repeat(auto-fit, 120px);
-    grid-template-rows: repeat(auto-fit, 120px);
-    gap:8px;
-    height: 380px;
-    overflow-y:scroll;
-    width:90%;
+    display:flex;
+    flex-direction:column;
     padding:10px;
-    margin-top:40px;
+}
+
+.encounters-list-container{
+    display:flex;
+    flex-direction:column;
+}
+
+.encounters-list{
+    display:flex;
+    flex-wrap:wrap;
+    align-items: center;
+    justify-content: center;
 }
 
 .encounters-item{
-    width:120px;
-    height:120px;
-    align-items: center;
-    justify-content: center;
-    display:flex;
+    all:unset;
+    display: flex;
     flex-direction: column;
-    border-radius:20px;
-    transition: border-color 0.3s ease;
-    border: 2px solid transparent;
+    justify-content: center;
+    align-items: center;
+    width:168px;
+    position:relative;
 }
 
-.encounters-item:hover{
-    border:var(--primary-color) 2px solid;
-}
-
-p.encounters-details{
-    margin:0px;
+.encounters-location-area{
+    font-size:30px;
+    padding-left:30px;
 }
