@@ -107,7 +107,13 @@ router.get('/locations', (req, res) => {
         INNER JOIN locations l ON la.location_id = l.id
         INNER JOIN location_names ln on l.id = ln.location_id
         WHERE e.version_id = ?
-        GROUP BY identifier, location_id, locationName;
+        GROUP BY identifier, location_id, locationName
+        ORDER BY
+            CASE
+                WHEN locationName LIKE 'Route %' THEN CAST(SUBSTRING(locationName, 7) AS UNSIGNED)
+                ELSE 0
+            END,
+            locationName;
     `;
 
     db.query(query, [versionId], (error, results) => {
