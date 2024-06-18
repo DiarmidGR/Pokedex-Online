@@ -5,6 +5,7 @@ import { getToken } from "./Auth";
 
 interface Location {
   identifier: string;
+  locationName: string;
 }
 
 interface LocationDropdownProps {
@@ -55,7 +56,7 @@ const LocationDropdown: React.FC<LocationDropdownProps> = ({
         <option value="">Please choose a location</option>
         {locations.map((location) => (
           <option key={location.identifier} value={location.identifier}>
-            {location.identifier}
+            {location.locationName}
           </option>
         ))}
       </select>
