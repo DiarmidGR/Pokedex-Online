@@ -10,6 +10,7 @@ interface EncounterData {
   locationName: string;
   encounterMethod: string;
   encounterRate: string;
+  encounterCondition: string;
 }
 
 interface EncounterGroup {
