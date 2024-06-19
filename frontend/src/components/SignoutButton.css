@@ -1,13 +1,10 @@
 .signout-button{
-    position:absolute;
-    top:0;
-    left:0;
-    width: 12%;
+    width:200px;
     margin:12px;
 }
 
 @media only screen and (max-width: 600px) {
     .signout-button{
-        right:0;
+        width:100%;
     }
 }
