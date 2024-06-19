@@ -12,14 +12,12 @@ interface PokemonDetails {
 interface PokedexContainerProps {
   versionId: string;
   storedItems: string[]; // array of pokemon to display passed to component in TrackingPage
-  handlePokemonClick: (versionId: string, item: number) => void; // Click handler to add / remove pokemon from db storage
   selectedPokedex: string; // Prop for selected pokedex
 }
 
 const PokedexContainer: React.FC<PokedexContainerProps> = ({
   storedItems,
   versionId,
-  handlePokemonClick,
   selectedPokedex,
 }) => {
   const [pokemonDetails, setPokemonDetails] = useState<PokemonDetails[]>([]);
@@ -76,7 +74,6 @@ const PokedexContainer: React.FC<PokedexContainerProps> = ({
                     : "transparent",
                   cursor: "pointer",
                 }}
-                onClick={() => handlePokemonClick(versionId, detail.pokemonId)}
               >
                 <img
                   src={spritesPath + detail.pokemonId + ".png"}
