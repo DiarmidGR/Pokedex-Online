@@ -10,16 +10,19 @@
     justify-content: center;
     border-top:1px solid #ADB5BF;
     padding-top:12px;
+    gap:8px;
 }
 
 .encounters-item{
     all:unset;
-    display: flex;
+    display: block;
     flex-direction: column;
     justify-content:baseline;
     align-items: center;
     width:168px;
     position:relative;
+    box-sizing: border-box;
+    padding:6px;
 }
 
 .encounters-location-area{

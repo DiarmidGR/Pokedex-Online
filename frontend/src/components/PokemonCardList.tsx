@@ -1,5 +1,5 @@
 import PokemonCard from "./PokemonCard";
-import "./EncounterList.css";
+import "./PokemonCardList.css";
 
 interface EncounterData {
   minLevel: number;

@@ -1,15 +1,28 @@
+.pokemon-card-container{
+    display:flex;
+    flex-direction: column;
+    position: relative;
+}
+
 .pokemon-card-name{
     font-size:x-large;
     display:flex;
-    justify-content: center;
     align-items: center;
+    padding-left:32px;
+    border-bottom:2px solid #ADB5BF;
+    font-weight:600;
 }
 
 .pokemon-card-image{
     width:168px;
+    height:126px;
     image-rendering: pixelated;
 }
 
 .pokemon-card-method{
     width:32px;
+    image-rendering: pixelated;
+    position: absolute;
+    top:0;
+    left:0;
 }
