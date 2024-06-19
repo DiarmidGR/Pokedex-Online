@@ -22,21 +22,10 @@
     justify-content: center;
 }
 
-.side-nav-footer{
-    display:flex;
-    width:100%;
-    height:min-content;
-    justify-content: center;
-    position:absolute;
-    bottom:0;
-    padding-bottom:12px;
-}
-
 .nav-banner{
     max-width:100%;
     margin-bottom:10px;
 }
 
 @media only screen and (max-width: 600px) {
-
 }

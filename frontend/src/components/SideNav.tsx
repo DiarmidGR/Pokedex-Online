@@ -25,13 +25,6 @@ const SideNav: React.FC<SideNavProps> = ({ version_id }) => {
       <div className="side-nav-child">
         <IconButton icon={faHome} onClick={handleHomeClick} label="Home" />
       </div>
-      <div className="side-nav-footer">
-        <IconButton
-          icon={faSignOut}
-          onClick={handleHomeClick}
-          label="Sign out"
-        />
-      </div>
     </div>
   );
 };

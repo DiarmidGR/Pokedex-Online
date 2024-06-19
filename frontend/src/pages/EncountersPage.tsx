@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import "./EncountersPage.css";
 import LocationDropdown from "../components/LocationDropdown";
 import EncountersContainer from "../components/EncountersContainer";
-import { useNavigate } from "react-router-dom";
 import PokedexContainer from "../components/PokedexContainer";
 import PokedexDropdown from "../components/PokedexDropdown";
 import { getToken } from "../components/Auth";
@@ -10,7 +9,6 @@ import axios from "axios";
 import SideNav from "../components/SideNav";
 
 interface EncountersPageProps {
-  version_name: string;
   version_id: string;
 }
 
@@ -19,10 +17,7 @@ interface CaughtPokemonProps {
   version_id: number;
 }
 
-const EncountersPage: React.FC<EncountersPageProps> = ({
-  version_id,
-  version_name,
-}) => {
+const EncountersPage: React.FC<EncountersPageProps> = ({ version_id }) => {
   const [selectedLocation, setSelectedLocation] = useState<string>("");
   const versionId = version_id;
 
@@ -180,16 +175,17 @@ const EncountersPage: React.FC<EncountersPageProps> = ({
           selectedPokedex={selectedPokedex}
         />
         <div className="encounters-controls-container">
-          <p className="encounters-controls-child">{"Pokedex"}</p>
           <div className="encounters-controls-child">
+            <p className="encounters-controls-child">{"Pokedex"}</p>
             <PokedexDropdown
               versionId={versionId}
               onPokedexChange={setSelectedPokedex}
               defaultIndex={lastPokedexId != null ? lastPokedexId : "1"}
             />
           </div>
-          <p className="encounters-controls-child">{"Location"}</p>
+
           <div className="encounters-controls-child">
+            <p className="encounters-controls-child">{"Location"}</p>
             <LocationDropdown
               versionId={version_id}
               onLocationChange={setSelectedLocation}

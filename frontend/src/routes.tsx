@@ -12,11 +12,6 @@ export const versionRoutes = (versions: Version[]) =>
     <Route
       key={version.id}
       path={`/${version.identifier}`}
-      element={
-        <EncountersPage
-          version={version.identifier}
-          version_id={version.id.toString()}
-        />
-      }
+      element={<EncountersPage version_id={version.id.toString()} />}
     />
   ));
