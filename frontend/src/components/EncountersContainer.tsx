@@ -88,7 +88,7 @@ const EncountersContainer: React.FC<EncountersContainerProps> = ({
     <div className="encounters-container">
       {encounterDetails.length > 0 ? (
         <>
-          {groupedEncounters.map((group, index) => (
+          {groupedEncounters.map((group) => (
             <div key={group.locationArea} className="encounters-list-container">
               <h2 className="encounters-location-area">
                 {group.locationArea != "" ? group.locationArea : "Area"}
