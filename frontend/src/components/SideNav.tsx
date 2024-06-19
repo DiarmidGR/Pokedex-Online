@@ -1,7 +1,7 @@
 import "./SideNav.css";
 import { useNavigate } from "react-router-dom";
 import IconButton from "./IconButton";
-import { faHome, faSignOut } from "@fortawesome/free-solid-svg-icons";
+import { faHome } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 
 interface SideNavProps {
