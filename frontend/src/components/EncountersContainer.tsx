@@ -96,13 +96,16 @@ const EncountersContainer: React.FC<EncountersContainerProps> = ({
           encounter1.pokemonName === encounter2.pokemonName &&
           encounter1.encounterMethod === encounter2.encounterMethod &&
           encounter1.encounterRate === encounter2.encounterRate &&
-          encounter1.encounterCondition.includes("time") &&
-          encounter2.encounterCondition.includes("time")
+          ((encounter1.encounterCondition.includes("time") &&
+            encounter2.encounterCondition.includes("time")) ||
+            (encounter1.encounterCondition.includes("season") &&
+              encounter2.encounterCondition.includes("season")))
         ) {
-          // Merge encounter conditions
+          // Merge time-based encounter conditions
           modifiedData[
             i
           ].encounterCondition += ` ${encounter2.encounterCondition}`;
+
           // Remove encounter2 from modifiedData
           modifiedData.splice(j, 1);
           // Since we removed an element, decrement j to adjust for the new length

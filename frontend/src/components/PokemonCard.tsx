@@ -20,9 +20,13 @@ interface EncounterData {
 const PokemonCard: React.FC<PokemonCardProps> = ({ encounter }) => {
   // Mapping of encounter condition keywords to image paths
   const conditionImages: { [key: string]: string } = {
-    "time-day": "/time-icons/time-day.png",
-    "time-morning": "/time-icons/time-morning.png",
-    "time-night": "/time-icons/time-night.png",
+    "time-day": "/icons/time-day.png",
+    "time-morning": "/icons/time-morning.png",
+    "time-night": "/icons/time-night.png",
+    "season-winter": "/icons/season-winter.png",
+    "season-autumn": "/icons/season-autumn.png",
+    "season-spring": "/icons/season-spring.png",
+    "season-summer": "/icons/season-summer.png",
   };
 
   // Function to render condition images or text if no images are available
