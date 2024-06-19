@@ -94,10 +94,10 @@ const EncountersContainer: React.FC<EncountersContainerProps> = ({
                 {group.locationArea != "" ? group.locationArea : "Area"}
               </h2>
               <div className="encounters-list">
-                {group.encounters.map((encounter) => (
+                {group.encounters.map((encounter, index) => (
                   <div
                     className="encounters-item"
-                    key={encounter.pokemonId}
+                    key={index}
                     style={{
                       backgroundColor: isItemStored(encounter.pokemonId)
                         ? "#af3049"
