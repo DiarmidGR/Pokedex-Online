@@ -143,7 +143,7 @@ router.get('/encounter-details', (req, res) => {
         l.identifier as locationName, 
         em.identifier as encounterMethod, 
         sum(es.rarity) as encounterRate,
-        (select ecvp.name from encounter_condition_value_prose ecvp where ecvp.encounter_condition_value_id=ecvm.encounter_condition_value_id) as encounterCondition
+        (select ecv.identifier from encounter_condition_values ecv where ecv.id=ecvm.encounter_condition_value_id) as encounterCondition
         from encounters e
 
         inner join location_areas la
@@ -168,7 +168,7 @@ router.get('/encounter-details', (req, res) => {
         
         group by pokemonId, locationArea, encounterMethod, pokemonName, ecvm.encounter_condition_value_id
 
-        order by encounterMethod, ecvm.encounter_condition_value_id;
+        order by ecvm.encounter_condition_value_id;
     `;
 
     db.query(query, [versionId, locationIdentifier], (error, results) => {
