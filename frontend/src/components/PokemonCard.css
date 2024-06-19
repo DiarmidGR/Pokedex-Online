@@ -6,10 +6,8 @@
 
 .pokemon-card-name{
     font-size:x-large;
-    display:flex;
-    align-items: center;
-    padding-left:32px;
-    border-bottom:2px solid #ADB5BF;
+    padding-left:36px;
+    border-bottom:2px solid var(--secondary-color);
     font-weight:600;
 }
 
@@ -25,4 +23,11 @@
     position: absolute;
     top:0;
     left:0;
+}
+
+.condition-container{
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
