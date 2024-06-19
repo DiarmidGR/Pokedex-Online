@@ -19,14 +19,14 @@ const Home: React.FC = () => {
   }, []);
 
   return (
-    <>
+    <div className="home-layout">
       <SignoutButton></SignoutButton>
       <div className="grid-container">
         {versions.map((version) => (
           <MenuItem key={version.id} version={version.identifier} />
         ))}
       </div>
-    </>
+    </div>
   );
 };
 

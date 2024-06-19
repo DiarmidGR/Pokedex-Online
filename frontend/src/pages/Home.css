@@ -1,18 +1,22 @@
+.home-layout{
+    display:flex;
+    flex-direction: column;
+    width:100%;
+    align-items: center;
+}
+
 .grid-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(128px, 1fr));
-    gap: 20px;
-    width: 80%;
+    display: flex;
+    width:60%;
     box-sizing: border-box;
-    margin-left:auto;
-    margin-right:auto;
-    padding:50px;
+    padding:12px;
+    justify-content: center;
+    flex-wrap:wrap;
+    gap:10px;
 }
 
 @media only screen and (max-width: 600px) {
     .grid-container{
-        padding:12px;
-        flex-direction: column;
         width:100%;
     }
 }
