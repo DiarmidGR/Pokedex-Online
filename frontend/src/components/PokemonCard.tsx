@@ -14,6 +14,7 @@ interface EncounterData {
   locationName: string;
   encounterMethod: string;
   encounterRate: string;
+  encounterCondition: string;
 }
 
 const PokemonCard: React.FC<PokemonCardProps> = ({ encounter }) => {
@@ -37,6 +38,7 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ encounter }) => {
       <section>
         Levels: {encounter.minLevel} - {encounter.maxLevel}
       </section>
+      <section>{encounter.encounterCondition}</section>
     </>
   );
 };
