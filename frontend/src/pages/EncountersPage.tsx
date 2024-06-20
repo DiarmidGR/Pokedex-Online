@@ -7,6 +7,7 @@ import PokedexDropdown from "../components/PokedexDropdown";
 import { getToken } from "../components/Auth";
 import axios from "axios";
 import SideNav from "../components/SideNav";
+import CheckboxComponent from "../ui/Checkbox";
 
 interface EncountersPageProps {
   version_id: string;
@@ -160,6 +161,14 @@ const EncountersPage: React.FC<EncountersPageProps> = ({ version_id }) => {
     setStoredItems(updatedStoredItems);
   };
 
+  // State to toggle whether to hide caught pokemon or not
+  const [hideCaughtPokemon, setHideCaughtPokemon] = useState<boolean>(false);
+
+  //
+  useEffect(() => {
+    console.log(hideCaughtPokemon);
+  }, [hideCaughtPokemon]);
+
   return (
     <div className="encounters-layout">
       <SideNav version_id={versionId} />
@@ -191,6 +200,15 @@ const EncountersPage: React.FC<EncountersPageProps> = ({ version_id }) => {
               onLocationChange={setSelectedLocation}
             />
           </div>
+          <div className="encounters-controls-child">
+            <CheckboxComponent
+              isChecked={hideCaughtPokemon}
+              setIsChecked={setHideCaughtPokemon}
+            ></CheckboxComponent>
+            <p className="encounters-controls-child">
+              {"Hide caught Pokemon?"}
+            </p>
+          </div>
         </div>
         <EncountersContainer
           versionId={versionId}
@@ -201,6 +219,7 @@ const EncountersPage: React.FC<EncountersPageProps> = ({ version_id }) => {
               ? handlePokemonClick
               : handlePokemonClickAuthenticated
           }
+          hideCaughtPokemon={hideCaughtPokemon}
         />
       </div>
     </div>

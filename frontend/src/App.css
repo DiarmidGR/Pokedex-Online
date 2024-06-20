@@ -10,7 +10,9 @@
   --secondary-color:#30323a;
   --secondary-dark:#2b2d34;
 
-  --third-color:#e6f1ff;
+  --third-light:#e6f1ff;
+  --third-color:#d4dde9;
+  --third-dark: #c2c9d2;
 }
 
 h2{

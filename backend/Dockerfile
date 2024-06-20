@@ -10,6 +10,9 @@ COPY package*.json ./
 # Install dependencies
 RUN npm install
 
+# Install PM2 globally
+RUN npm install pm2 -g
+
 RUN npm install cors
 
 # Copy the rest of the application code
@@ -19,4 +22,4 @@ COPY . .
 ENV PORT = 3000
 
 # Command to run the application
-CMD ["node", "server.js"]
+CMD ["pm2-runtime", "server.js"]
