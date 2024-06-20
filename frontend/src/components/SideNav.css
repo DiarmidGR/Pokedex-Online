@@ -1,8 +1,13 @@
 .side-nav-container{
     display: flex;
     flex-direction:column;
-    height:100%;
-    position:relative;
+    min-width:72px;
+    max-width:72px;
+}
+
+.nav-expanded{
+    min-width:200px;
+    max-width:200px;
 }
 
 .side-nav-header{
@@ -20,6 +25,7 @@
     width:100%;
     height:min-content;
     justify-content: center;
+    height:44px;
 }
 
 .nav-banner{

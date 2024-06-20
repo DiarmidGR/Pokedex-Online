@@ -1,0 +1,30 @@
+.header-container{
+    width:100%;
+    min-height:56px;
+    position:relative;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    margin-left:16px;
+    margin-right:16px;
+    padding:4px;
+}
+
+.header-child{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header-child.collapse{
+    position:absolute;
+    width:40px;
+    height:40px;
+    left:0;
+}
+
+.header-child h1 {
+    margin:0;
+    padding:0;
+    min-width:max-content;
+}

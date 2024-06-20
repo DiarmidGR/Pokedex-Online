@@ -8,6 +8,7 @@ import { getToken } from "../components/Auth";
 import axios from "axios";
 import SideNav from "../components/SideNav";
 import CheckboxComponent from "../ui/Checkbox";
+import Header from "../Header";
 
 interface EncountersPageProps {
   version_id: string;
@@ -164,63 +165,67 @@ const EncountersPage: React.FC<EncountersPageProps> = ({ version_id }) => {
   // State to toggle whether to hide caught pokemon or not
   const [hideCaughtPokemon, setHideCaughtPokemon] = useState<boolean>(false);
 
-  //
+  const [expandNav, setExpandNav] = useState<boolean>(false);
+
   useEffect(() => {
-    console.log(hideCaughtPokemon);
-  }, [hideCaughtPokemon]);
+    console.log("Expanding nav? " + expandNav);
+  }, [expandNav]);
 
   return (
     <div className="encounters-layout">
-      <SideNav version_id={versionId} />
-      <div className="encounters-div">
-        <PokedexContainer
-          versionId={version_id}
-          storedItems={storedItems}
-          selectedPokedex={selectedPokedex}
-          handlePokemonClick={
-            getToken() == null
-              ? handlePokemonClick
-              : handlePokemonClickAuthenticated
-          }
-        />
-        <div className="encounters-controls-container">
-          <div className="encounters-controls-child">
-            <p className="encounters-controls-child">{"Pokedex"}</p>
-            <PokedexDropdown
-              versionId={versionId}
-              onPokedexChange={setSelectedPokedex}
-              defaultIndex={lastPokedexId != null ? lastPokedexId : "1"}
-            />
-          </div>
+      <Header expandNav={expandNav} setExpandNav={setExpandNav} />
+      <div className="content-container">
+        <SideNav version_id={versionId} expandNav={expandNav} />
+        <div className="encounters-div">
+          <PokedexContainer
+            versionId={version_id}
+            storedItems={storedItems}
+            selectedPokedex={selectedPokedex}
+            handlePokemonClick={
+              getToken() == null
+                ? handlePokemonClick
+                : handlePokemonClickAuthenticated
+            }
+          />
+          <div className="encounters-controls-container">
+            <div className="encounters-controls-child">
+              <p className="encounters-controls-child">{"Pokedex"}</p>
+              <PokedexDropdown
+                versionId={versionId}
+                onPokedexChange={setSelectedPokedex}
+                defaultIndex={lastPokedexId != null ? lastPokedexId : "1"}
+              />
+            </div>
 
-          <div className="encounters-controls-child">
-            <p className="encounters-controls-child">{"Location"}</p>
-            <LocationDropdown
-              versionId={version_id}
-              onLocationChange={setSelectedLocation}
-            />
+            <div className="encounters-controls-child">
+              <p className="encounters-controls-child">{"Location"}</p>
+              <LocationDropdown
+                versionId={version_id}
+                onLocationChange={setSelectedLocation}
+              />
+            </div>
+            <div className="encounters-controls-child">
+              <CheckboxComponent
+                isChecked={hideCaughtPokemon}
+                setIsChecked={setHideCaughtPokemon}
+              ></CheckboxComponent>
+              <p className="encounters-controls-child">
+                {"Hide caught Pokemon?"}
+              </p>
+            </div>
           </div>
-          <div className="encounters-controls-child">
-            <CheckboxComponent
-              isChecked={hideCaughtPokemon}
-              setIsChecked={setHideCaughtPokemon}
-            ></CheckboxComponent>
-            <p className="encounters-controls-child">
-              {"Hide caught Pokemon?"}
-            </p>
-          </div>
+          <EncountersContainer
+            versionId={versionId}
+            locationIdentifier={selectedLocation}
+            storedItems={storedItems}
+            handlePokemonClick={
+              getToken() == null
+                ? handlePokemonClick
+                : handlePokemonClickAuthenticated
+            }
+            hideCaughtPokemon={hideCaughtPokemon}
+          />
         </div>
-        <EncountersContainer
-          versionId={versionId}
-          locationIdentifier={selectedLocation}
-          storedItems={storedItems}
-          handlePokemonClick={
-            getToken() == null
-              ? handlePokemonClick
-              : handlePokemonClickAuthenticated
-          }
-          hideCaughtPokemon={hideCaughtPokemon}
-        />
       </div>
     </div>
   );

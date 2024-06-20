@@ -6,9 +6,10 @@ import React from "react";
 
 interface SideNavProps {
   version_id: string;
+  expandNav: boolean;
 }
 
-const SideNav: React.FC<SideNavProps> = ({ version_id }) => {
+const SideNav: React.FC<SideNavProps> = ({ version_id, expandNav }) => {
   const versionBannerPath = "/version-banners/" + version_id + ".png";
   // Click handler for home page button
   const navigate = useNavigate();
@@ -17,8 +18,14 @@ const SideNav: React.FC<SideNavProps> = ({ version_id }) => {
     navigate("/");
   };
 
-  return (
+  return expandNav ? (
     <div className="side-nav-container">
+      <div className="side-nav-child">
+        <IconButton icon={faHome} onClick={handleHomeClick} />
+      </div>
+    </div>
+  ) : (
+    <div className="side-nav-container nav-expanded">
       <div className="side-nav-header">
         <img src={versionBannerPath} alt="" className="nav-banner" />
       </div>
