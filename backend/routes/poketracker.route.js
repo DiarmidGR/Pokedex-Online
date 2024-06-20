@@ -168,7 +168,7 @@ router.get('/encounter-details', (req, res) => {
         
         group by pokemonId, locationArea, encounterMethod, pokemonName, ecvm.encounter_condition_value_id
 
-        order by ecvm.encounter_condition_value_id;
+        order by encounterMethod, ecvm.encounter_condition_value_id, pokemonId;
     `;
 
     db.query(query, [versionId, locationIdentifier], (error, results) => {
