@@ -68,14 +68,12 @@ const PokedexContainer: React.FC<PokedexContainerProps> = ({
           <div className="pokedex-items-wrapper">
             {pokemonDetails.map((detail, index) => (
               <div
-                className="pokedex-item"
+                className={
+                  isItemStored(detail.pokemonId)
+                    ? "pokedex-item caught"
+                    : "pokedex-item not-caught"
+                }
                 key={index}
-                style={{
-                  backgroundColor: isItemStored(detail.pokemonId)
-                    ? "#a82d27"
-                    : "transparent",
-                  cursor: "pointer",
-                }}
                 onClick={() => handlePokemonClick(versionId, detail.pokemonId)}
               >
                 <img
