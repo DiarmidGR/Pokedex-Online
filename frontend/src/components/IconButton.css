@@ -1,18 +1,17 @@
 .icon-button{
     background-color: #e6f1ff;
     color: #30323a;
-    border: 1px solid transparent;
-    border-radius: 8px;
-    padding:12px;
+    border: none;
+    border-radius: 20px;
     cursor:pointer;
     transition: background-color 0.25s;
-    font-size: 16px;
+    font-size: 20px;
     font-weight: 600;
-    font-family: inherit;
-    width:92%;
-    text-align: left;
+    width:100%;
     align-items:center;
     display:flex;
+    justify-content: center;
+    min-height:100%;
 }
 
 .icon-button:hover{
@@ -21,4 +20,26 @@
 
 .button-label{
     margin-left:20px;
+}
+
+.icon-button-text{
+    background-color: #e6f1ff;
+    color: #30323a;
+    border: none;
+    border-radius: 10px;
+    cursor:pointer;
+    transition: background-color 0.25s;
+    font-size: 16px;
+    font-weight: 600;
+    width:100%;
+    align-items:center;
+    display:flex;
+    justify-content: left;
+    padding-left:20px;
+    padding-top:10px;
+    padding-bottom:10px;
+}
+
+.icon-button-text:hover{
+    background-color:#DBE5F2;
 }
