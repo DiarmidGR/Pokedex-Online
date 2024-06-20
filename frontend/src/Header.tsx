@@ -19,7 +19,7 @@ const Header: React.FC<HeaderProps> = ({ expandNav, setExpandNav }) => {
         <IconButton icon={faBars} onClick={handleHomeClick}></IconButton>
       </div>
       <div className="header-child title">
-        <h1>Poketracker Online by Diarmid</h1>
+        <h1>Poketracker Online</h1>
       </div>
     </div>
   );
