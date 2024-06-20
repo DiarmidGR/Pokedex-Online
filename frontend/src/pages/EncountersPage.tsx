@@ -168,6 +168,11 @@ const EncountersPage: React.FC<EncountersPageProps> = ({ version_id }) => {
           versionId={version_id}
           storedItems={storedItems}
           selectedPokedex={selectedPokedex}
+          handlePokemonClick={
+            getToken() == null
+              ? handlePokemonClick
+              : handlePokemonClickAuthenticated
+          }
         />
         <div className="encounters-controls-container">
           <div className="encounters-controls-child">
