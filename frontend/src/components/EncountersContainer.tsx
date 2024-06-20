@@ -21,6 +21,7 @@ interface EncountersContainerProps {
   locationIdentifier: string;
   storedItems: string[];
   handlePokemonClick: (versionId: string, item: number) => void;
+  hideCaughtPokemon: boolean;
 }
 
 const EncountersContainer: React.FC<EncountersContainerProps> = ({
@@ -28,6 +29,7 @@ const EncountersContainer: React.FC<EncountersContainerProps> = ({
   locationIdentifier,
   storedItems,
   handlePokemonClick,
+  hideCaughtPokemon,
 }) => {
   const [encounterDetails, setEncounterDetails] = useState<EncounterData[]>([]);
 
@@ -143,6 +145,11 @@ const EncountersContainer: React.FC<EncountersContainerProps> = ({
     }
   };
 
+  // Function to check hideCaughtPokemon and return the style
+  const getCaughtStyle = (isCaught: boolean) => {
+    return hideCaughtPokemon && isCaught ? { display: "none" } : {};
+  };
+
   return (
     <div className="encounters-container">
       {encounterDetails.length > 0 ? (
@@ -169,6 +176,7 @@ const EncountersContainer: React.FC<EncountersContainerProps> = ({
                       onClick={() =>
                         handlePokemonClick(versionId, encounter.pokemonId)
                       }
+                      style={getCaughtStyle(isItemStored(encounter.pokemonId))}
                     >
                       <PokemonCard key={index} encounter={encounter} />
                     </div>
