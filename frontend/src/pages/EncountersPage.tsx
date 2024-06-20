@@ -33,6 +33,10 @@ const EncountersPage: React.FC<EncountersPageProps> = ({ version_id }) => {
     lastPokedexId != null ? lastPokedexId : "1"
   );
 
+  const [hideCaughtPokemon, setHideCaughtPokemon] = useState<boolean>(false); // used for CheckboxComponent and passed to EncountersContainer
+
+  const [expandNav, setExpandNav] = useState<boolean>(false); // passed to SideNav component to signal whether to be expanded or not, dependent on button in Header
+
   // Save the selected Pokedex to localStorage
   useEffect(() => {
     localStorage.setItem(versionLastPokedexString, selectedPokedex);
@@ -161,15 +165,6 @@ const EncountersPage: React.FC<EncountersPageProps> = ({ version_id }) => {
     }
     setStoredItems(updatedStoredItems);
   };
-
-  // State to toggle whether to hide caught pokemon or not
-  const [hideCaughtPokemon, setHideCaughtPokemon] = useState<boolean>(false);
-
-  const [expandNav, setExpandNav] = useState<boolean>(false);
-
-  useEffect(() => {
-    console.log("Expanding nav? " + expandNav);
-  }, [expandNav]);
 
   return (
     <div className="encounters-layout">

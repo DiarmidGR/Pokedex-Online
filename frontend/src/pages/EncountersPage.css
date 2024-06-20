@@ -41,4 +41,9 @@ p.encounters-controls-child{
     .encounters-controls-container{
         flex-direction:column;
     }
+
+    .content-container{
+        display:flex;
+        flex-direction:column;
+    }
 }

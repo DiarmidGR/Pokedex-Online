@@ -35,6 +35,11 @@
 
 @media only screen and (max-width: 600px) {
     .side-nav-container{
+        flex-direction:row;
         height:auto;
+    }
+
+    .side-nav-header{
+        display:none;
     }
 }
