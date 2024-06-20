@@ -62,6 +62,18 @@
     height:56px;
 }
 
+.pokedex-item.caught{
+    background-color:var(--primary-color);
+}
+
+.pokedex-item.not-caught:hover{
+    background-color:var(--third-color);
+}
+
+.pokedex-item.caught:hover{
+    background-color:var(--primary-dark);
+}
+
 @media only screen and (max-width: 600px) {
     .pokedex-container{
         all:unset;
