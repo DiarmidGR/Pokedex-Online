@@ -68,7 +68,11 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ encounter }) => {
           className="pokemon-card-image"
         />
         <img
-          src={"/icons/" + encounter.encounterMethod + ".png"}
+          src={
+            encounter.encounterMethod == "grass-spots"
+              ? "/icons/grass-spots.gif"
+              : "/icons/" + encounter.encounterMethod + ".png"
+          }
           alt=""
           className="pokemon-card-method"
           title={encounter.encounterMethod}
