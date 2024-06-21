@@ -9,6 +9,7 @@ import axios from "axios";
 import SideNav from "../components/SideNav";
 import CheckboxComponent from "../ui/Checkbox";
 import Header from "../Header";
+import axiosInstance from "../axiosInstance";
 
 interface EncountersPageProps {
   version_id: string;
@@ -51,7 +52,7 @@ const EncountersPage: React.FC<EncountersPageProps> = ({ version_id }) => {
         const userId = localStorage.getItem("user_id");
         if (token) {
           // Fetch stored items from backend API
-          const response = await axios.get(
+          const response = await axiosInstance.get(
             import.meta.env.VITE_API_ENDPOINT +
               `user-pokemon?version_id=${versionId}&user_id=${userId}`,
             {
@@ -108,7 +109,7 @@ const EncountersPage: React.FC<EncountersPageProps> = ({ version_id }) => {
     // Item exists, execute delete query
     if (storedItems.includes(storageString)) {
       const userId = localStorage.getItem("user_id");
-      axios
+      axiosInstance
         .post(
           import.meta.env.VITE_API_ENDPOINT + `user-pokemon/delete`,
           {

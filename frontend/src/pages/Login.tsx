@@ -1,7 +1,7 @@
 import "./Login.css";
 import { useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import axiosInstance from "../axiosInstance";
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -9,16 +9,17 @@ function Login() {
   const [error, setError] = useState("");
 
   let navigate = useNavigate();
-  const apiUrl = import.meta.env.VITE_LOGIN_ENDPOINT;
+  const loginUrl = import.meta.env.VITE_LOGIN_ENDPOINT;
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     try {
-      const res = await axios.post(apiUrl, {
+      const res = await axiosInstance.post(loginUrl, {
         username,
         password,
       });
-      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("token", res.data.accessToken);
+      localStorage.setItem("refreshToken", res.data.refreshToken);
       localStorage.setItem("user_id", res.data.user_id);
       navigate("/");
     } catch (err) {
