@@ -9,6 +9,7 @@ import axios from "axios";
 import CheckboxComponent from "../ui/Checkbox";
 import Header from "../Header";
 import axiosInstance from "../axiosInstance";
+import PokedexCard from "../components/PokedexCard";
 
 interface EncountersPageProps {
   version_id: string;
@@ -20,6 +21,7 @@ interface CaughtPokemonProps {
 }
 
 const EncountersPage: React.FC<EncountersPageProps> = ({ version_id }) => {
+  const [selectedPokemonId, setSelectedPokemonId] = useState<string>("");
   const [selectedLocation, setSelectedLocation] = useState<string>("");
   const versionId = version_id;
 
@@ -173,12 +175,17 @@ const EncountersPage: React.FC<EncountersPageProps> = ({ version_id }) => {
     console.log(
       `Pokemon with ID ${pokemonId} from version with ID ${versionId} right clicked.`
     );
+    let newPokemonId = pokemonId.toString();
+    setSelectedPokemonId(newPokemonId);
   };
 
   return (
     <div className="encounters-layout">
       <Header />
       <div className="content-container">
+        <div className="pokedex-container">
+          <PokedexCard pokemonId={selectedPokemonId} versionId={version_id} />
+        </div>
         <div className="encounters-div">
           <PokemonList
             versionId={version_id}
