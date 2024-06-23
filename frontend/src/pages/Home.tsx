@@ -2,7 +2,7 @@ import versionsData from "../data/versions.json";
 import MenuItem from "../components/MenuItem";
 import { useState, useEffect } from "react";
 import "./Home.css";
-import SignoutButton from "../components/SignoutButton";
+import SignoutButton from "../ui/SignoutButton";
 
 interface Version {
   id: number;

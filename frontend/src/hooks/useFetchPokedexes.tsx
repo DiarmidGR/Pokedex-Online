@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { getToken } from "../components/Auth";
+import { getToken } from "../utils/Auth";
 
 interface Pokedex {
   pokedexId: string;

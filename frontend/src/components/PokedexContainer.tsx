@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./PokedexContainer.css";
-import { getToken } from "./Auth";
+import { getToken } from "../utils/Auth";
 
 // interface for pokemon data received from api
 interface PokemonDetails {
