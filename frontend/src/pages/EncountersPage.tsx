@@ -173,7 +173,7 @@ const EncountersPage: React.FC<EncountersPageProps> = ({ version_id }) => {
   ) => {
     event.preventDefault();
     console.log(
-      `Pokemon with ID ${pokemonId} from version with ID ${versionId} right clicked.`
+      `Pokemon with ID ${pokemonId} from version with ID ${versionId} opened in pokedex.`
     );
     let newPokemonId = pokemonId.toString();
     setSelectedPokemonId(newPokemonId);
@@ -183,9 +183,6 @@ const EncountersPage: React.FC<EncountersPageProps> = ({ version_id }) => {
     <div className="encounters-layout">
       <Header />
       <div className="content-container">
-        <div className="pokedex-container">
-          <PokedexCard pokemonId={selectedPokemonId} versionId={version_id} />
-        </div>
         <div className="encounters-div">
           <PokemonList
             versionId={version_id}
@@ -225,18 +222,26 @@ const EncountersPage: React.FC<EncountersPageProps> = ({ version_id }) => {
               </p>
             </div>
           </div>
-          <EncountersContainer
-            versionId={versionId}
-            locationIdentifier={selectedLocation}
-            storedItems={storedItems}
-            handlePokemonClick={
-              getToken() == null
-                ? handlePokemonClick
-                : handlePokemonClickAuthenticated
-            }
-            hideCaughtPokemon={hideCaughtPokemon}
-            handlePokemonRightClick={handlePokemonRightClick}
-          />
+          <div className="encounters-container-layout">
+            <div className="pokedex-container">
+              <PokedexCard
+                pokemonId={selectedPokemonId}
+                versionId={version_id}
+              />
+            </div>
+            <EncountersContainer
+              versionId={versionId}
+              locationIdentifier={selectedLocation}
+              storedItems={storedItems}
+              handlePokemonClick={
+                getToken() == null
+                  ? handlePokemonClick
+                  : handlePokemonClickAuthenticated
+              }
+              hideCaughtPokemon={hideCaughtPokemon}
+              handlePokemonRightClick={handlePokemonRightClick}
+            />
+          </div>
         </div>
       </div>
     </div>

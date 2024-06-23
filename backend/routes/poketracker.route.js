@@ -76,11 +76,20 @@ router.get('/pokemon_details', (req, res) => {
         };
 
     const query = `
-        SELECT p.identifier, p.species_id, p.height, p.weight, pc.identifier as color_name
-        FROM pokemon p 
-        INNER JOIN pokemon_species_2 ps on p.species_id=ps.id
-        INNER JOIN pokemon_colors pc on ps.color_id=pc.id
-        WHERE p.species_id = ?;
+        SELECT
+            p.species_id as nationalId,
+            psn.name AS name,
+            GROUP_CONCAT(DISTINCT t.identifier ORDER BY t.identifier SEPARATOR ', ') AS types
+        FROM
+            pokemon p
+            INNER JOIN pokemon_species_names psn ON psn.pokemon_species_id = p.species_id
+            INNER JOIN pokemon_types pt ON pt.pokemon_id = p.species_id
+            INNER JOIN types t ON t.id=pt.type_id
+        WHERE
+            p.species_id = ?
+        GROUP BY
+            p.species_id, p.height, p.weight, psn.name
+        LIMIT 1;
     `
 
     db.query(query, [pokemonId], (error, results) => {

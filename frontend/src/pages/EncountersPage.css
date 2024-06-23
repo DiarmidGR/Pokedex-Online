@@ -4,6 +4,10 @@
     height:100%;
 }
 
+.encounters-container-layout{
+    display:flex;
+}
+
 .content-container{
     display:flex;
     flex-direction: row;
@@ -46,5 +50,9 @@ p.encounters-controls-child{
     .content-container{
         display:flex;
         flex-direction:column;
+    }
+
+    .encounters-container-layout{
+        flex-direction: column;
     }
 }
