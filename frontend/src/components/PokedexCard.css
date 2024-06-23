@@ -1,5 +1,30 @@
-.pokedex-card-container{
-    position:absolute;
-    bottom:10px;
-    left:10px;
+.pokedex-card-item{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    background-color:var(--third-color);
+    border-radius:20px;
+    margin-left:40px;
+    margin-right:40px;
+}
+
+.pokedex-card-item h1{
+    margin:0;
+    padding:0;
+}
+
+.pokedex-card-item img {
+    width:336px;
+    image-rendering: pixelated;
+}
+
+.pokedex-card-item-types img{
+    width:100px;
+    margin:8px;
+    image-rendering: auto;
+}
+
+.pokedex-card-item-types{
+    display:flex;
+    flex-direction: row;
 }

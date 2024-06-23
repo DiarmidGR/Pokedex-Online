@@ -9,11 +9,9 @@ interface PokedexCardProps {
 }
 
 interface PokemonDetails {
-  identifier: string;
-  species_id: string;
-  height: string;
-  weight: string;
-  color_name: string;
+  name: string;
+  nationalId: string;
+  types: string;
 }
 
 const PokedexCard: React.FC<PokedexCardProps> = ({ pokemonId }) => {
@@ -50,11 +48,23 @@ const PokedexCard: React.FC<PokedexCardProps> = ({ pokemonId }) => {
   if (pokemonId === "") {
     return null;
   }
+
   return (
     <div className="pokedex-card-container">
       {pokemonDetails.map((pokemon, index) => (
         <div className="pokedex-card-item" key={index}>
-          <section>{pokemon.identifier}</section>
+          <h1>{pokemon.name}</h1>
+          <h2>#{pokemon.nationalId}</h2>
+          <img src={`/sprites/pokemon/${pokemon.nationalId}.png`} alt="" />
+          <div className="pokedex-card-item-types">
+            {pokemon.types.split(",").map((type) => (
+              <img
+                key={type}
+                src={"/images/types/" + type.trim() + ".png"}
+                alt={type}
+              />
+            ))}
+          </div>
         </div>
       ))}
     </div>
