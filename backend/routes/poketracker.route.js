@@ -66,6 +66,32 @@ router.get('/user-pokemon', verifyToken, (req, res) => {
     });
 });
 
+// Get pokemon details by pokemon_id
+router.get('/pokemon_details', (req, res) => {
+    const pokemonId = req.query.pokemon_id;
+
+    if (!pokemonId)
+        {
+            return res.status(400).send({error: 'version_id and pokemon_id is required to fex pokemon details.'})
+        };
+
+    const query = `
+        SELECT p.identifier, p.species_id, p.height, p.weight, pc.identifier as color_name
+        FROM pokemon p 
+        INNER JOIN pokemon_species_2 ps on p.species_id=ps.id
+        INNER JOIN pokemon_colors pc on ps.color_id=pc.id
+        WHERE p.species_id = ?;
+    `
+
+    db.query(query, [pokemonId], (error, results) => {
+        if (error) {
+            return res.status(500).send({ error: error.message });
+        }
+
+        res.send(results);
+    });
+});
+
 // Get pokedex ids and names by version_id
 router.get('/pokedex_versions', (req, res) => {
     const versionId = req.query.version_id;
