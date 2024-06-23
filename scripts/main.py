@@ -1,11 +1,11 @@
 import pokedex_data
-import encounters_data
+import rename_images
 
 
 def show_menu():
     print("Select an option:")
     print("1. Run Pokedex Data")
-    print("2. Run Encounters Data")
+    print("2. Run Pokedex Images Renamer")
     print("3. Exit")
 
 
@@ -17,7 +17,7 @@ def main():
         if choice == '1':
             pokedex_data.get_data()
         elif choice == '2':
-            encounters_data.get_data()
+            rename_images.get_data()
         elif choice == '3':
             print("Exiting...")
             break
