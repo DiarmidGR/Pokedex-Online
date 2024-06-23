@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./EncountersPage.css";
 import LocationDropdown from "../ui/LocationDropdown";
 import EncountersContainer from "../components/EncountersContainer";
-import PokedexContainer from "../components/PokedexContainer";
+import PokemonList from "../components/PokemonList";
 import PokedexDropdown from "../ui/PokedexDropdown";
 import { getToken } from "../components/Auth";
 import axios from "axios";
@@ -164,12 +164,23 @@ const EncountersPage: React.FC<EncountersPageProps> = ({ version_id }) => {
     setStoredItems(updatedStoredItems);
   };
 
+  const handlePokemonRightClick = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    versionId: String,
+    pokemonId: number
+  ) => {
+    event.preventDefault();
+    console.log(
+      `Pokemon with ID ${pokemonId} from version with ID ${versionId} right clicked.`
+    );
+  };
+
   return (
     <div className="encounters-layout">
       <Header />
       <div className="content-container">
         <div className="encounters-div">
-          <PokedexContainer
+          <PokemonList
             versionId={version_id}
             storedItems={storedItems}
             selectedPokedex={selectedPokedex}
@@ -178,6 +189,7 @@ const EncountersPage: React.FC<EncountersPageProps> = ({ version_id }) => {
                 ? handlePokemonClick
                 : handlePokemonClickAuthenticated
             }
+            handlePokemonRightClick={handlePokemonRightClick}
           />
           <div className="encounters-controls-container">
             <div className="encounters-controls-child">
@@ -216,6 +228,7 @@ const EncountersPage: React.FC<EncountersPageProps> = ({ version_id }) => {
                 : handlePokemonClickAuthenticated
             }
             hideCaughtPokemon={hideCaughtPokemon}
+            handlePokemonRightClick={handlePokemonRightClick}
           />
         </div>
       </div>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "./PokedexContainer.css";
+import "./PokemonList.css";
 import { getToken } from "./Auth";
 
 // interface for pokemon data received from api
@@ -9,18 +9,24 @@ interface PokemonDetails {
   pokemonId: number;
 }
 
-interface PokedexContainerProps {
+interface PokemonListProps {
   versionId: string;
   storedItems: string[]; // array of pokemon to display passed to component in TrackingPage
   selectedPokedex: string; // Prop for selected pokedex
   handlePokemonClick: (versionId: string, item: number) => void;
+  handlePokemonRightClick: (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    versionId: String,
+    pokemonId: number
+  ) => void;
 }
 
-const PokedexContainer: React.FC<PokedexContainerProps> = ({
+const PokemonList: React.FC<PokemonListProps> = ({
   storedItems,
   versionId,
   selectedPokedex,
   handlePokemonClick,
+  handlePokemonRightClick,
 }) => {
   const [pokemonDetails, setPokemonDetails] = useState<PokemonDetails[]>([]);
 
@@ -63,22 +69,25 @@ const PokedexContainer: React.FC<PokedexContainerProps> = ({
   return (
     <>
       {pokemonDetails.length > 0 ? (
-        <div className={`pokedex-container`}>
-          <div className="pokedex-items-wrapper">
+        <div className={`pokemon-list-container`}>
+          <div className="pokemon-list-wrapper">
             {pokemonDetails.map((detail, index) => (
               <div
                 className={
                   isItemStored(detail.pokemonId)
-                    ? "pokedex-item caught"
-                    : "pokedex-item not-caught"
+                    ? "pokemon-list-item caught"
+                    : "pokemon-list-item not-caught"
                 }
                 key={index}
                 onClick={() => handlePokemonClick(versionId, detail.pokemonId)}
+                onContextMenu={(event) =>
+                  handlePokemonRightClick(event, versionId, detail.pokemonId)
+                }
               >
                 <img
                   src={`/sprites/pokemon/${detail.pokemonId}.png`}
                   alt=""
-                  className="pokedex-details"
+                  className="pokemon-details"
                 />
               </div>
             ))}
@@ -91,4 +100,4 @@ const PokedexContainer: React.FC<PokedexContainerProps> = ({
   );
 };
 
-export default PokedexContainer;
+export default PokemonList;
