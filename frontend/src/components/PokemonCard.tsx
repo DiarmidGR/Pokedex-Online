@@ -46,7 +46,7 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ encounter }) => {
             key={index}
             src={conditionImages[condition]}
             alt={condition}
-            className="condition-image"
+            className="pokemon-card-condition-image"
             title={condition}
           />
         );
@@ -55,7 +55,7 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ encounter }) => {
       }
     });
 
-    return <div className="condition-container">{elements}</div>;
+    return <div className="pokemon-card-condition-container">{elements}</div>;
   };
 
   return (

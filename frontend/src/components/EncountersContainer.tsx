@@ -22,6 +22,11 @@ interface EncountersContainerProps {
   storedItems: string[];
   handlePokemonClick: (versionId: string, item: number) => void;
   hideCaughtPokemon: boolean;
+  handlePokemonRightClick: (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    versionId: String,
+    pokemonId: number
+  ) => void;
 }
 
 const EncountersContainer: React.FC<EncountersContainerProps> = ({
@@ -29,6 +34,7 @@ const EncountersContainer: React.FC<EncountersContainerProps> = ({
   locationIdentifier,
   storedItems,
   handlePokemonClick,
+  handlePokemonRightClick,
   hideCaughtPokemon,
 }) => {
   const [encounterDetails, setEncounterDetails] = useState<EncounterData[]>([]);
@@ -77,11 +83,6 @@ const EncountersContainer: React.FC<EncountersContainerProps> = ({
   const isItemStored = (item: number) => {
     let storageString = versionId + "_" + item;
     return storedItems.includes(storageString);
-  };
-
-  // Right click handler on encounter-item
-  const handleRightClick = (event: React.MouseEvent<HTMLDivElement>) => {
-    event.preventDefault(); // Prevent the default context menu from appearing
   };
 
   // Function to modify EncounterData based on conditions
@@ -172,7 +173,13 @@ const EncountersContainer: React.FC<EncountersContainerProps> = ({
                           : "encounters-item not-caught"
                       }
                       key={index}
-                      onContextMenu={handleRightClick}
+                      onContextMenu={(event) =>
+                        handlePokemonRightClick(
+                          event,
+                          versionId,
+                          encounter.pokemonId
+                        )
+                      }
                       onClick={() =>
                         handlePokemonClick(versionId, encounter.pokemonId)
                       }
