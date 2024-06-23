@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./PokedexContainer.css";
-import { getToken } from "../utils/Auth";
+import { getToken } from "./Auth";
 
 // interface for pokemon data received from api
 interface PokemonDetails {
@@ -23,7 +23,6 @@ const PokedexContainer: React.FC<PokedexContainerProps> = ({
   handlePokemonClick,
 }) => {
   const [pokemonDetails, setPokemonDetails] = useState<PokemonDetails[]>([]);
-  const spritesPath = "/pokemon-sprites/";
 
   // fetch data from API using selectedPokedex
   useEffect(() => {
@@ -77,7 +76,7 @@ const PokedexContainer: React.FC<PokedexContainerProps> = ({
                 onClick={() => handlePokemonClick(versionId, detail.pokemonId)}
               >
                 <img
-                  src={spritesPath + detail.pokemonId + ".png"}
+                  src={`/sprites/pokemon/${detail.pokemonId}.png`}
                   alt=""
                   className="pokedex-details"
                 />

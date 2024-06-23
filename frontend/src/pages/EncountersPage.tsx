@@ -4,7 +4,7 @@ import LocationDropdown from "../ui/LocationDropdown";
 import EncountersContainer from "../components/EncountersContainer";
 import PokedexContainer from "../components/PokedexContainer";
 import PokedexDropdown from "../ui/PokedexDropdown";
-import { getToken } from "../utils/Auth";
+import { getToken } from "../components/Auth";
 import axios from "axios";
 import CheckboxComponent from "../ui/Checkbox";
 import Header from "../Header";

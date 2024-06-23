@@ -63,7 +63,7 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ encounter }) => {
       <section className="pokemon-card-name">{encounter.pokemonName}</section>
       <section className="pokemon-card-image">
         <img
-          src={"/pokemon-sprites/" + encounter.pokemonId + ".png"}
+          src={`/sprites/pokemon/${encounter.pokemonId}.png`}
           alt={encounter.pokemonName}
           className="pokemon-card-image"
         />
