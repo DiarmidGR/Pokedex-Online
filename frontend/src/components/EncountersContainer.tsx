@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./EncountersContainer.css";
-import { getToken } from "./Auth";
+import { getToken } from "../utils/Auth";
 import PokemonCard from "./PokemonCard";
 
 interface EncounterData {

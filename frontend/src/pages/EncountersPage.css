@@ -13,6 +13,7 @@
 .encounters-controls-container{
     display:flex;
     align-items: center;
+    justify-content: center;
 }
 
 p.encounters-controls-child{

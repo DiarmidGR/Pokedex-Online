@@ -1,25 +1,28 @@
 import "./Header.css";
-import IconButton from "./components/IconButton";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import { isAuthenticated } from "./utils/Auth";
 
-interface HeaderProps {
-  expandNav: boolean;
-  setExpandNav: React.Dispatch<React.SetStateAction<boolean>>;
-}
+interface HeaderProps {}
 
-const Header: React.FC<HeaderProps> = ({ expandNav, setExpandNav }) => {
+const Header: React.FC<HeaderProps> = ({}) => {
+  // Click handler for home page button
+  const navigate = useNavigate();
+
   const handleHomeClick = () => {
-    setExpandNav(!expandNav);
+    navigate("/");
   };
-
   return (
     <div className="header-container">
-      <div className="header-child collapse">
-        <IconButton icon={faBars} onClick={handleHomeClick}></IconButton>
-      </div>
       <div className="header-child title">
-        <h1>Poketracker Online</h1>
+        <h1 onClick={handleHomeClick}>Poketracker Online</h1>
+      </div>
+      <div className="header-child login-status">
+        {isAuthenticated() ? (
+          <p style={{ color: "green" }}>Authenticated</p>
+        ) : (
+          <p style={{ color: "red" }}>Unauthenticated</p>
+        )}
       </div>
     </div>
   );

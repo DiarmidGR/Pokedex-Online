@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "./EncountersPage.css";
-import LocationDropdown from "../components/LocationDropdown";
+import LocationDropdown from "../ui/LocationDropdown";
 import EncountersContainer from "../components/EncountersContainer";
 import PokedexContainer from "../components/PokedexContainer";
-import PokedexDropdown from "../components/PokedexDropdown";
-import { getToken } from "../components/Auth";
+import PokedexDropdown from "../ui/PokedexDropdown";
+import { getToken } from "../utils/Auth";
 import axios from "axios";
-import SideNav from "../components/SideNav";
 import CheckboxComponent from "../ui/Checkbox";
 import Header from "../Header";
 import axiosInstance from "../axiosInstance";
@@ -35,8 +34,6 @@ const EncountersPage: React.FC<EncountersPageProps> = ({ version_id }) => {
   );
 
   const [hideCaughtPokemon, setHideCaughtPokemon] = useState<boolean>(false); // used for CheckboxComponent and passed to EncountersContainer
-
-  const [expandNav, setExpandNav] = useState<boolean>(false); // passed to SideNav component to signal whether to be expanded or not, dependent on button in Header
 
   // Save the selected Pokedex to localStorage
   useEffect(() => {
@@ -169,9 +166,8 @@ const EncountersPage: React.FC<EncountersPageProps> = ({ version_id }) => {
 
   return (
     <div className="encounters-layout">
-      <Header expandNav={expandNav} setExpandNav={setExpandNav} />
+      <Header />
       <div className="content-container">
-        <SideNav version_id={versionId} expandNav={expandNav} />
         <div className="encounters-div">
           <PokedexContainer
             versionId={version_id}
