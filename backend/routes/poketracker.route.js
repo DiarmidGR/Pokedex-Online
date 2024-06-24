@@ -77,14 +77,18 @@ router.get('/pokemon_locations', (req, res) => {
         };
 
     const query = `
-        SELECT l.identifier as LocationName
+        SELECT 
+        l.identifier as locationIdentifier, 
+        ln.name locationName
         FROM encounters e
         inner join location_areas la
         ON e.location_area_id=la.id
         inner join locations l
         ON l.id=la.location_id
+        inner join location_names ln
+        ON l.id=ln.location_id
         WHERE e.version_id=? and e.pokemon_id=?
-        group by l.identifier;
+        group by l.identifier, ln.name;
     `
 
     db.query(query, [versionId, pokemonId], (error, results) => {
