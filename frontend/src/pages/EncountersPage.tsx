@@ -7,8 +7,8 @@ import PokedexDropdown from "../ui/PokedexDropdown";
 import { getToken } from "../components/Auth";
 import axios from "axios";
 import CheckboxComponent from "../ui/Checkbox";
-import Header from "../Header";
-import axiosInstance from "../axiosInstance";
+import Header from "../components/Header";
+import axiosInstance from "../utils/axiosInstance";
 import PokedexCard from "../components/PokedexCard";
 
 interface EncountersPageProps {
