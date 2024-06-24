@@ -21,14 +21,14 @@ exports.login = async (req, res) => {
             return res.status(401).json({message: 'Invalid credentials.'});
         }
 
-        const accessToken = jwt.sign({id: user.id}, process.env.JWT_SECRET, {expiresIn: '300s'});// Expires in 5 minutes
+        const accessToken = jwt.sign({id: user.id}, process.env.JWT_SECRET, {expiresIn: '1h'});// Expires in 5 minutes
         const refreshToken = jwt.sign({ id: user.id }, process.env.JWT_REFRESH_SECRET, { expiresIn: '1d' });
 
         res.json({accessToken, refreshToken, user_id: user.id});
     });
 };
 
-exports.refreshToken = (req, res) => {
+exports.refreshToken = async (req, res) => {
     const { refreshToken } = req.body;
     if (!refreshToken) {
       return res.status(400).json({ message: 'Refresh token is required' });
@@ -36,7 +36,7 @@ exports.refreshToken = (req, res) => {
   
     try {
       const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET);
-      const newAccessToken = jwt.sign({ id: decoded.id }, process.env.JWT_SECRET, { expiresIn: '300s' });// Expires in 5 minutes
+      const newAccessToken = jwt.sign({ id: decoded.id }, process.env.JWT_SECRET, { expiresIn: '1h' });// Expires in 5 minutes
   
       res.json({ accessToken: newAccessToken });
     } catch (err) {
