@@ -11,14 +11,15 @@ interface Location {
 interface LocationDropdownProps {
   versionId: string;
   onLocationChange: (location: string) => void;
+  selectedLocation: string;
 }
 
 const LocationDropdown: React.FC<LocationDropdownProps> = ({
   versionId,
   onLocationChange,
+  selectedLocation,
 }) => {
   const [locations, setLocations] = useState<Location[]>([]);
-  const [selectedLocation, setSelectedLocation] = useState<string>("");
 
   useEffect(() => {
     // Fetch locations from the API
@@ -39,9 +40,14 @@ const LocationDropdown: React.FC<LocationDropdownProps> = ({
       });
   }, [versionId]);
 
+  useEffect(() => {
+    if (selectedLocation) {
+      onLocationChange(selectedLocation);
+    }
+  }, [selectedLocation, onLocationChange]);
+
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const location = event.target.value;
-    setSelectedLocation(location);
     onLocationChange(location);
   };
 

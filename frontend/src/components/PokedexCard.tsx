@@ -2,10 +2,12 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { getToken } from "./Auth";
 import "./PokedexCard.css";
+import PokedexLocations from "./PokedexLocations";
 
 interface PokedexCardProps {
   pokemonId: string;
   versionId: string;
+  setSelectedLocation: (location: string) => void;
 }
 
 interface PokemonDetails {
@@ -14,7 +16,11 @@ interface PokemonDetails {
   types: string;
 }
 
-const PokedexCard: React.FC<PokedexCardProps> = ({ pokemonId }) => {
+const PokedexCard: React.FC<PokedexCardProps> = ({
+  pokemonId,
+  setSelectedLocation,
+  versionId,
+}) => {
   const [pokemonDetails, setPokemonDetails] = useState<PokemonDetails[]>([]);
 
   // fetch data from API using pokemonId
@@ -65,6 +71,11 @@ const PokedexCard: React.FC<PokedexCardProps> = ({ pokemonId }) => {
               />
             ))}
           </div>
+          <PokedexLocations
+            versionId={versionId}
+            pokemonId={pokemonId}
+            setSelectedLocation={setSelectedLocation}
+          />
         </div>
       ))}
     </div>

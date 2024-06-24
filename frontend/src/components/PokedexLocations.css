@@ -1,0 +1,10 @@
+.pokedex-card-location{
+    font-size:x-large;
+    font-weight:600;
+    cursor:pointer;
+    transition:color ease 0.2s;
+}
+
+.pokedex-card-location:hover{
+    color:var(--primary-color);
+}
