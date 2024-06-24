@@ -1,7 +1,7 @@
 import "./Header.css";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { isAuthenticated } from "./components/Auth";
+import { isAuthenticated } from "./Auth";
 
 interface HeaderProps {}
 

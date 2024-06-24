@@ -1,5 +1,5 @@
 import { Route } from "react-router-dom";
-import EncountersPage from "./pages/EncountersPage";
+import EncountersPage from "../pages/EncountersPage";
 
 interface Version {
   id: number;
