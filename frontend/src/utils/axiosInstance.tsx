@@ -1,6 +1,5 @@
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
-import { useNavigate } from "react-router-dom";
 
 const apiUrl = import.meta.env.VITE_API_ENDPOINT;
 
@@ -16,11 +15,9 @@ const refreshAccessToken = async () => {
     const res = await axios.post(`${apiUrl}refresh`, {
       refreshToken,
     });
-
     localStorage.setItem("token", res.data.accessToken);
     return res.data.accessToken;
   } catch (err) {
-    console.error("Unable to refresh access token:", err);
     throw err;
   }
 };
@@ -59,15 +56,22 @@ axiosInstance.interceptors.response.use(
         originalRequest.headers["Authorization"] = `Bearer ${newToken}`;
         return axiosInstance(originalRequest);
       } catch (err) {
-        console.error("Unable to refresh access token:", err);
-        // Handle the error, possibly logging out the user
-        const navigate = useNavigate();
-        navigate("/login");
+        console.log("Unable to refresh access token on client side:", err);
+
+        // Redirect to login page on token refresh failure
+        redirectToLogin();
       }
     }
 
     return Promise.reject(error);
   }
 );
+
+const redirectToLogin = () => {
+  // Redirect to the login page
+  localStorage.removeItem("token");
+  localStorage.removeItem("refreshToken");
+  window.location.href = "/login";
+};
 
 export default axiosInstance;
