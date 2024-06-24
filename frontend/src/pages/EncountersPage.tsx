@@ -210,6 +210,7 @@ const EncountersPage: React.FC<EncountersPageProps> = ({ version_id }) => {
               <LocationDropdown
                 versionId={version_id}
                 onLocationChange={setSelectedLocation}
+                selectedLocation={selectedLocation}
               />
             </div>
             <div className="encounters-controls-child">
@@ -227,6 +228,7 @@ const EncountersPage: React.FC<EncountersPageProps> = ({ version_id }) => {
               <PokedexCard
                 pokemonId={selectedPokemonId}
                 versionId={version_id}
+                setSelectedLocation={setSelectedLocation}
               />
             </div>
             <EncountersContainer
