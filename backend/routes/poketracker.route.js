@@ -66,13 +66,43 @@ router.get('/user-pokemon', verifyToken, (req, res) => {
     });
 });
 
+// Get pokemon locations by pokemon_id and version_id
+router.get('/pokemon_locations', (req, res) => {
+    const pokemonId = req.query.pokemon_id;
+    const versionId = req.query.version_id;
+
+    if (!pokemonId || !versionId)
+        {
+            return res.status(400).send({error: 'version_id and pokemon_id is required to fetch pokemon locations.'})
+        };
+
+    const query = `
+        SELECT l.identifier as LocationName
+        FROM encounters e
+        inner join location_areas la
+        ON e.location_area_id=la.id
+        inner join locations l
+        ON l.id=la.location_id
+        WHERE e.version_id=? and e.pokemon_id=?
+        group by l.identifier;
+    `
+
+    db.query(query, [versionId, pokemonId], (error, results) => {
+        if (error) {
+            return res.status(500).send({ error: error.message });
+        }
+
+        res.send(results);
+    });
+});
+
 // Get pokemon details by pokemon_id
 router.get('/pokemon_details', (req, res) => {
     const pokemonId = req.query.pokemon_id;
 
     if (!pokemonId)
         {
-            return res.status(400).send({error: 'version_id and pokemon_id is required to fex pokemon details.'})
+            return res.status(400).send({error: 'pokemon_id is required to fetch pokemon details.'})
         };
 
     const query = `
