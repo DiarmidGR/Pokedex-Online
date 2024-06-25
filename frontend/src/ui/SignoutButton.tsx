@@ -1,10 +1,15 @@
 import { useNavigate } from "react-router-dom";
 import { removeToken } from "../components/Auth";
 import "./SignoutButton.css";
-import IconButton from "./IconButton";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignOut } from "@fortawesome/free-solid-svg-icons";
 
-const SignoutButton: React.FC = () => {
+// Define the interface for the props
+interface SignoutButtonProps {
+  label?: string;
+}
+
+const SignoutButton: React.FC<SignoutButtonProps> = ({ label }) => {
   let navigate = useNavigate();
 
   const handleSignOut = async () => {
@@ -13,13 +18,10 @@ const SignoutButton: React.FC = () => {
   };
 
   return (
-    <div className="signout-button">
-      <IconButton
-        icon={faSignOut}
-        onClick={handleSignOut}
-        label="Sign out"
-      ></IconButton>
-    </div>
+    <button onClick={handleSignOut} className="signout-button switzer-regular">
+      <FontAwesomeIcon icon={faSignOut} />
+      {label && <span>{label}</span>}
+    </button>
   );
 };
 

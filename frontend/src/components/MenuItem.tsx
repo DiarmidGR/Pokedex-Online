@@ -14,9 +14,9 @@ const MenuItem: React.FC<MenuItemProps> = ({ version }) => {
 
   return (
     <img
-      src={"/boxart/" + version + ".png"}
+      src={`/boxart/${version}.png`}
       alt=""
-      className="grid-item"
+      className="home-item"
       onClick={handleClick}
     />
   );

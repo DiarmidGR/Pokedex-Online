@@ -28,11 +28,11 @@
 
 .encounters-item.caught{
     background-color:var(--primary-color);
-    color:white;
+    color:var(--third-light);
 }
 
 .encounters-item.not-caught:hover{
-    background-color: #d8e3f0;
+    background-color: var(--third-color);
 }
 
 .encounters-item.caught:hover{
@@ -42,13 +42,7 @@
 .encounters-location-area{
     font-size:30px;
     text-align:center;
-    border-bottom:1px solid #ADB5BF;
+    border-bottom:1px solid var(--third-dark);
     padding-top:12px;
     cursor:pointer;
-}
-
-@media only screen and (max-width: 600px) {
-    .encounters-container{
-        overflow:visible;
-    }
 }

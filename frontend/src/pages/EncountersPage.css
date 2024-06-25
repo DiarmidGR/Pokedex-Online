@@ -2,10 +2,20 @@
     display:flex;
     flex-direction:column;
     height:100%;
+    width:100%;
+}
+
+.pokedex-container{
+    display:flex;
+    padding-top:60px;
+    box-sizing: border-box;
+    justify-content: center;
+    height:min-content;
 }
 
 .encounters-container-layout{
     display:flex;
+    width:80%;
 }
 
 .content-container{
@@ -35,6 +45,7 @@ p.encounters-controls-child{
 .encounters-div{
     display:flex;
     flex-direction:column;
+    align-items: center;
 }
 
 @media only screen and (max-width: 600px) {
@@ -54,5 +65,10 @@ p.encounters-controls-child{
 
     .encounters-container-layout{
         flex-direction: column;
+    }
+
+    .pokedex-container{
+        padding:0;
+        width:100%;
     }
 }

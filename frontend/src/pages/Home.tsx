@@ -2,7 +2,6 @@ import versionsData from "../data/versions.json";
 import MenuItem from "../components/MenuItem";
 import { useState, useEffect } from "react";
 import "./Home.css";
-import SignoutButton from "../ui/SignoutButton";
 
 interface Version {
   id: number;
@@ -20,8 +19,7 @@ const Home: React.FC = () => {
 
   return (
     <div className="home-layout">
-      <SignoutButton></SignoutButton>
-      <div className="grid-container">
+      <div className="home-container">
         {versions.map((version) => (
           <MenuItem key={version.id} version={version.identifier} />
         ))}

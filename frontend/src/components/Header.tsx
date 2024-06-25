@@ -1,7 +1,7 @@
 import "./Header.css";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { isAuthenticated } from "./Auth";
+import SignoutButton from "../ui/SignoutButton";
 
 interface HeaderProps {}
 
@@ -15,14 +15,12 @@ const Header: React.FC<HeaderProps> = ({}) => {
   return (
     <div className="header-container">
       <div className="header-child title">
-        <h1 onClick={handleHomeClick}>Poketracker Online</h1>
+        <h1 onClick={handleHomeClick} title="Return to homepage">
+          Pokétracker Online
+        </h1>
       </div>
-      <div className="header-child login-status">
-        {isAuthenticated() ? (
-          <p style={{ color: "green" }}>Authenticated</p>
-        ) : (
-          <p style={{ color: "red" }}>Unauthenticated</p>
-        )}
+      <div className="header-child">
+        <SignoutButton label="Sign Out" />
       </div>
     </div>
   );

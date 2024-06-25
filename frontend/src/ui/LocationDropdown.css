@@ -1,9 +1,14 @@
 .location-select{
-    background-color:#f2f6fa;
+    background-color:var(--primary-color);
     border:none;
     padding:10px;
     font-size:larger;
-    color: #30323a;
+    color: var(--third-light);
     cursor:pointer;
     width:fit-content;
+    transition:background-color ease 0.2s;
+}
+
+.location-select:hover{
+    background-color:var(--primary-dark);
 }

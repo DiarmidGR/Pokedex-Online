@@ -158,7 +158,7 @@ const EncountersContainer: React.FC<EncountersContainerProps> = ({
           {groupedEncounters.map((group) => (
             <div key={group.locationArea} className="encounters-list-container">
               <h2
-                className="encounters-location-area"
+                className="encounters-location-area switzer-bold"
                 onClick={() => toggleLocationExpansion(group.locationArea)}
               >
                 {group.locationArea !== "" ? group.locationArea : "Area"}

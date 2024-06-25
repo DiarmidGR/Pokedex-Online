@@ -1,14 +1,31 @@
 .signout-button{
-    width:200px;
+    width:min-content;
+    text-wrap:nowrap;
     padding:12px;
-    position:absolute;
-    top:0;
-    left:0;
+    border:none;
+    border-radius:14px;
+    font-size:18px;
+    background-color:var(--primary-color);
+    transition: background-color ease 0.2s;
+    cursor:pointer;
+    color:var(--third-light);
+    text-align: left;
+    position: absolute;
+    left:18px;
+    margin:10px;
+}
+
+.signout-button span{
+    padding-left:16px;
+}
+
+.signout-button:hover{
+    background-color:var(--primary-dark);
 }
 
 @media only screen and (max-width: 600px) {
     .signout-button{
-        width:100%;
         position:relative;
+        left:0;
     }
 }

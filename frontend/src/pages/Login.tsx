@@ -64,8 +64,8 @@ function Login() {
         </form>
       </div>
       <div className="register-container">
-        <h1>No account?</h1>
-        <p className="register-message">
+        <h1 className="switzer-bold">No account?</h1>
+        <p className="register-message switzer-regular">
           No account? Unlucky, continue as guest for now.
         </p>
         <button
