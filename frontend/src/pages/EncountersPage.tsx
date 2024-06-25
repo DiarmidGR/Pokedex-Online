@@ -5,7 +5,6 @@ import EncountersContainer from "../components/EncountersContainer";
 import PokemonList from "../components/PokemonList";
 import PokedexDropdown from "../ui/PokedexDropdown";
 import { getToken } from "../components/Auth";
-import axios from "axios";
 import CheckboxComponent from "../ui/Checkbox";
 import Header from "../components/Header";
 import axiosInstance from "../utils/axiosInstance";
@@ -138,7 +137,7 @@ const EncountersPage: React.FC<EncountersPageProps> = ({ version_id }) => {
       // Item doesn't exist, execute insert query
     } else {
       const userId = localStorage.getItem("user_id");
-      axios
+      axiosInstance
         .post(
           import.meta.env.VITE_API_ENDPOINT + `user-pokemon/insert`,
           {

@@ -1,11 +1,25 @@
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
+import { AxiosRequestConfig } from "axios";
 
 const apiUrl = import.meta.env.VITE_API_ENDPOINT;
 
 const axiosInstance = axios.create({
   baseURL: apiUrl,
 });
+
+// Structure definition for a retry queue item
+interface RetryQueueItem {
+  resolve: (value?: any) => void;
+  reject: (error?: any) => void;
+  config: AxiosRequestConfig;
+}
+
+// List to gold RequestQueue
+const refreshAndRetryQueue: RetryQueueItem[] = [];
+
+// Prevents multiple token refresh requests
+let isRefreshing = false;
 
 const refreshAccessToken = async () => {
   try {
@@ -44,33 +58,58 @@ axiosInstance.interceptors.request.use(
   }
 );
 
+// references:
+// https://medium.com/@sina.alizadeh120/repeating-failed-requests-after-token-refresh-in-axios-interceptors-for-react-js-apps-50feb54ddcbc
 axiosInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
-    const originalRequest = error.config;
+    const originalRequest: AxiosRequestConfig = error.config;
 
-    if (error.response.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
+    if (error.response && error.response.status === 401) {
+      if (!isRefreshing) {
+        isRefreshing = true;
+      }
       try {
-        const newToken = await refreshAccessToken();
-        originalRequest.headers["Authorization"] = `Bearer ${newToken}`;
-        return axiosInstance(originalRequest);
-      } catch (err) {
-        console.log("Unable to refresh access token on client side:", err);
+        // Refresh access token
+        const newAccessToken = await refreshAccessToken();
 
-        // Redirect to login page on token refresh failure
+        // Update the request headers with the new access token
+        error.config.headers["Authorization"] = `Bearer ${newAccessToken}`;
+
+        // Retry all requests in queue with new token
+        refreshAndRetryQueue.forEach(({ config, resolve, reject }) => {
+          axiosInstance
+            .request(config)
+            .then((response) => resolve(response))
+            .catch((err) => reject(err));
+        });
+
+        // Clear queue
+        refreshAndRetryQueue.length = 0;
+
+        // Retry original request
+        return axiosInstance(error.config);
+      } catch (refreshError) {
+        // Handle token refresh error
+        localStorage.removeItem("token");
+        localStorage.removeItem("refreshToken");
         redirectToLogin();
+        throw refreshError;
+      } finally {
+        isRefreshing = false;
       }
     }
 
+    // Add original request to queue
+    return new Promise<void>((resolve, reject) => {
+      refreshAndRetryQueue.push({ config: originalRequest, resolve, reject });
+    });
+    // Return Promis rejection if status code is not 401
     return Promise.reject(error);
   }
 );
 
 const redirectToLogin = () => {
-  // Redirect to the login page
-  localStorage.removeItem("token");
-  localStorage.removeItem("refreshToken");
   window.location.href = "/login";
 };
 

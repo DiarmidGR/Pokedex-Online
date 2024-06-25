@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import axiosInstance from "../utils/axiosInstance";
 import "./PokemonList.css";
 import { getToken } from "./Auth";
 
@@ -34,7 +34,7 @@ const PokemonList: React.FC<PokemonListProps> = ({
   useEffect(() => {
     if (storedItems) {
       // Fetch pokedex details from the API
-      axios
+      axiosInstance
         .get(
           import.meta.env.VITE_API_ENDPOINT +
             `pokedex?version_id=${selectedPokedex}`,
