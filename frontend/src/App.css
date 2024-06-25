@@ -10,12 +10,29 @@
   --secondary-color:#30323a;
   --secondary-dark:#2b2d34;
 
-  --third-light:#e6f1ff;
-  --third-color: #d8e3f0;
-  --third-dark: #c2c9d2;
+  --third-light:#FFFFFF; 
+  --third-color: #EFF5F3;
+  --third-dark: #717473;
+
+  background-color:var(--third-light);
+  color:var(--secondary-color);
+  display:flex;
+  justify-content: center;
+  align-items: center;
 }
 
 h2{
   padding:0;
   margin:0;
+}
+
+/* fonts */
+.switzer-regular{
+  font-family: 'Switzer', sans-serif;
+  font-weight:400;
+}
+
+.switzer-bold{
+  font-family: 'Switzer', sans-serif;
+  font-weight:700;
 }
