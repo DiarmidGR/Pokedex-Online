@@ -28,37 +28,54 @@ function Login() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="login-form lato-regular">
-      <h2 className="text-center lato-bold">Sign In</h2>
-      <label htmlFor="" className="login-child">
-        Username
-        <input
-          type="username"
-          className="login-input"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          required
-        />
-      </label>
+    <div className="login-layout">
+      <div className="login-container">
+        <form onSubmit={handleSubmit} className="login-form">
+          <h1 className="login-header switzer-bold">Login to Your Account</h1>
+          <h3 className="login-subheader switzer-regular">
+            Login using admin provided info
+          </h3>
+          <label htmlFor="" className="login-child">
+            <input
+              type="username"
+              className="login-input switzer-regular"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+              placeholder="Username"
+            />
+          </label>
 
-      <label htmlFor="" className="login-child">
-        Password
-        <input
-          type="password"
-          className="login-input"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-      </label>
-      <button type="submit" className="login-child login-button lato-bold">
-        LOGIN
-      </button>
-      <p className="login-guest">
-        No account? Continue as <a href="/">Guest</a>
-      </p>
-      {error && <p className="login-message">{error}</p>}
-    </form>
+          <label htmlFor="" className="login-child">
+            <input
+              type="password"
+              className="login-input switzer-regular"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              placeholder="Password"
+            />
+          </label>
+          <button type="submit" className="login-button switzer-bold">
+            Sign In
+          </button>
+
+          {error && <p className="login-message">{error}</p>}
+        </form>
+      </div>
+      <div className="register-container">
+        <h1>No account?</h1>
+        <p className="register-message">
+          No account? Unlucky, continue as guest for now.
+        </p>
+        <button
+          className="guest-button switzer-bold"
+          onClick={() => navigate("/")}
+        >
+          Continue as Guest
+        </button>
+      </div>
+    </div>
   );
 }
 

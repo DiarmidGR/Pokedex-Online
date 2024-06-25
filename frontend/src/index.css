@@ -3,9 +3,7 @@
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
-  color: #30323a;
-  background-color: #e6f1ff;
+  background-color: var(--third-light);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -15,4 +13,6 @@
 
 body, html {
   height:100%;
+  margin:0;
+  padding:0;
 }
