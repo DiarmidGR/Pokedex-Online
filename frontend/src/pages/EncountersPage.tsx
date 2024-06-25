@@ -6,7 +6,6 @@ import PokemonList from "../components/PokemonList";
 import PokedexDropdown from "../ui/PokedexDropdown";
 import { getToken } from "../components/Auth";
 import CheckboxComponent from "../ui/Checkbox";
-import Header from "../components/Header";
 import axiosInstance from "../utils/axiosInstance";
 import PokedexCard from "../components/PokedexCard";
 
@@ -180,7 +179,6 @@ const EncountersPage: React.FC<EncountersPageProps> = ({ version_id }) => {
 
   return (
     <div className="encounters-layout">
-      <Header />
       <div className="content-container">
         <div className="encounters-div">
           <PokemonList
@@ -196,7 +194,9 @@ const EncountersPage: React.FC<EncountersPageProps> = ({ version_id }) => {
           />
           <div className="encounters-controls-container">
             <div className="encounters-controls-child">
-              <p className="encounters-controls-child">{"Pokedex"}</p>
+              <p className="encounters-controls-child switzer-regular">
+                {"Pokedex"}
+              </p>
               <PokedexDropdown
                 versionId={versionId}
                 onPokedexChange={setSelectedPokedex}
@@ -205,7 +205,9 @@ const EncountersPage: React.FC<EncountersPageProps> = ({ version_id }) => {
             </div>
 
             <div className="encounters-controls-child">
-              <p className="encounters-controls-child">{"Location"}</p>
+              <p className="encounters-controls-child switzer-regular">
+                {"Location"}
+              </p>
               <LocationDropdown
                 versionId={version_id}
                 onLocationChange={setSelectedLocation}
@@ -217,7 +219,7 @@ const EncountersPage: React.FC<EncountersPageProps> = ({ version_id }) => {
                 isChecked={hideCaughtPokemon}
                 setIsChecked={setHideCaughtPokemon}
               ></CheckboxComponent>
-              <p className="encounters-controls-child">
+              <p className="encounters-controls-child switzer-regular">
                 {"Hide caught Pokemon?"}
               </p>
             </div>

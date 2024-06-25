@@ -1,10 +1,14 @@
-.pokedex-card-location{
-    font-size:x-large;
-    font-weight:600;
+.pokedex-dropdown{
+    background-color: var(--primary-color);
+    border:none;
+    padding:10px;
+    font-size:larger;
+    color: var(--third-light);
     cursor:pointer;
-    transition:color ease 0.2s;
+    width:fit-content;
+    transition:background-color ease 0.2s;
 }
 
-.pokedex-card-location:hover{
-    color:var(--primary-color);
+.pokedex-dropdown:hover{
+    background-color:var(--primary-dark);
 }

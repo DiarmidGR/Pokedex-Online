@@ -57,7 +57,7 @@ const LocationDropdown: React.FC<LocationDropdownProps> = ({
         id="location-select"
         value={selectedLocation}
         onChange={handleChange}
-        className="location-select"
+        className="location-select switzer-regular"
       >
         <option value="">Please choose a location</option>
         {locations.map((location) => (

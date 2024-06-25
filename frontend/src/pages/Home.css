@@ -3,20 +3,40 @@
     flex-direction: column;
     width:100%;
     align-items: center;
+    height:100%;
+    color: var(--secondary-color);
 }
 
-.grid-container {
+/* grid displaying game boxart items */
+.home-container {
     display: flex;
+    flex-wrap:wrap;
     width:60%;
     box-sizing: border-box;
-    padding:12px;
     justify-content: center;
-    flex-wrap:wrap;
     gap:10px;
+    padding:20px;
+}
+
+.home-header{
+    display: flex;
+    width:100%;
+    justify-content: center;
+    align-items: center;
+    position:relative;
+}
+
+.home-header h1{
+    cursor:pointer;
+    transition:background-color 0.2s ease;
+}
+
+.home-header h1:hover{
+    color:var(--primary-color);
 }
 
 @media only screen and (max-width: 600px) {
-    .grid-container{
+    .home-container{
         width:100%;
     }
 }

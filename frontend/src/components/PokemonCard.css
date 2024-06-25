@@ -7,7 +7,6 @@
 .pokemon-card-name{
     font-size:x-large;
     padding-left:36px;
-    border-bottom:2px solid var(--secondary-color);
     font-weight:600;
 }
 

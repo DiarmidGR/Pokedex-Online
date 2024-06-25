@@ -48,27 +48,27 @@ const PokedexLocations: React.FC<PokedexLocationsProps> = ({
           );
         });
     }
-  }, [pokemonId]);
+  }, [pokemonId, versionId]);
 
-  // click handler to set selected location to locationName
-  const handleClick = (locationName: string) => {
-    console.log(locationName);
-    setSelectedLocation(locationName);
+  // change handler to set selected location to locationName
+  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedLocation = event.target.value;
+    console.log(selectedLocation);
+    setSelectedLocation(selectedLocation);
   };
 
   return (
-    <>
+    <select
+      onChange={handleChange}
+      className="pokedex-dropdown switzer-regular"
+    >
+      <option value="">Select a location</option>
       {pokemonLocations.map((location, index) => (
-        <div
-          key={index}
-          onClick={() => handleClick(location.locationIdentifier)}
-          className="pokedex-card-location"
-          title="Left click to show location encounters"
-        >
+        <option key={index} value={location.locationIdentifier}>
           {location.locationName}
-        </div>
+        </option>
       ))}
-    </>
+    </select>
   );
 };
 

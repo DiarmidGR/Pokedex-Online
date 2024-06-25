@@ -34,7 +34,7 @@ const PokedexDropdown: React.FC<PokedexDropdownProps> = ({
     <div>
       <select
         onChange={handleChange}
-        className="pokedex-select-dropdown"
+        className="pokedex-select-dropdown switzer-regular"
         value={defaultIndex}
       >
         <option value="1">National</option>

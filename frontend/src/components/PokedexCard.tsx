@@ -56,7 +56,7 @@ const PokedexCard: React.FC<PokedexCardProps> = ({
   }
 
   return (
-    <div className="pokedex-card-container">
+    <>
       {pokemonDetails.map((pokemon, index) => (
         <div className="pokedex-card-item" key={index}>
           <h1>{pokemon.name}</h1>
@@ -78,7 +78,7 @@ const PokedexCard: React.FC<PokedexCardProps> = ({
           />
         </div>
       ))}
-    </div>
+    </>
   );
 };
 

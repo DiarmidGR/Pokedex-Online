@@ -60,7 +60,9 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ encounter }) => {
 
   return (
     <div className="pokemon-card-container">
-      <section className="pokemon-card-name">{encounter.pokemonName}</section>
+      <section className="pokemon-card-name switzer-bold">
+        {encounter.pokemonName}
+      </section>
       <section className="pokemon-card-image">
         <img
           src={`/sprites/pokemon/${encounter.pokemonId}.png`}
@@ -78,9 +80,11 @@ const PokemonCard: React.FC<PokemonCardProps> = ({ encounter }) => {
           title={encounter.encounterMethod}
         />
       </section>
-      <section>#{encounter.pokemonId}</section>
-      <section>Rarity: {encounter.encounterRate}%</section>
-      <section>
+      <section className="switzer-regular">#{encounter.pokemonId}</section>
+      <section className="switzer-regular">
+        Rarity: {encounter.encounterRate}%
+      </section>
+      <section className="switzer-regular">
         Levels: {encounter.minLevel} - {encounter.maxLevel}
       </section>
       <section>{renderConditionImagesOrText()}</section>

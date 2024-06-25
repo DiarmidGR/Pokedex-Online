@@ -4,6 +4,8 @@
     align-items: center;
     justify-content: center;
     display: flex;
+    color:var(--secondary-color);
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
 }
 
 .header-child{
@@ -13,11 +15,12 @@
 }
 
 .header-child h1 {
-    margin:0;
-    padding:0;
     min-width:max-content;
     cursor:pointer;
     transition: color 0.2s ease;
+    font-size:40px;
+    margin:0;
+    padding:6px;
 }
 
 .header-child h1:hover{
