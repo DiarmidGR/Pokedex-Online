@@ -7,17 +7,18 @@
     transition: all 0.2s ease; /* transition to grow image */
     border:3px solid var(--primary-color);
     background-color:var(--primary-color);
+    cursor:pointer;
 }
 
 .item-container:hover{
-    transform:scale(1.5);
+    transform:scale(1.3);
     z-index:2;
 }
 
 .item-image, .item-overlay{
     width:100%;
     height:100%;
-    transition: all 0.15s ease; /* transition to apply opacity layer */
+    transition: all 0.19s ease; /* transition to apply opacity layer */
     border-radius:10px;
 }
 
@@ -39,7 +40,7 @@
     left:0;
     right:0;
     bottom:0;
-    background-color:var(--third-color);
+    background-color:var(--third-darker);
     opacity:0;
 }
 
