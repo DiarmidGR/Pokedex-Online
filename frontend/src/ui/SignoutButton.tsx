@@ -14,6 +14,9 @@ const SignoutButton: React.FC<SignoutButtonProps> = ({ label }) => {
 
   const handleSignOut = async () => {
     removeToken();
+    localStorage.removeItem("token");
+    localStorage.removeItem("refreshToken");
+    localStorage.removeItem("user_id");
     navigate("/login");
   };
 

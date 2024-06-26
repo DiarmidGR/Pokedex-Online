@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axiosInstance from "../utils/axiosInstance";
 import { getToken } from "./Auth";
 import "./PokedexLocations.css";
 
@@ -28,7 +28,7 @@ const PokedexLocations: React.FC<PokedexLocationsProps> = ({
     // dont attempt to fetch data if pokemonId isn't provided
     if (pokemonId !== "") {
       // Fetch pokedex details from the API
-      axios
+      axiosInstance
         .get(
           import.meta.env.VITE_API_ENDPOINT +
             `pokemon_locations?pokemon_id=${pokemonId}&version_id=${versionId}`,
@@ -53,7 +53,6 @@ const PokedexLocations: React.FC<PokedexLocationsProps> = ({
   // change handler to set selected location to locationName
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedLocation = event.target.value;
-    console.log(selectedLocation);
     setSelectedLocation(selectedLocation);
   };
 
