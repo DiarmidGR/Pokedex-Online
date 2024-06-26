@@ -13,13 +13,8 @@ const MenuItem: React.FC<MenuItemProps> = ({ version }) => {
   };
 
   return (
-    <div className="item-container">
-      <img
-        src={`/boxart/${version}.png`}
-        alt=""
-        onClick={handleClick}
-        className="item-image"
-      />
+    <div className="item-container" onClick={handleClick}>
+      <img src={`/boxart/${version}.png`} alt="" className="item-image" />
       <div className="item-overlay"></div>
     </div>
   );
