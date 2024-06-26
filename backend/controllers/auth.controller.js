@@ -35,7 +35,6 @@ exports.refreshToken = async (req, res) => {
     }
   
     try {
-      console.log(`Old access token: ${refreshToken}`);
       const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET);
       const newAccessToken = jwt.sign({ id: decoded.id }, process.env.JWT_SECRET, { expiresIn: '300s' });// Expires in 5 minutes
   
