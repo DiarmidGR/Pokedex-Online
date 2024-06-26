@@ -21,7 +21,11 @@ const Home: React.FC = () => {
     <div className="home-layout">
       <div className="home-container">
         {versions.map((version) => (
-          <MenuItem key={version.id} version={version.identifier} />
+          <MenuItem
+            key={version.id}
+            version={version.identifier}
+            versionId={version.id}
+          />
         ))}
       </div>
     </div>
