@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./styles/EncountersPage.css";
+import styles from "./styles/EncountersPage.module.css";
 import LocationDropdown from "./components/LocationDropdown";
 import EncountersContainer from "./components/EncountersContainer";
 import PokemonList from "./components/PokemonList";
@@ -9,7 +9,7 @@ import CheckboxComponent from "../../ui/Checkbox";
 import axiosInstance from "../../utils/axiosInstance";
 import PokedexCard from "./components/PokedexCard";
 
-interface EncountersPageProps {
+interface TrackingPageProps {
   version_id: string;
 }
 
@@ -18,7 +18,7 @@ interface CaughtPokemonProps {
   version_id: number;
 }
 
-const EncountersPage: React.FC<EncountersPageProps> = ({ version_id }) => {
+const Tracking: React.FC<TrackingPageProps> = ({ version_id }) => {
   const [selectedPokemonId, setSelectedPokemonId] = useState<string>("");
   const [selectedLocation, setSelectedLocation] = useState<string>("");
   const versionId = version_id;
@@ -178,77 +178,69 @@ const EncountersPage: React.FC<EncountersPageProps> = ({ version_id }) => {
   };
 
   return (
-    <div className="encounters-layout">
-      <div className="content-container">
-        <div className="encounters-div">
-          <PokemonList
-            versionId={version_id}
-            storedItems={storedItems}
-            selectedPokedex={selectedPokedex}
-            handlePokemonClick={
-              getToken() == null
-                ? handlePokemonClick
-                : handlePokemonClickAuthenticated
-            }
-            handlePokemonRightClick={handlePokemonRightClick}
+    <div className={styles["tracker-container"]}>
+      <div className={styles["pokedex-container"]}>
+        <PokemonList
+          versionId={version_id}
+          storedItems={storedItems}
+          selectedPokedex={selectedPokedex}
+          handlePokemonClick={
+            getToken() == null
+              ? handlePokemonClick
+              : handlePokemonClickAuthenticated
+          }
+          handlePokemonRightClick={handlePokemonRightClick}
+        />
+      </div>
+      <div className={styles["controls-container"]}>
+        <div className={styles["controls-child"]}>
+          <p className="switzer-regular">{"Pokedex"}</p>
+          <PokedexDropdown
+            versionId={versionId}
+            onPokedexChange={setSelectedPokedex}
+            defaultIndex={lastPokedexId != null ? lastPokedexId : "1"}
           />
-          <div className="encounters-controls-container">
-            <div className="encounters-controls-child">
-              <p className="encounters-controls-child switzer-regular">
-                {"Pokedex"}
-              </p>
-              <PokedexDropdown
-                versionId={versionId}
-                onPokedexChange={setSelectedPokedex}
-                defaultIndex={lastPokedexId != null ? lastPokedexId : "1"}
-              />
-            </div>
-
-            <div className="encounters-controls-child">
-              <p className="encounters-controls-child switzer-regular">
-                {"Location"}
-              </p>
-              <LocationDropdown
-                versionId={version_id}
-                onLocationChange={setSelectedLocation}
-                selectedLocation={selectedLocation}
-              />
-            </div>
-            <div className="encounters-controls-child">
-              <CheckboxComponent
-                isChecked={hideCaughtPokemon}
-                setIsChecked={setHideCaughtPokemon}
-              ></CheckboxComponent>
-              <p className="encounters-controls-child switzer-regular">
-                {"Hide caught Pokemon?"}
-              </p>
-            </div>
-          </div>
-          <div className="encounters-container-layout">
-            <div className="pokedex-container">
-              <PokedexCard
-                pokemonId={selectedPokemonId}
-                versionId={version_id}
-                setSelectedLocation={setSelectedLocation}
-              />
-            </div>
-            <EncountersContainer
-              versionId={versionId}
-              locationIdentifier={selectedLocation}
-              storedItems={storedItems}
-              handlePokemonClick={
-                getToken() == null
-                  ? handlePokemonClick
-                  : handlePokemonClickAuthenticated
-              }
-              hideCaughtPokemon={hideCaughtPokemon}
-              handlePokemonRightClick={handlePokemonRightClick}
-            />
-          </div>
         </div>
+
+        <div className={styles["controls-child"]}>
+          <p className="switzer-regular">{"Location"}</p>
+          <LocationDropdown
+            versionId={version_id}
+            onLocationChange={setSelectedLocation}
+            selectedLocation={selectedLocation}
+          />
+        </div>
+        <div className={styles["controls-child"]}>
+          <CheckboxComponent
+            isChecked={hideCaughtPokemon}
+            setIsChecked={setHideCaughtPokemon}
+          ></CheckboxComponent>
+          <p className="switzer-regular">{"Hide caught Pokemon?"}</p>
+        </div>
+      </div>
+      <div className={styles["encounters-container"]}>
+        <div className="pokedex-container">
+          <PokedexCard
+            pokemonId={selectedPokemonId}
+            versionId={version_id}
+            setSelectedLocation={setSelectedLocation}
+          />
+        </div>
+        <EncountersContainer
+          versionId={versionId}
+          locationIdentifier={selectedLocation}
+          storedItems={storedItems}
+          handlePokemonClick={
+            getToken() == null
+              ? handlePokemonClick
+              : handlePokemonClickAuthenticated
+          }
+          hideCaughtPokemon={hideCaughtPokemon}
+          handlePokemonRightClick={handlePokemonRightClick}
+        />
       </div>
     </div>
   );
 };
 
-export default EncountersPage;
+export default Tracking;
