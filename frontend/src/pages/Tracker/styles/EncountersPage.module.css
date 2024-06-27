@@ -38,6 +38,7 @@
     display: flex;
     flex-direction: row;
     width:80%;
+    gap:20px;
 }
 
 .encounters-container{
@@ -47,6 +48,10 @@
 }
 
 @media only screen and (max-width: 600px) {
+    .encounters-layout{
+        flex-direction:column-reverse;
+    }
+    
     .controls-container{
         flex-direction:column;
         align-items: center;

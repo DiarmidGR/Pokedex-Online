@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import styles from "../styles/EncountersList.module.css";
-import PokemonCard from "./PokemonCard";
+import PokemonCard from "./EncounterCard";
 import { getToken } from "../../../utils/Auth";
 
 interface EncounterData {
@@ -158,7 +158,7 @@ const EncountersList: React.FC<EncountersListProps> = ({
           {groupedEncounters.map((group) => (
             <div key={group.locationArea} className={styles["list-container"]}>
               <h2
-                className={styles["encounters-location-area switzer-bold"]}
+                className={styles["encounters-location"]}
                 onClick={() => toggleLocationExpansion(group.locationArea)}
               >
                 {group.locationArea !== "" ? group.locationArea : "Area"}

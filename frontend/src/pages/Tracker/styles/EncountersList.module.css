@@ -41,7 +41,7 @@
     background-color:var(--primary-dark);
 }
 
-h2{
+.encounters-location{
     font-size:30px;
     text-align:center;
     border-bottom:1px solid var(--third-dark);
