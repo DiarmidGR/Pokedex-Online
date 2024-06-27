@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
-import "../styles/PokemonList.css";
+import styles from "../styles/PokedexList.module.css";
 import { getToken } from "../../../utils/Auth";
 
 // interface for pokemon data received from api
@@ -9,7 +9,7 @@ interface PokemonDetails {
   pokemonId: number;
 }
 
-interface PokemonListProps {
+interface PokedexListProps {
   versionId: string;
   storedItems: string[]; // array of pokemon to display passed to component in TrackingPage
   selectedPokedex: string; // Prop for selected pokedex
@@ -21,7 +21,7 @@ interface PokemonListProps {
   ) => void;
 }
 
-const PokemonList: React.FC<PokemonListProps> = ({
+const PokedexList: React.FC<PokedexListProps> = ({
   storedItems,
   versionId,
   selectedPokedex,
@@ -67,33 +67,29 @@ const PokemonList: React.FC<PokemonListProps> = ({
   };
 
   return (
-    <>
-      <div className={`pokemon-list-container`}>
-        <div className="pokemon-list-wrapper">
-          {pokemonDetails.map((detail, index) => (
-            <div
-              className={
-                isItemStored(detail.pokemonId)
-                  ? "pokemon-list-item caught"
-                  : "pokemon-list-item not-caught"
-              }
-              key={index}
-              onClick={() => handlePokemonClick(versionId, detail.pokemonId)}
-              onContextMenu={(event) =>
-                handlePokemonRightClick(event, versionId, detail.pokemonId)
-              }
-            >
-              <img
-                src={`/sprites/pokemon/${detail.pokemonId}.png`}
-                alt=""
-                className="pokemon-details"
-              />
-            </div>
-          ))}
+    <div className={styles["pokemon-list-wrapper"]}>
+      {pokemonDetails.map((detail, index) => (
+        <div
+          className={`${styles["pokemon-list-item"]} ${
+            isItemStored(detail.pokemonId)
+              ? styles["caught"]
+              : styles["not-caught"]
+          }`}
+          key={index}
+          onClick={() => handlePokemonClick(versionId, detail.pokemonId)}
+          onContextMenu={(event) =>
+            handlePokemonRightClick(event, versionId, detail.pokemonId)
+          }
+        >
+          <img
+            src={`/sprites/pokemon/${detail.pokemonId}.png`}
+            alt=""
+            className={styles["pokemon-details"]}
+          />
         </div>
-      </div>
-    </>
+      ))}
+    </div>
   );
 };
 
-export default PokemonList;
+export default PokedexList;
