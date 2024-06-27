@@ -1,4 +1,5 @@
 import { jwtDecode } from "jwt-decode";
+import { useNavigate } from "react-router-dom";
 
 interface DecodedToken {
   exp: number;
@@ -17,6 +18,10 @@ export const removeToken = () => {
   localStorage.removeItem("token");
 };
 
+export const getUsername = () => {
+  return localStorage.getItem("username");
+};
+
 // Return bool of jwt token status
 export const isAuthenticated = () => {
   const token = getToken();
@@ -32,4 +37,15 @@ export const isAuthenticated = () => {
   } catch (error) {
     return false;
   }
+};
+
+// Sign the user out and remove any important stored local variables
+export const logoutUser = async () => {
+  let navigate = useNavigate();
+  removeToken();
+  localStorage.removeItem("token");
+  localStorage.removeItem("refreshToken");
+  localStorage.removeItem("user_id");
+  localStorage.removeItem("username");
+  navigate("/login");
 };

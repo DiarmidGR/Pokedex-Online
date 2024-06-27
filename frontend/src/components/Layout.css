@@ -4,19 +4,6 @@
     width:100%;
 }
 
-.layout-header{
-    background-color:var(--primary-color);
-    box-sizing:border-box;
-}
-
-.layout-header h1{
-    color:var(--third-light);
-}
-
-.layout-header h1:hover{
-    color: var(--third-dark);
-}
-
 .layout-content{
     display:flex;
     flex:1;

@@ -21,6 +21,7 @@ function Login() {
       localStorage.setItem("token", res.data.accessToken);
       localStorage.setItem("refreshToken", res.data.refreshToken);
       localStorage.setItem("user_id", res.data.user_id);
+      localStorage.setItem("username", username);
       navigate("/");
     } catch (err) {
       setError("Invalid credentials.");

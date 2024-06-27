@@ -1,7 +1,8 @@
-import "./Header.css";
+import styles from "./Header.module.css";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import SignoutButton from "../ui/SignoutButton";
+import { getUsername, getToken } from "../utils/Auth";
 
 interface HeaderProps {}
 
@@ -13,16 +14,19 @@ const Header: React.FC<HeaderProps> = ({}) => {
     navigate("/");
   };
   return (
-    <div className="header-container">
-      <div className="header-child title">
+    <header>
+      <div className={styles["header-title"]}>
         <h1 onClick={handleHomeClick} title="Return to homepage">
           Pokétracker Online
         </h1>
       </div>
-      <div className="header-child">
+      <div className={styles["header-user"]}>
+        {getToken() && <p>Logged in: {getUsername()}</p>}
+      </div>
+      <div className={styles["header-logout"]}>
         <SignoutButton label="Sign Out" />
       </div>
-    </div>
+    </header>
   );
 };
 

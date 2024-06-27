@@ -1,0 +1,40 @@
+header{
+    width:100%;
+    position:relative;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+    color:var(--third-light);
+    background-color:var(--primary-color);
+}
+
+.header-title h1 {
+    cursor:pointer;
+    transition: color 0.2s ease;
+    margin:6px;
+}
+
+.header-title:hover h1{
+    color:var(--third-dark);
+}
+
+.header-logout{
+    position:absolute;
+    left:6px;
+}
+
+.header-user{
+    position:absolute;
+    right:6px;
+}
+
+@media only screen and (max-width: 600px) {
+    header{
+        flex-direction:column;
+    }
+
+    .header-logout, .header-user{
+        position:relative;
+    }
+}
