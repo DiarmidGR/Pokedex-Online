@@ -1,59 +1,27 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
-import { getToken } from "../../../utils/Auth";
 import styles from "../styles/PokemonCard.module.css";
 import PokedexLocations from "./PokedexLocations";
+import useFetchPokemonDetails from "../hooks/useFetchPokemonDetails";
 
-interface PokedexCardProps {
+interface PokemonCardProps {
   pokemonId: string;
   versionId: string;
   setSelectedLocation: (location: string) => void;
 }
 
-interface PokemonDetails {
-  name: string;
-  nationalId: string;
-  types: string;
-}
-
-const PokedexCard: React.FC<PokedexCardProps> = ({
+const PokemonCard: React.FC<PokemonCardProps> = ({
   pokemonId,
   setSelectedLocation,
   versionId,
 }) => {
-  const [pokemonDetails, setPokemonDetails] = useState<PokemonDetails[]>([]);
+  // Fetch pokemon details from api
+  const { pokemonDetails, loading, error } = useFetchPokemonDetails(pokemonId);
 
-  // fetch data from API using pokemonId
-  useEffect(() => {
-    // dont attempt to fetch data if pokemonId isn't provided
-    if (pokemonId !== "") {
-      // Fetch pokedex details from the API
-      axios
-        .get(
-          `${
-            import.meta.env.VITE_API_ENDPOINT
-          }/pokemon_details?pokemon_id=${pokemonId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${getToken()}`, // Include JWT token in the headers
-            },
-          }
-        )
-        .then((response) => {
-          setPokemonDetails(response.data);
-        })
-        .catch((error) => {
-          console.error(
-            "There was an error fetching the pokemon details!",
-            error
-          );
-        });
-    }
-  }, [pokemonId]);
-
-  // Return no component  if pokemon isn't selected
-  if (pokemonId === "") {
+  if (loading) {
     return null;
+  }
+
+  if (error) {
+    return <div>Error fetching pokémon details: {error.message}</div>;
   }
 
   return (
@@ -83,4 +51,4 @@ const PokedexCard: React.FC<PokedexCardProps> = ({
   );
 };
 
-export default PokedexCard;
+export default PokemonCard;
