@@ -34,7 +34,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ version, versionId }) => {
         .get(
           `${
             import.meta.env.VITE_API_ENDPOINT
-          }version_details?user_id=${userId}&version_id=${versionId}`,
+          }/version_details?user_id=${userId}&version_id=${versionId}`,
           {
             headers: {
               Authorization: `Bearer ${getToken()}`, // Include JWT token in the headers

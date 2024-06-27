@@ -36,8 +36,9 @@ const PokedexList: React.FC<PokedexListProps> = ({
       // Fetch pokedex details from the API
       axiosInstance
         .get(
-          import.meta.env.VITE_API_ENDPOINT +
-            `pokedex?version_id=${selectedPokedex}`,
+          `${
+            import.meta.env.VITE_API_ENDPOINT
+          }/pokedex?version_id=${selectedPokedex}`,
           {
             headers: {
               Authorization: `Bearer ${getToken()}`, // Include JWT token in the headers

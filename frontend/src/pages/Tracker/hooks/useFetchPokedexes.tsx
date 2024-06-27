@@ -16,8 +16,9 @@ const useFetchPokedexes = (versionId: string) => {
     const fetchPokedexes = async () => {
       try {
         const response = await axios.get(
-          import.meta.env.VITE_API_ENDPOINT +
-            `pokedex_versions?version_id=${versionId}`,
+          `${
+            import.meta.env.VITE_API_ENDPOINT
+          }/pokedex_versions?version_id=${versionId}`,
           {
             headers: {
               Authorization: `Bearer ${getToken()}`, // Include JWT token in the headers
