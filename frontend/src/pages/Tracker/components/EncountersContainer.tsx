@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import styles from "../styles/EncountersList.module.css";
+import "../styles/EncountersContainer.css";
 import PokemonCard from "./EncounterCard";
 import { getToken } from "../../../utils/Auth";
 
@@ -152,26 +152,26 @@ const EncountersList: React.FC<EncountersListProps> = ({
   };
 
   return (
-    <>
+    <div className="encounters-container">
       {encounterDetails.length > 0 ? (
         <>
           {groupedEncounters.map((group) => (
-            <div key={group.locationArea} className={styles["list-container"]}>
+            <div key={group.locationArea} className="encounters-list-container">
               <h2
-                className={styles["encounters-location"]}
+                className="encounters-location-area switzer-bold"
                 onClick={() => toggleLocationExpansion(group.locationArea)}
               >
                 {group.locationArea !== "" ? group.locationArea : "Area"}
               </h2>
               {expandedLocations.includes(group.locationArea) && (
-                <div className={styles["encounters-list"]}>
+                <div className="encounters-list">
                   {group.encounters.map((encounter, index) => (
                     <div
-                      className={`${styles["encounters-item"]} ${
+                      className={
                         isItemStored(encounter.pokemonId)
-                          ? styles["caught"]
-                          : styles["not-caught"]
-                      }`}
+                          ? "encounters-item caught"
+                          : "encounters-item not-caught"
+                      }
                       key={index}
                       onContextMenu={(event) =>
                         handlePokemonRightClick(
@@ -196,7 +196,7 @@ const EncountersList: React.FC<EncountersListProps> = ({
       ) : (
         ""
       )}
-    </>
+    </div>
   );
 };
 

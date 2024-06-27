@@ -1,95 +1,85 @@
-import React from "react";
-import "../styles/PokemonCard.css";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { getToken } from "../../../utils/Auth";
+import styles from "../styles/PokemonCard.module.css";
+import PokedexLocations from "./PokedexLocations";
 
-interface PokemonCardProps {
-  encounter: EncounterData;
+interface PokedexCardProps {
+  pokemonId: string;
+  versionId: string;
+  setSelectedLocation: (location: string) => void;
 }
 
-interface EncounterData {
-  minLevel: number;
-  maxLevel: number;
-  pokemonName: string;
-  pokemonId: number;
-  locationArea: string;
-  locationName: string;
-  encounterMethod: string;
-  encounterRate: string;
-  encounterCondition: string;
+interface PokemonDetails {
+  name: string;
+  nationalId: string;
+  types: string;
 }
 
-const PokemonCard: React.FC<PokemonCardProps> = ({ encounter }) => {
-  // Mapping of encounter condition keywords to image paths
-  const conditionImages: { [key: string]: string } = {
-    "time-day": "time-day.png",
-    "time-morning": "time-morning.png",
-    "time-night": "time-night.png",
-    "season-winter": "season-winter.png",
-    "season-autumn": "season-autumn.png",
-    "season-spring": "season-spring.png",
-    "season-summer": "season-summer.png",
-  };
+const PokedexCard: React.FC<PokedexCardProps> = ({
+  pokemonId,
+  setSelectedLocation,
+  versionId,
+}) => {
+  const [pokemonDetails, setPokemonDetails] = useState<PokemonDetails[]>([]);
 
-  // Function to render condition images or text if no images are available
-  const renderConditionImagesOrText = () => {
-    if (
-      !encounter.encounterCondition ||
-      typeof encounter.encounterCondition !== "string"
-    ) {
-      return null;
+  // fetch data from API using pokemonId
+  useEffect(() => {
+    // dont attempt to fetch data if pokemonId isn't provided
+    if (pokemonId !== "") {
+      // Fetch pokedex details from the API
+      axios
+        .get(
+          import.meta.env.VITE_API_ENDPOINT +
+            `pokemon_details?pokemon_id=${pokemonId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${getToken()}`, // Include JWT token in the headers
+            },
+          }
+        )
+        .then((response) => {
+          setPokemonDetails(response.data);
+        })
+        .catch((error) => {
+          console.error(
+            "There was an error fetching the pokemon details!",
+            error
+          );
+        });
     }
+  }, [pokemonId]);
 
-    const conditions = encounter.encounterCondition.split(" ");
-    const elements = conditions.map((condition, index) => {
-      if (conditionImages[condition]) {
-        return (
-          <img
-            key={index}
-            src={conditionImages[condition]}
-            alt={condition}
-            className="pokemon-card-condition-image"
-            title={condition}
-          />
-        );
-      } else {
-        return <section key={index}>{condition}</section>;
-      }
-    });
-
-    return <div className="pokemon-card-condition-container">{elements}</div>;
-  };
+  // Return no component  if pokemon isn't selected
+  if (pokemonId === "") {
+    return null;
+  }
 
   return (
-    <div className="pokemon-card-container">
-      <section className="pokemon-card-name switzer-bold">
-        {encounter.pokemonName}
-      </section>
-      <section className="pokemon-card-image">
-        <img
-          src={`/sprites/pokemon/${encounter.pokemonId}.png`}
-          alt={encounter.pokemonName}
-          className="pokemon-card-image"
-        />
-        <img
-          src={
-            encounter.encounterMethod == "grass-spots"
-              ? "grass-spots.gif"
-              : encounter.encounterMethod + ".png"
-          }
-          alt=""
-          className="pokemon-card-method"
-          title={encounter.encounterMethod}
-        />
-      </section>
-      <section className="switzer-regular">#{encounter.pokemonId}</section>
-      <section className="switzer-regular">
-        Rarity: {encounter.encounterRate}%
-      </section>
-      <section className="switzer-regular">
-        Levels: {encounter.minLevel} - {encounter.maxLevel}
-      </section>
-      <section>{renderConditionImagesOrText()}</section>
-    </div>
+    <>
+      {pokemonDetails.map((pokemon, index) => (
+        <div className={styles["pokedex-card-item"]} key={index}>
+          <h1>{pokemon.name}</h1>
+          <h2>#{pokemon.nationalId}</h2>
+          <img src={`/sprites/pokemon/${pokemon.nationalId}.png`} alt="" />
+          <div className={styles["pokedex-card-item-types"]}>
+            {pokemon.types.split(",").map((type) => (
+              <img
+                key={type}
+                src={"/images/types/" + type.trim() + ".png"}
+                alt={type}
+              />
+            ))}
+          </div>
+          <PokedexLocations
+            versionId={versionId}
+            pokemonId={pokemonId}
+            setSelectedLocation={setSelectedLocation}
+          />
+        </div>
+      ))}
+    </>
   );
 };
 
-export default PokemonCard;
+export default PokedexCard;

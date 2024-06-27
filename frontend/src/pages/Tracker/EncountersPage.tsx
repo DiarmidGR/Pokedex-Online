@@ -7,7 +7,7 @@ import PokedexDropdown from "./components/PokedexDropdown";
 import { getToken } from "../../utils/Auth";
 import CheckboxComponent from "../../ui/Checkbox";
 import axiosInstance from "../../utils/axiosInstance";
-import PokedexCard from "./components/PokedexCard";
+import PokemonCard from "./components/PokemonCard";
 
 interface TrackingPageProps {
   version_id: string;
@@ -234,7 +234,7 @@ const Tracking: React.FC<TrackingPageProps> = ({ version_id }) => {
           />
         </div>
         <div className="pokemon-container">
-          <PokedexCard
+          <PokemonCard
             pokemonId={selectedPokemonId}
             versionId={version_id}
             setSelectedLocation={setSelectedLocation}
