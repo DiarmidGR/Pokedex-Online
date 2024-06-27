@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-import "./EncountersPage.css";
-import LocationDropdown from "../ui/LocationDropdown";
-import EncountersContainer from "../components/EncountersContainer";
-import PokemonList from "../components/PokemonList";
-import PokedexDropdown from "../ui/PokedexDropdown";
-import { getToken } from "../components/Auth";
-import CheckboxComponent from "../ui/Checkbox";
-import axiosInstance from "../utils/axiosInstance";
-import PokedexCard from "../components/PokedexCard";
+import "./styles/EncountersPage.css";
+import LocationDropdown from "./components/LocationDropdown";
+import EncountersContainer from "./components/EncountersContainer";
+import PokemonList from "./components/PokemonList";
+import PokedexDropdown from "./components/PokedexDropdown";
+import { getToken } from "../../utils/Auth";
+import CheckboxComponent from "../../ui/Checkbox";
+import axiosInstance from "../../utils/axiosInstance";
+import PokedexCard from "./components/PokedexCard";
 
 interface EncountersPageProps {
   version_id: string;

@@ -1,5 +1,5 @@
-import versionsData from "../data/versions.json";
-import MenuItem from "../components/MenuItem";
+import versionsData from "./data/versions.json";
+import MenuItem from "./components/MenuItem";
 import { useState, useEffect } from "react";
 import "./Home.css";
 
