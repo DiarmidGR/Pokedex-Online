@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styles from "./styles/EncountersPage.module.css";
 import LocationDropdown from "./components/LocationDropdown";
 import EncountersContainer from "./components/EncountersContainer";
-import PokemonList from "./components/PokemonList";
+import PokedexList from "./components/PokedexList";
 import PokedexDropdown from "./components/PokedexDropdown";
 import { getToken } from "../../utils/Auth";
 import CheckboxComponent from "../../ui/Checkbox";
@@ -180,7 +180,7 @@ const Tracking: React.FC<TrackingPageProps> = ({ version_id }) => {
   return (
     <div className={styles["tracker-container"]}>
       <div className={styles["pokedex-container"]}>
-        <PokemonList
+        <PokedexList
           versionId={version_id}
           storedItems={storedItems}
           selectedPokedex={selectedPokedex}
