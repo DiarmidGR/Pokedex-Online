@@ -1,5 +1,4 @@
 .signout-button{
-    width:min-content;
     text-wrap:nowrap;
     padding:12px;
     border:none;
@@ -10,9 +9,6 @@
     cursor:pointer;
     color:var(--third-light);
     text-align: left;
-    position: absolute;
-    left:18px;
-    margin:10px;
 }
 
 .signout-button span{

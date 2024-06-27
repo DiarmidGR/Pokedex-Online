@@ -68,34 +68,30 @@ const PokemonList: React.FC<PokemonListProps> = ({
 
   return (
     <>
-      {pokemonDetails.length > 0 ? (
-        <div className={`pokemon-list-container`}>
-          <div className="pokemon-list-wrapper">
-            {pokemonDetails.map((detail, index) => (
-              <div
-                className={
-                  isItemStored(detail.pokemonId)
-                    ? "pokemon-list-item caught"
-                    : "pokemon-list-item not-caught"
-                }
-                key={index}
-                onClick={() => handlePokemonClick(versionId, detail.pokemonId)}
-                onContextMenu={(event) =>
-                  handlePokemonRightClick(event, versionId, detail.pokemonId)
-                }
-              >
-                <img
-                  src={`/sprites/pokemon/${detail.pokemonId}.png`}
-                  alt=""
-                  className="pokemon-details"
-                />
-              </div>
-            ))}
-          </div>
+      <div className={`pokemon-list-container`}>
+        <div className="pokemon-list-wrapper">
+          {pokemonDetails.map((detail, index) => (
+            <div
+              className={
+                isItemStored(detail.pokemonId)
+                  ? "pokemon-list-item caught"
+                  : "pokemon-list-item not-caught"
+              }
+              key={index}
+              onClick={() => handlePokemonClick(versionId, detail.pokemonId)}
+              onContextMenu={(event) =>
+                handlePokemonRightClick(event, versionId, detail.pokemonId)
+              }
+            >
+              <img
+                src={`/sprites/pokemon/${detail.pokemonId}.png`}
+                alt=""
+                className="pokemon-details"
+              />
+            </div>
+          ))}
         </div>
-      ) : (
-        <p></p>
-      )}
+      </div>
     </>
   );
 };
