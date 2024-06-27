@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styles from "./styles/EncountersPage.module.css";
 import LocationDropdown from "./components/LocationDropdown";
-import EncountersContainer from "./components/EncountersContainer";
+import EncountersList from "./components/EncountersList";
 import PokedexList from "./components/PokedexList";
 import PokedexDropdown from "./components/PokedexDropdown";
 import { getToken } from "../../utils/Auth";
@@ -218,26 +218,28 @@ const Tracking: React.FC<TrackingPageProps> = ({ version_id }) => {
           <p className="switzer-regular">{"Hide caught Pokemon?"}</p>
         </div>
       </div>
-      <div className={styles["encounters-container"]}>
-        <div className="pokedex-container">
+      <div className={styles["encounters-layout"]}>
+        <div className={styles["encounters-container"]}>
+          <EncountersList
+            versionId={versionId}
+            locationIdentifier={selectedLocation}
+            storedItems={storedItems}
+            handlePokemonClick={
+              getToken() == null
+                ? handlePokemonClick
+                : handlePokemonClickAuthenticated
+            }
+            hideCaughtPokemon={hideCaughtPokemon}
+            handlePokemonRightClick={handlePokemonRightClick}
+          />
+        </div>
+        <div className="pokemon-container">
           <PokedexCard
             pokemonId={selectedPokemonId}
             versionId={version_id}
             setSelectedLocation={setSelectedLocation}
           />
         </div>
-        <EncountersContainer
-          versionId={versionId}
-          locationIdentifier={selectedLocation}
-          storedItems={storedItems}
-          handlePokemonClick={
-            getToken() == null
-              ? handlePokemonClick
-              : handlePokemonClickAuthenticated
-          }
-          hideCaughtPokemon={hideCaughtPokemon}
-          handlePokemonRightClick={handlePokemonRightClick}
-        />
       </div>
     </div>
   );

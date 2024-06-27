@@ -1,15 +1,17 @@
-.encounters-container{
-    max-height: 70vh;
-    flex:1;
-    overflow-y:auto;
+.list-container{
+    display:flex;
+    flex-direction:column;
+    flex-wrap:wrap;
+    justify-content: center;
+    gap:8px;
 }
 
 .encounters-list{
     display:flex;
     flex-wrap:wrap;
+    width:100%;
     justify-content: center;
-    padding-top:12px;
-    gap:8px;
+    gap:4px;
 }
 
 .encounters-item{
@@ -39,7 +41,7 @@
     background-color:var(--primary-dark);
 }
 
-.encounters-location-area{
+h2{
     font-size:30px;
     text-align:center;
     border-bottom:1px solid var(--third-dark);

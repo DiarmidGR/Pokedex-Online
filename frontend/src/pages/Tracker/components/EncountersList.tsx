@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "../styles/EncountersContainer.css";
+import styles from "../styles/EncountersList.module.css";
 import PokemonCard from "./PokemonCard";
 import { getToken } from "../../../utils/Auth";
 
@@ -16,7 +16,7 @@ interface EncounterData {
   encounterCondition: string;
 }
 
-interface EncountersContainerProps {
+interface EncountersListProps {
   versionId: string;
   locationIdentifier: string;
   storedItems: string[];
@@ -29,7 +29,7 @@ interface EncountersContainerProps {
   ) => void;
 }
 
-const EncountersContainer: React.FC<EncountersContainerProps> = ({
+const EncountersList: React.FC<EncountersListProps> = ({
   versionId,
   locationIdentifier,
   storedItems,
@@ -152,26 +152,26 @@ const EncountersContainer: React.FC<EncountersContainerProps> = ({
   };
 
   return (
-    <div className="encounters-container">
+    <>
       {encounterDetails.length > 0 ? (
         <>
           {groupedEncounters.map((group) => (
-            <div key={group.locationArea} className="encounters-list-container">
+            <div key={group.locationArea} className={styles["list-container"]}>
               <h2
-                className="encounters-location-area switzer-bold"
+                className={styles["encounters-location-area switzer-bold"]}
                 onClick={() => toggleLocationExpansion(group.locationArea)}
               >
                 {group.locationArea !== "" ? group.locationArea : "Area"}
               </h2>
               {expandedLocations.includes(group.locationArea) && (
-                <div className="encounters-list">
+                <div className={styles["encounters-list"]}>
                   {group.encounters.map((encounter, index) => (
                     <div
-                      className={
+                      className={`${styles["encounters-item"]} ${
                         isItemStored(encounter.pokemonId)
-                          ? "encounters-item caught"
-                          : "encounters-item not-caught"
-                      }
+                          ? styles["caught"]
+                          : styles["not-caught"]
+                      }`}
                       key={index}
                       onContextMenu={(event) =>
                         handlePokemonRightClick(
@@ -196,8 +196,8 @@ const EncountersContainer: React.FC<EncountersContainerProps> = ({
       ) : (
         ""
       )}
-    </div>
+    </>
   );
 };
 
-export default EncountersContainer;
+export default EncountersList;
