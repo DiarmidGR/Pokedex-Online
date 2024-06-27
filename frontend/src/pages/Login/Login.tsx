@@ -9,15 +9,17 @@ function Login() {
   const [error, setError] = useState("");
 
   let navigate = useNavigate();
-  const loginUrl = import.meta.env.VITE_LOGIN_ENDPOINT;
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     try {
-      const res = await axiosInstance.post(loginUrl, {
-        username,
-        password,
-      });
+      const res = await axiosInstance.post(
+        `${import.meta.env.VITE_API_ENDPOINT}/login`,
+        {
+          username,
+          password,
+        }
+      );
       localStorage.setItem("token", res.data.accessToken);
       localStorage.setItem("refreshToken", res.data.refreshToken);
       localStorage.setItem("user_id", res.data.user_id);

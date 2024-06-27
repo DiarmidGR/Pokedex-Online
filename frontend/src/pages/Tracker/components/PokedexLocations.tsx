@@ -30,8 +30,9 @@ const PokedexLocations: React.FC<PokedexLocationsProps> = ({
       // Fetch pokedex details from the API
       axiosInstance
         .get(
-          import.meta.env.VITE_API_ENDPOINT +
-            `pokemon_locations?pokemon_id=${pokemonId}&version_id=${versionId}`,
+          `${
+            import.meta.env.VITE_API_ENDPOINT
+          }/pokemon_locations?pokemon_id=${pokemonId}&version_id=${versionId}`,
           {
             headers: {
               Authorization: `Bearer ${getToken()}`, // Include JWT token in the headers

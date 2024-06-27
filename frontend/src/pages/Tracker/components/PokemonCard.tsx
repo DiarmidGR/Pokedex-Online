@@ -30,8 +30,9 @@ const PokedexCard: React.FC<PokedexCardProps> = ({
       // Fetch pokedex details from the API
       axios
         .get(
-          import.meta.env.VITE_API_ENDPOINT +
-            `pokemon_details?pokemon_id=${pokemonId}`,
+          `${
+            import.meta.env.VITE_API_ENDPOINT
+          }/pokemon_details?pokemon_id=${pokemonId}`,
           {
             headers: {
               Authorization: `Bearer ${getToken()}`, // Include JWT token in the headers

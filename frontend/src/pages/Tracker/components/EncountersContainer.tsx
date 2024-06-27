@@ -47,8 +47,9 @@ const EncountersList: React.FC<EncountersListProps> = ({
       // Fetch encounter details from the API
       axios
         .get(
-          import.meta.env.VITE_API_ENDPOINT +
-            `encounter-details?version_id=${versionId}&location_identifier=${locationIdentifier}`,
+          `${
+            import.meta.env.VITE_API_ENDPOINT
+          }/encounter-details?version_id=${versionId}&location_identifier=${locationIdentifier}`,
           {
             headers: {
               Authorization: `Bearer ${getToken()}`, // Include JWT token in the headers
