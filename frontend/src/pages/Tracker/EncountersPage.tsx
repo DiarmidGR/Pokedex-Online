@@ -50,8 +50,9 @@ const Tracking: React.FC<TrackingPageProps> = ({ version_id }) => {
         if (token) {
           // Fetch stored items from backend API
           const response = await axiosInstance.get(
-            import.meta.env.VITE_API_ENDPOINT +
-              `user-pokemon?version_id=${versionId}&user_id=${userId}`,
+            `${
+              import.meta.env.VITE_API_ENDPOINT
+            }/user-pokemon?version_id=${versionId}&user_id=${userId}`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -108,7 +109,7 @@ const Tracking: React.FC<TrackingPageProps> = ({ version_id }) => {
       const userId = localStorage.getItem("user_id");
       axiosInstance
         .post(
-          import.meta.env.VITE_API_ENDPOINT + `user-pokemon/delete`,
+          `${import.meta.env.VITE_API_ENDPOINT}/user-pokemon/delete`,
           {
             pokemon_id: pokemonId,
             version_id: versionId,
@@ -138,7 +139,7 @@ const Tracking: React.FC<TrackingPageProps> = ({ version_id }) => {
       const userId = localStorage.getItem("user_id");
       axiosInstance
         .post(
-          import.meta.env.VITE_API_ENDPOINT + `user-pokemon/insert`,
+          `${import.meta.env.VITE_API_ENDPOINT}/user-pokemon/insert`,
           {
             pokemon_id: pokemonId,
             version_id: versionId,
