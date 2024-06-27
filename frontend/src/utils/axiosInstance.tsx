@@ -26,7 +26,7 @@ const refreshAccessToken = async () => {
     const refreshToken = localStorage.getItem("refreshToken");
     if (!refreshToken) throw new Error("No refresh token found");
 
-    const res = await axios.post(`${apiUrl}refresh`, {
+    const res = await axios.post(`${apiUrl}/refresh`, {
       refreshToken,
     });
     localStorage.setItem("token", res.data.accessToken);
