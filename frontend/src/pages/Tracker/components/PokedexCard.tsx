@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { getToken } from "./Auth";
-import "./PokedexCard.css";
+import { getToken } from "../../../utils/Auth";
+import "../styles/PokedexCard.css";
 import PokedexLocations from "./PokedexLocations";
 
 interface PokedexCardProps {
