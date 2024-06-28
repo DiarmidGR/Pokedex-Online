@@ -3,6 +3,7 @@ import styles from "../styles/EncounterCard.module.css";
 
 interface EncounterCardProps {
   encounter: EncounterData;
+  isCaught: boolean;
 }
 
 interface EncounterData {
@@ -17,7 +18,10 @@ interface EncounterData {
   encounterCondition: string;
 }
 
-const EncounterCard: React.FC<EncounterCardProps> = ({ encounter }) => {
+const EncounterCard: React.FC<EncounterCardProps> = ({
+  encounter,
+  isCaught,
+}) => {
   // Mapping of encounter condition keywords to image paths
   const conditionImages: { [key: string]: string } = {
     "time-day": "time-day.png",
@@ -62,8 +66,31 @@ const EncounterCard: React.FC<EncounterCardProps> = ({ encounter }) => {
     );
   };
 
+  const darkSprite = () => {
+    return (
+      <img
+        src="/icons/pokeball-dark.png"
+        alt=""
+        loading="lazy"
+        className={styles["pokeball-icon"]}
+      />
+    );
+  };
+
+  const normalSprite = () => {
+    return (
+      <img
+        src="/icons/pokeball.png"
+        alt=""
+        loading="lazy"
+        className={styles["pokeball-icon"]}
+      />
+    );
+  };
+
   return (
     <div className={styles["pokemon-card-container"]}>
+      {isCaught ? normalSprite() : darkSprite()}
       <section className={styles["pokemon-card-name"]}>
         {encounter.pokemonName}
       </section>
