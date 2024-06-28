@@ -69,7 +69,7 @@ const EncounterCard: React.FC<EncounterCardProps> = ({
   const darkSprite = () => {
     return (
       <img
-        src="/icons/pokeball-dark.png"
+        src="/pokeball-dark.png"
         alt=""
         loading="lazy"
         className={styles["pokeball-icon"]}
@@ -80,7 +80,7 @@ const EncounterCard: React.FC<EncounterCardProps> = ({
   const normalSprite = () => {
     return (
       <img
-        src="/icons/pokeball.png"
+        src="/pokeball.png"
         alt=""
         loading="lazy"
         className={styles["pokeball-icon"]}
