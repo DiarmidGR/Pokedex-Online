@@ -13,36 +13,6 @@
     padding:8px;
 }
 
-.pokemon-list-item{
-    max-width:56px;
-    height:56px;
-}
-
-.pokemon-sprite{
-    width:56px;
-    transition:all 0.16s ease;
-    pointer-events: none;
-}
-
-/* make the pokemon sprite grow when the mouse is on it */
-.pokemon-list-item:hover .pokemon-sprite{
-    transform:scale(2);
-    image-rendering:pixelated;
-    z-index:1;
-}
-
-/* .pokemon-list-item.caught{
-    background-color:var(--primary-color);
-}
-
-.pokemon-list-item.not-caught:hover{
-    background-color:var(--third-dark);
-}
-
-.pokemon-list-item.caught:hover{
-    background-color:var(--primary-dark);
-} */
-
 @media only screen and (max-width: 600px) {
     .pokemon-list-container{
         all:unset;

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
 import styles from "../styles/PokedexList.module.css";
 import { getToken } from "../../../utils/Auth";
+import PokedexItem from "./PokedexItem";
 
 // interface for pokemon data received from api
 interface PokemonDetails {
@@ -19,6 +20,7 @@ interface PokedexListProps {
     versionId: String,
     pokemonId: number
   ) => void;
+  showHiddenPokemon: boolean;
 }
 
 const PokedexList: React.FC<PokedexListProps> = ({
@@ -27,6 +29,7 @@ const PokedexList: React.FC<PokedexListProps> = ({
   selectedPokedex,
   handlePokemonClick,
   handlePokemonRightClick,
+  showHiddenPokemon,
 }) => {
   const [pokemonDetails, setPokemonDetails] = useState<PokemonDetails[]>([]);
 
@@ -60,39 +63,18 @@ const PokedexList: React.FC<PokedexListProps> = ({
     }
   }, [selectedPokedex]);
 
-  // function to check whether a pokemon is stored in localStorage already
-  // is used to determine background color of pokedex item
-  const isItemStored = (item: number) => {
-    let storageString = versionId + "_" + item;
-    return storedItems.includes(storageString);
-  };
-
   return (
     <div className={styles["pokemon-list-wrapper"]}>
-      {pokemonDetails.map((detail, index) => (
-        <div
-          className={`${styles["pokemon-list-item"]} ${
-            isItemStored(detail.pokemonId)
-              ? styles["caught"]
-              : styles["not-caught"]
-          }`}
+      {pokemonDetails.map((pokemon, index) => (
+        <PokedexItem
+          pokemon={pokemon}
           key={index}
-          onClick={() => handlePokemonClick(versionId, detail.pokemonId)}
-          onContextMenu={(event) =>
-            handlePokemonRightClick(event, versionId, detail.pokemonId)
-          }
-        >
-          <img
-            src={
-              isItemStored(detail.pokemonId)
-                ? `/sprites/pokemon/${detail.pokemonId}.png`
-                : `/sprites/pokemon-dark/${detail.pokemonId}.png`
-            }
-            alt=""
-            className={styles["pokemon-sprite"]}
-            loading={"lazy"}
-          />
-        </div>
+          storedItems={storedItems}
+          handlePokemonClick={handlePokemonClick}
+          handlePokemonRightClick={handlePokemonRightClick}
+          showHiddenPokemon={showHiddenPokemon}
+          versionId={versionId}
+        ></PokedexItem>
       ))}
     </div>
   );

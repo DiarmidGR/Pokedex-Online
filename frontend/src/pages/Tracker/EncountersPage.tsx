@@ -21,19 +21,15 @@ interface CaughtPokemonProps {
 const Tracking: React.FC<TrackingPageProps> = ({ version_id }) => {
   const [selectedPokemonId, setSelectedPokemonId] = useState<string>("");
   const [selectedLocation, setSelectedLocation] = useState<string>("");
+  const [storedItems, setStoredItems] = useState<string[]>([]); // State to update both Encounters and Pokedex container items together at the same time
   const versionId = version_id;
-
-  // State to update both Encounters and Pokedex container items together at the same time
-  const [storedItems, setStoredItems] = useState<string[]>([]);
-
-  // State to manage the selected Pokedex
   const versionLastPokedexString = versionId + "_lastPokedexId";
   const lastPokedexId = localStorage.getItem(versionLastPokedexString);
   const [selectedPokedex, setSelectedPokedex] = useState<string>(
     lastPokedexId != null ? lastPokedexId : "1"
-  );
-
+  ); // State to manage the selected Pokedex
   const [hideCaughtPokemon, setHideCaughtPokemon] = useState<boolean>(false); // used for CheckboxComponent and passed to EncountersContainer
+  const [showHiddenPokemon, setShowHiddenPokemon] = useState<boolean>(false); // used for CheckboxComponent and passed to PokedexList component
 
   // Save the selected Pokedex to localStorage
   useEffect(() => {
@@ -191,9 +187,18 @@ const Tracking: React.FC<TrackingPageProps> = ({ version_id }) => {
               : handlePokemonClickAuthenticated
           }
           handlePokemonRightClick={handlePokemonRightClick}
+          showHiddenPokemon={showHiddenPokemon}
         />
       </div>
       <div className={styles["controls-container"]}>
+        <div className={styles["controls-child"]}>
+          <CheckboxComponent
+            isChecked={showHiddenPokemon}
+            setIsChecked={setShowHiddenPokemon}
+          ></CheckboxComponent>
+          <p className="switzer-regular">{"Show hidden pokemon?"}</p>
+        </div>
+
         <div className={styles["controls-child"]}>
           <p className="switzer-regular">{"Pokedex"}</p>
           <PokedexDropdown
