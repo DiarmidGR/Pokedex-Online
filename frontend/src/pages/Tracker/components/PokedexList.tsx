@@ -83,9 +83,14 @@ const PokedexList: React.FC<PokedexListProps> = ({
           }
         >
           <img
-            src={`/sprites/pokemon/${detail.pokemonId}.png`}
+            src={
+              isItemStored(detail.pokemonId)
+                ? `/sprites/pokemon/${detail.pokemonId}.png`
+                : `/sprites/pokemon-dark/${detail.pokemonId}.png`
+            }
             alt=""
             className={styles["pokemon-sprite"]}
+            loading={"lazy"}
           />
         </div>
       ))}
