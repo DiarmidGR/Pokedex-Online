@@ -55,7 +55,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ version, versionId }) => {
         .get(
           `${
             import.meta.env.VITE_API_ENDPOINT
-          }version_details?version_id=${versionId}`
+          }/version_details?version_id=${versionId}`
         )
         .then((response) => {
           setGameInfo(response.data);
