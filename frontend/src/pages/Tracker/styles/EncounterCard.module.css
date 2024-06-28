@@ -6,7 +6,7 @@
 
 .pokemon-card-name{
     font-size:x-large;
-    padding-left:36px;
+    text-align: center;
     font-weight:600;
 }
 
@@ -20,8 +20,8 @@
     width:32px;
     image-rendering: pixelated;
     position: absolute;
-    top:0;
-    left:0;
+    bottom:0;
+    right:0;
 }
 
 .pokemon-card-condition-container{
@@ -29,4 +29,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.pokeball-icon{
+    position:absolute;
+    width:24px;
+    top:0px;
+    left:0px;
+    image-rendering:pixelated;
+    transform:translate(-45%, -45%);
 }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import styles from "../styles/EncountersList.module.css";
-import PokemonCard from "./EncounterCard";
+import EncounterCard from "./EncounterCard";
 import { getToken } from "../../../utils/Auth";
 
 interface EncounterData {
@@ -186,7 +186,11 @@ const EncountersList: React.FC<EncountersListProps> = ({
                       }
                       style={getCaughtStyle(isItemStored(encounter.pokemonId))}
                     >
-                      <PokemonCard key={index} encounter={encounter} />
+                      <EncounterCard
+                        key={index}
+                        encounter={encounter}
+                        isCaught={isItemStored(encounter.pokemonId)}
+                      />
                     </div>
                   ))}
                 </div>
