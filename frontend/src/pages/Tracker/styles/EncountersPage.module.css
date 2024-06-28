@@ -50,11 +50,14 @@
     overflow-y:auto;
 }
 
+.encounters-container:empty{
+    width:auto;
+}
+
 .pokemon-container{
     display:flex;
     align-items: flex-start;
     justify-content: center;
-    padding-top:130px;
 }
 
 @media only screen and (max-width: 600px) {
