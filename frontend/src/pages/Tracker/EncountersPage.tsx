@@ -239,7 +239,7 @@ const Tracking: React.FC<TrackingPageProps> = ({ version_id }) => {
             handlePokemonRightClick={handlePokemonRightClick}
           />
         </div>
-        <div className="pokemon-container">
+        <div className={styles["pokemon-container"]}>
           <PokemonCard
             pokemonId={selectedPokemonId}
             versionId={version_id}

@@ -28,6 +28,11 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
     <>
       {pokemonDetails.map((pokemon, index) => (
         <div className={styles["pokedex-card-item"]} key={index}>
+          <img
+            src="/icons/pokeball.png"
+            alt=""
+            className={styles["caught-icon"]}
+          />
           <h1>{pokemon.name}</h1>
           <h2>#{pokemon.nationalId}</h2>
           <img src={`/sprites/pokemon/${pokemon.nationalId}.png`} alt="" />
