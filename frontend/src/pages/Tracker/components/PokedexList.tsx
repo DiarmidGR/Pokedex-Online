@@ -85,7 +85,7 @@ const PokedexList: React.FC<PokedexListProps> = ({
           <img
             src={`/sprites/pokemon/${detail.pokemonId}.png`}
             alt=""
-            className={styles["pokemon-details"]}
+            className={styles["pokemon-sprite"]}
           />
         </div>
       ))}
