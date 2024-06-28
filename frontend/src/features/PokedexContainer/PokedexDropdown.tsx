@@ -1,6 +1,6 @@
 import React from "react";
-import useFetchPokedexes from "../hooks/useFetchPokedexes";
-import "../styles/PokedexDropdown.css";
+import useFetchPokedexes from "./useFetchPokedexes";
+import "./PokedexDropdown.css";
 
 interface PokedexDropdownProps {
   versionId: string;

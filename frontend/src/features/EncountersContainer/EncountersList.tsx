@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import styles from "../styles/EncountersList.module.css";
+import styles from "./EncountersList.module.css";
 import EncounterCard from "./EncounterCard";
-import { getToken } from "../../../utils/Auth";
+import { getToken } from "../../shared/utils/Auth";
 
 interface EncounterData {
   minLevel: number;

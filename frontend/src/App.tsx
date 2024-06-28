@@ -1,10 +1,10 @@
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home/Home";
-import Login from "./pages/Login/Login";
-import { useVersions } from "./pages/Home/hooks/useVersion";
-import { versionRoutes } from "./utils/routes";
-import Layout from "./components/Layout";
+import Home from "./features/HomePage/Home";
+import Login from "./features/LoginPage/Login";
+import { useVersions } from "./features/HomePage/hooks/useVersion";
+import { versionRoutes } from "./shared/utils/routes";
+import Layout from "./features/Layout/Layout";
 
 const App: React.FC = () => {
   const versions = useVersions();

@@ -1,4 +1,4 @@
-import styles from "../styles/PokedexItem.module.css";
+import styles from "./PokedexItem.module.css";
 
 interface PokedexItemProps {
   pokemon: PokemonDetails;

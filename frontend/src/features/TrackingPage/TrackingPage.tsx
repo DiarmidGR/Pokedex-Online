@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-import styles from "./styles/EncountersPage.module.css";
-import LocationDropdown from "./components/LocationDropdown";
-import EncountersList from "./components/EncountersList";
-import PokedexList from "./components/PokedexList";
-import PokedexDropdown from "./components/PokedexDropdown";
-import { getToken } from "../../utils/Auth";
-import CheckboxComponent from "../../ui/Checkbox";
-import axiosInstance from "../../utils/axiosInstance";
-import PokemonCard from "./components/PokemonCard";
+import styles from "./TrackingPage.module.css";
+import LocationDropdown from "../EncountersContainer/LocationDropdown";
+import EncountersList from "../EncountersContainer/EncountersList";
+import PokedexList from "../PokedexContainer/PokedexList";
+import PokedexDropdown from "../PokedexContainer/PokedexDropdown";
+import { getToken } from "../../shared/utils/Auth";
+import CheckboxComponent from "../../shared/components/Checkbox";
+import axiosInstance from "../../shared/utils/axiosInstance";
+import PokemonCard from "../PokemonCard/PokemonCard";
 
 interface TrackingPageProps {
   version_id: string;
@@ -18,7 +18,7 @@ interface CaughtPokemonProps {
   version_id: number;
 }
 
-const Tracking: React.FC<TrackingPageProps> = ({ version_id }) => {
+const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
   const [selectedPokemonId, setSelectedPokemonId] = useState<string>("");
   const [selectedLocation, setSelectedLocation] = useState<string>("");
   const [storedItems, setStoredItems] = useState<string[]>([]); // State to update both Encounters and Pokedex container items together at the same time
@@ -257,4 +257,4 @@ const Tracking: React.FC<TrackingPageProps> = ({ version_id }) => {
   );
 };
 
-export default Tracking;
+export default TrackingPage;

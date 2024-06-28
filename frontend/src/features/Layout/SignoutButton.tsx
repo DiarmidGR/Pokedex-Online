@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { removeToken } from "../utils/Auth";
+import { removeToken } from "../../shared/utils/Auth";
 import "./SignoutButton.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignOut } from "@fortawesome/free-solid-svg-icons";
