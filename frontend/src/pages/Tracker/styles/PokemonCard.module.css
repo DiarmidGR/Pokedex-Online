@@ -5,12 +5,19 @@
     border-radius:14px;
     padding:4px;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-    background-color:var(--primary-light);
+    background-color:var(--third-light);
     color:var(--third-light);
     cursor:default;
     position:relative;
-    border:solid var(--primary-dark) 3px;
+    border:solid transparent 3px;
+    color:var(--secondary-color);
     
+}
+
+.caught{
+    background-color:var(--primary-light);
+    border:solid var(--primary-dark) 3px;
+    color:var(--third-light);
 }
 
 .pokedex-card-item h1{

@@ -174,6 +174,11 @@ const Tracking: React.FC<TrackingPageProps> = ({ version_id }) => {
     setSelectedPokemonId(newPokemonId);
   };
 
+  const isItemStored = (item: string) => {
+    let storageString = versionId + "_" + item;
+    return storedItems.includes(storageString);
+  };
+
   return (
     <div className={styles["tracker-container"]}>
       <div className={styles["pokedex-container"]}>
@@ -244,6 +249,7 @@ const Tracking: React.FC<TrackingPageProps> = ({ version_id }) => {
             pokemonId={selectedPokemonId}
             versionId={version_id}
             setSelectedLocation={setSelectedLocation}
+            isCaught={isItemStored(selectedPokemonId)}
           />
         </div>
       </div>
