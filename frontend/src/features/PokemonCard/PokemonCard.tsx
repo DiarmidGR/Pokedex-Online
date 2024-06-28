@@ -21,7 +21,7 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
   const darkSprite = () => {
     return (
       <img
-        src="/icons/pokeball-dark.png"
+        src="/pokeball-dark.png"
         alt=""
         loading="lazy"
         className={styles["caught-icon"]}
@@ -32,7 +32,7 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
   const normalSprite = () => {
     return (
       <img
-        src="/icons/pokeball.png"
+        src="/pokeball.png"
         alt=""
         loading="lazy"
         className={styles["caught-icon"]}
