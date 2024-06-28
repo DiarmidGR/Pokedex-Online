@@ -10,6 +10,7 @@
     cursor:default;
     position:relative;
     border:solid var(--primary-dark) 3px;
+    
 }
 
 .pokedex-card-item h1{
