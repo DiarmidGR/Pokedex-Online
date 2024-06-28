@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../styles/EncounterCard.module.css";
+import styles from "./EncounterCard.module.css";
 
 interface EncounterCardProps {
   encounter: EncounterData;

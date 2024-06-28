@@ -1,8 +1,8 @@
 import styles from "./Header.module.css";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import SignoutButton from "../ui/SignoutButton";
-import { getUsername, getToken } from "../utils/Auth";
+import SignoutButton from "./SignoutButton";
+import { getUsername, getToken } from "../../shared/utils/Auth";
 
 interface HeaderProps {}
 

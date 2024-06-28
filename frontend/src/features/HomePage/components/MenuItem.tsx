@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import "./MenuItem.css";
 import { useNavigate } from "react-router-dom";
-import axiosInstance from "../../../utils/axiosInstance";
-import { getToken, isAuthenticated } from "../../../utils/Auth";
+import axiosInstance from "../../../shared/utils/axiosInstance";
+import { getToken, isAuthenticated } from "../../../shared/utils/Auth";
 import axios from "axios";
 
 interface GameInfo {

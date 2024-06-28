@@ -1,5 +1,5 @@
 import { Route } from "react-router-dom";
-import EncountersPage from "../pages/Tracker/EncountersPage";
+import TrackingPage from "../../features/TrackingPage/TrackingPage";
 
 interface Version {
   id: number;
@@ -12,6 +12,6 @@ export const versionRoutes = (versions: Version[]) =>
     <Route
       key={version.id}
       path={`/${version.identifier}`}
-      element={<EncountersPage version_id={version.id.toString()} />}
+      element={<TrackingPage version_id={version.id.toString()} />}
     />
   ));

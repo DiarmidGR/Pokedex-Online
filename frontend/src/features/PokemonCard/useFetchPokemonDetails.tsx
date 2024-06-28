@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { getToken } from "../../../utils/Auth";
+import { getToken } from "../../shared/utils/Auth";
 
 interface PokemonDetails {
   name: string;

@@ -1,6 +1,6 @@
-import styles from "../styles/PokemonCard.module.css";
-import PokedexLocations from "./PokedexLocations";
-import useFetchPokemonDetails from "../hooks/useFetchPokemonDetails";
+import styles from "./PokemonCard.module.css";
+import PokedexLocations from "../PokedexContainer/PokedexLocations";
+import useFetchPokemonDetails from "./useFetchPokemonDetails";
 
 interface PokemonCardProps {
   pokemonId: string;

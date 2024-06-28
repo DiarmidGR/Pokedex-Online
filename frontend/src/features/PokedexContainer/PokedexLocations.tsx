@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import axiosInstance from "../../../utils/axiosInstance";
-import { getToken } from "../../../utils/Auth";
-import "../styles/PokedexLocations.css";
+import axiosInstance from "../../shared/utils/axiosInstance";
+import { getToken } from "../../shared/utils/Auth";
+import "./PokedexLocations.css";
 
 interface PokedexLocationsProps {
   pokemonId: string;
