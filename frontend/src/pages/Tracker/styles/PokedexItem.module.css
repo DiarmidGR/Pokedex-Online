@@ -1,0 +1,17 @@
+.pokemon-list-item{
+    max-width:56px;
+    height:56px;
+}
+
+.pokemon-sprite{
+    width:56px;
+    transition:all 0.16s ease;
+    pointer-events: none;
+}
+
+/* make the pokemon sprite grow when the mouse is on it */
+.pokemon-list-item:hover .pokemon-sprite{
+    transform:scale(2);
+    image-rendering:pixelated;
+    z-index:1;
+}
