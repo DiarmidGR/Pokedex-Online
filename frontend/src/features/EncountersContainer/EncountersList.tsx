@@ -1,33 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import styles from "./EncountersList.module.css";
-import EncounterCard from "./EncounterCard";
+import EncounterListGroup from "./EncounterListGroup";
 import { getToken } from "../../shared/utils/Auth";
-
-interface EncounterData {
-  minLevel: number;
-  maxLevel: number;
-  pokemonName: string;
-  pokemonId: number;
-  locationArea: string;
-  locationName: string;
-  encounterMethod: string;
-  encounterRate: string;
-  encounterCondition: string;
-}
-
-interface EncountersListProps {
-  versionId: string;
-  locationIdentifier: string;
-  storedItems: string[];
-  handlePokemonClick: (versionId: string, item: number) => void;
-  hideCaughtPokemon: boolean;
-  handlePokemonRightClick: (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    versionId: String,
-    pokemonId: number
-  ) => void;
-}
+import { modifyEncounterData } from "./encounterUtils";
+import { EncounterData, EncountersListProps } from "./types";
 
 const EncountersList: React.FC<EncountersListProps> = ({
   versionId,
@@ -81,45 +58,6 @@ const EncountersList: React.FC<EncountersListProps> = ({
     }
   }, [versionId, locationIdentifier]);
 
-  const isItemStored = (item: number) => {
-    let storageString = versionId + "_" + item;
-    return storedItems.includes(storageString);
-  };
-
-  // Function to modify EncounterData based on conditions
-  const modifyEncounterData = (data: EncounterData[]): EncounterData[] => {
-    const modifiedData = [...data];
-    for (let i = 0; i < modifiedData.length; i++) {
-      for (let j = i + 1; j < modifiedData.length; j++) {
-        const encounter1 = modifiedData[i];
-        const encounter2 = modifiedData[j];
-        if (
-          encounter1.locationArea === encounter2.locationArea &&
-          encounter1.minLevel === encounter2.minLevel &&
-          encounter1.maxLevel === encounter2.maxLevel &&
-          encounter1.pokemonName === encounter2.pokemonName &&
-          encounter1.encounterMethod === encounter2.encounterMethod &&
-          encounter1.encounterRate === encounter2.encounterRate &&
-          ((encounter1.encounterCondition.includes("time") &&
-            encounter2.encounterCondition.includes("time")) ||
-            (encounter1.encounterCondition.includes("season") &&
-              encounter2.encounterCondition.includes("season")))
-        ) {
-          // Merge time-based encounter conditions
-          modifiedData[
-            i
-          ].encounterCondition += ` ${encounter2.encounterCondition}`;
-
-          // Remove encounter2 from modifiedData
-          modifiedData.splice(j, 1);
-          // Since we removed an element, decrement j to adjust for the new length
-          j--;
-        }
-      }
-    }
-    return modifiedData;
-  };
-
   // Group encounters by locationArea
   const groupedEncounters = encounterDetails.reduce(
     (
@@ -147,11 +85,6 @@ const EncountersList: React.FC<EncountersListProps> = ({
     }
   };
 
-  // Function to check hideCaughtPokemon and return the style
-  const getCaughtStyle = (isCaught: boolean) => {
-    return hideCaughtPokemon && isCaught ? { display: "none" } : {};
-  };
-
   return (
     <>
       {encounterDetails.length > 0 ? (
@@ -166,32 +99,15 @@ const EncountersList: React.FC<EncountersListProps> = ({
               </h2>
               {expandedLocations.includes(group.locationArea) && (
                 <div className={styles["encounters-list"]}>
-                  {group.encounters.map((encounter, index) => (
-                    <div
-                      className={`${styles["encounters-item"]} ${
-                        isItemStored(encounter.pokemonId)
-                          ? styles["caught"]
-                          : styles["not-caught"]
-                      }`}
-                      key={index}
-                      onContextMenu={(event) =>
-                        handlePokemonRightClick(
-                          event,
-                          versionId,
-                          encounter.pokemonId
-                        )
-                      }
-                      onClick={() =>
-                        handlePokemonClick(versionId, encounter.pokemonId)
-                      }
-                      style={getCaughtStyle(isItemStored(encounter.pokemonId))}
-                    >
-                      <EncounterCard
-                        key={index}
-                        encounter={encounter}
-                        isCaught={isItemStored(encounter.pokemonId)}
-                      />
-                    </div>
+                  {group.encounters.map((encounter) => (
+                    <EncounterListGroup
+                      encounter={encounter}
+                      storedItems={storedItems}
+                      versionId={versionId}
+                      handlePokemonRightClick={handlePokemonRightClick}
+                      handlePokemonClick={handlePokemonClick}
+                      hideCaughtPokemon={hideCaughtPokemon}
+                    />
                   ))}
                 </div>
               )}
