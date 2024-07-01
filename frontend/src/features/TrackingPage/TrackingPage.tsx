@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import styles from "./TrackingPage.module.css";
-import LocationDropdown from "./LocationDropdown";
+import LocationDropdown from "./components/LocationDropdown";
 import EncountersList from "../EncountersContainer/EncountersList";
 import PokedexList from "../PokedexContainer/PokedexList";
-import PokedexDropdown from "../PokedexContainer/PokedexDropdown";
+import PokedexDropdown from "./components/PokedexDropdown";
 import { getToken } from "../../shared/utils/Auth";
 import CheckboxComponent from "../../shared/components/Checkbox";
 import axiosInstance from "../../shared/utils/axiosInstance";
