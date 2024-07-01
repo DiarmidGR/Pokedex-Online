@@ -57,3 +57,24 @@
     padding-top:12px;
     cursor:pointer;
 }
+
+.groupHeader{
+    display:flex;
+    flex-direction:column;
+    width:100%;
+    position:relative;
+    justify-content: center;
+}
+
+.headerArrow{
+    position:absolute;
+    font-size:24px;
+    width:30px;
+    height:30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 30px;
+    cursor:pointer;
+    pointer-events: none;
+}

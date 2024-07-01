@@ -3,6 +3,7 @@ import { isItemStored, getCaughtStyle } from "../encounterUtils";
 import EncounterCard from "./EncounterCard";
 import { EncounterListGroupProps } from "../types";
 import { useState } from "react";
+import ArrowIcon from "./ArrowIcon";
 
 const EncounterListGroup: React.FC<EncounterListGroupProps> = ({
   encounters,
@@ -17,15 +18,20 @@ const EncounterListGroup: React.FC<EncounterListGroupProps> = ({
   const [hideEncounters, setHideEncounters] = useState(false);
   return (
     <div className={styles["list-container"]}>
-      <h2
-        className={styles["encounters-location"]}
-        // Toggle hideEncounter state, used to hide this EncounterGroupList
-        onClick={() => {
-          setHideEncounters(!hideEncounters);
-        }}
-      >
-        {locationArea !== "" ? locationArea : "Area"}
-      </h2>
+      <div className={styles["groupHeader"]}>
+        <div className={styles["headerArrow"]}>
+          <ArrowIcon hideEncounters={hideEncounters} />
+        </div>
+        <h2
+          className={styles["encounters-location"]}
+          // Toggle hideEncounter state, used to hide this EncounterGroupList
+          onClick={() => {
+            setHideEncounters(!hideEncounters);
+          }}
+        >
+          {locationArea !== "" ? locationArea : "Area"}
+        </h2>
+      </div>
       <div
         // Change classname depending on hideEncounters status, hides div if true
         className={`${styles["encounters-list"]} ${
