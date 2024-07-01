@@ -23,10 +23,11 @@ export interface EncountersListProps {
     ) => void;
 }
   
-export interface EncounterProps {
+export interface EncounterListGroupProps {
     storedItems: string[];
-    encounter: EncounterData;
+    encounters: EncounterData[];
     versionId: string;
+    locationArea: string;
     handlePokemonRightClick: (
         event: React.MouseEvent<HTMLDivElement, MouseEvent>,
         versionId: string,

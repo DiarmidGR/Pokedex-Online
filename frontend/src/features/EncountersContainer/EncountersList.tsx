@@ -1,8 +1,8 @@
-import React from "react";
-import styles from "./EncountersList.module.css";
+import React, { useEffect } from "react";
 import EncounterListGroup from "./EncounterListGroup";
 import { EncounterData, EncountersListProps } from "./types";
 import useFetchEncounterDetails from "./hooks/useFetchEncounterDetails";
+import { modifyEncounterData } from "./encounterUtils";
 
 const EncountersList: React.FC<EncountersListProps> = ({
   versionId,
@@ -16,7 +16,6 @@ const EncountersList: React.FC<EncountersListProps> = ({
     locationIdentifier,
     versionId
   );
-
   // Group encounters by locationArea
   const groupedEncounters = encounterDetails.reduce(
     (
@@ -34,6 +33,10 @@ const EncountersList: React.FC<EncountersListProps> = ({
     []
   );
 
+  useEffect(() => {
+    modifyEncounterData(encounterDetails);
+  }, [encounterDetails]);
+
   if (loading) {
     return null;
   }
@@ -44,32 +47,18 @@ const EncountersList: React.FC<EncountersListProps> = ({
 
   return (
     <>
-      {encounterDetails.length > 0 ? (
-        <>
-          {groupedEncounters.map((group) => (
-            <div key={group.locationArea} className={styles["list-container"]}>
-              <h2 className={styles["encounters-location"]}>
-                {group.locationArea !== "" ? group.locationArea : "Area"}
-              </h2>
-              <div className={styles["encounters-list"]}>
-                {group.encounters.map((encounter, index) => (
-                  <EncounterListGroup
-                    encounter={encounter}
-                    storedItems={storedItems}
-                    versionId={versionId}
-                    handlePokemonRightClick={handlePokemonRightClick}
-                    handlePokemonClick={handlePokemonClick}
-                    hideCaughtPokemon={hideCaughtPokemon}
-                    key={index}
-                  />
-                ))}
-              </div>
-            </div>
-          ))}
-        </>
-      ) : (
-        ""
-      )}
+      {groupedEncounters.map((group, index) => (
+        <EncounterListGroup
+          encounters={group.encounters}
+          locationArea={group.locationArea}
+          storedItems={storedItems}
+          versionId={versionId}
+          handlePokemonRightClick={handlePokemonRightClick}
+          handlePokemonClick={handlePokemonClick}
+          hideCaughtPokemon={hideCaughtPokemon}
+          key={index}
+        />
+      ))}
     </>
   );
 };
