@@ -1,5 +1,5 @@
 import styles from "./PokemonCard.module.css";
-import PokedexLocations from "../PokedexContainer/PokedexLocations";
+import PokedexLocations from "./components/PokedexLocations";
 import useFetchPokemonDetails from "./useFetchPokemonDetails";
 
 interface PokemonCardProps {
