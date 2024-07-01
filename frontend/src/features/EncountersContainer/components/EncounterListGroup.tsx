@@ -2,6 +2,7 @@ import styles from "./EncountersListGroup.module.css";
 import { isItemStored, getCaughtStyle } from "../encounterUtils";
 import EncounterCard from "./EncounterCard";
 import { EncounterListGroupProps } from "../types";
+import { useState } from "react";
 
 const EncounterListGroup: React.FC<EncounterListGroupProps> = ({
   encounters,
@@ -12,12 +13,25 @@ const EncounterListGroup: React.FC<EncounterListGroupProps> = ({
   handlePokemonClick,
   hideCaughtPokemon,
 }) => {
+  // Constant to toggle this EncounterListGroup's height, used to hide group when user clicks
+  const [hideEncounters, setHideEncounters] = useState(false);
   return (
     <div className={styles["list-container"]}>
-      <h2 className={styles["encounters-location"]}>
+      <h2
+        className={styles["encounters-location"]}
+        // Toggle hideEncounter state, used to hide this EncounterGroupList
+        onClick={() => {
+          setHideEncounters(!hideEncounters);
+        }}
+      >
         {locationArea !== "" ? locationArea : "Area"}
       </h2>
-      <div className={styles["encounters-list"]}>
+      <div
+        // Change classname depending on hideEncounters status, hides div if true
+        className={`${styles["encounters-list"]} ${
+          hideEncounters ? styles["closed"] : styles["open"]
+        }`}
+      >
         {encounters.map((encounter, index) => (
           <div
             className={`${styles["encounters-item"]} ${
