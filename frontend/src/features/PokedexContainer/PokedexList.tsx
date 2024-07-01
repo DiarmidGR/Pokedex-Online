@@ -83,7 +83,7 @@ const PokedexList: React.FC<PokedexListProps> = ({
     <div className={styles["pokedex-items"]}>
       <div className={styles["pokedex-stats"]}>
         <div className={styles["statsItem"]}>
-          {`Pokemon Caught: ${storedItems.length}/${pokemonDetails.length}`}
+          {`Pokémon Caught: ${storedItems.length}/${pokemonDetails.length}`}
         </div>
         <div className={styles["statsItem"]}>
           <PokedexSearch onChange={handlePokedexSearchChange} />
