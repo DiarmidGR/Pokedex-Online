@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { getToken } from "../../../shared/utils/Auth";
 import { EncounterData } from "../types";
-import { modifyEncounterData } from "../encounterUtils";
 
 const useFetchEncounterDetails = (
   locationIdentifier: string,
@@ -26,8 +25,7 @@ const useFetchEncounterDetails = (
           },
         }
       );
-      // Modify encounters to separate by locationArea, and then set to new encounters
-      setEncounterDetails(modifyEncounterData(response.data));
+      setEncounterDetails(response.data);
     } catch (err: any) {
       setError(err);
     } finally {
