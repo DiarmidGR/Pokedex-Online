@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { getToken } from "../../../shared/utils/Auth";
-import { EncounterData } from "../types";
+import { getToken } from "../../shared/utils/Auth";
+import { EncounterData } from "./types";
 
 const useFetchEncounterDetails = (
   locationIdentifier: string,

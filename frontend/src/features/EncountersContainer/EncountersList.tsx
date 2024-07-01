@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
-import EncounterListGroup from "./EncounterListGroup";
+import EncounterListGroup from "./components/EncounterListGroup";
 import { EncounterData, EncountersListProps } from "./types";
-import useFetchEncounterDetails from "./hooks/useFetchEncounterDetails";
+import useFetchEncounterDetails from "./useFetchEncounterDetails";
 import { modifyEncounterData } from "./encounterUtils";
 
 const EncountersList: React.FC<EncountersListProps> = ({

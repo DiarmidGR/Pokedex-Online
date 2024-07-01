@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styles from "./TrackingPage.module.css";
-import LocationDropdown from "../EncountersContainer/LocationDropdown";
+import LocationDropdown from "./LocationDropdown";
 import EncountersList from "../EncountersContainer/EncountersList";
 import PokedexList from "../PokedexContainer/PokedexList";
 import PokedexDropdown from "../PokedexContainer/PokedexDropdown";
