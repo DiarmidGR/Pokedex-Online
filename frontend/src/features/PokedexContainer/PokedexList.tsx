@@ -3,6 +3,7 @@ import axiosInstance from "../../shared/utils/axiosInstance";
 import styles from "./PokedexList.module.css";
 import { getToken } from "../../shared/utils/Auth";
 import PokedexItem from "./components/PokedexItem";
+import PokedexSearch from "./components/PokedexSearch";
 
 // interface for pokemon data received from api
 interface PokemonDetails {
@@ -32,6 +33,9 @@ const PokedexList: React.FC<PokedexListProps> = ({
   showHiddenPokemon,
 }) => {
   const [pokemonDetails, setPokemonDetails] = useState<PokemonDetails[]>([]);
+  const [filteredPokemonDetails, setFilteredPokemonFetails] = useState<
+    PokemonDetails[]
+  >([]);
 
   // fetch data from API using selectedPokedex
   useEffect(() => {
@@ -63,25 +67,47 @@ const PokedexList: React.FC<PokedexListProps> = ({
     }
   }, [selectedPokedex]);
 
+  // Event handler to filter pokemonDetails data according to search bar contents
+  const handlePokedexSearchChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    // Get user input (pokemon name)
+    const searchTerm = event.target.value.toLowerCase();
+    const filteredPokemonDetails = pokemonDetails.filter((pokemon) =>
+      pokemon.pokemonName.toLowerCase().includes(searchTerm)
+    );
+    setFilteredPokemonFetails(filteredPokemonDetails);
+  };
+
   return (
     <div className={styles["pokedex-items"]}>
       <div className={styles["pokedex-stats"]}>
-        <div
-          className={styles["stat-item"]}
-        >{`Pokemon Caught: ${storedItems.length}/${pokemonDetails.length}`}</div>
+        <div className={styles["statsItem"]}>
+          {`Pokemon Caught: ${storedItems.length}/${pokemonDetails.length}`}
+        </div>
+        <div className={styles["statsItem"]}>
+          <PokedexSearch onChange={handlePokedexSearchChange} />
+        </div>
       </div>
+
       <div className={styles["pokemon-list-wrapper"]}>
-        {pokemonDetails.map((pokemon, index) => (
-          <PokedexItem
-            pokemon={pokemon}
-            key={index}
-            storedItems={storedItems}
-            handlePokemonClick={handlePokemonClick}
-            handlePokemonRightClick={handlePokemonRightClick}
-            showHiddenPokemon={showHiddenPokemon}
-            versionId={versionId}
-          ></PokedexItem>
-        ))}
+        {
+          // display all pokemon if search bar is empty
+          (filteredPokemonDetails.length > 0
+            ? filteredPokemonDetails
+            : pokemonDetails
+          ).map((pokemon, index) => (
+            <PokedexItem
+              pokemon={pokemon}
+              key={index}
+              storedItems={storedItems}
+              handlePokemonClick={handlePokemonClick}
+              handlePokemonRightClick={handlePokemonRightClick}
+              showHiddenPokemon={showHiddenPokemon}
+              versionId={versionId}
+            ></PokedexItem>
+          ))
+        }
       </div>
     </div>
   );
