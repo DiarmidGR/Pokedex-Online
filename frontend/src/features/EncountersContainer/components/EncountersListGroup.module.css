@@ -14,6 +14,15 @@
     gap:10px;
 }
 
+.encounters-list.open{
+    height:auto;
+}
+
+.encounters-list.closed{
+    height:0;
+    overflow:hidden;
+}
+
 .encounters-item{
     display: block;
     flex-direction: column;
