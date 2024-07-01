@@ -46,4 +46,8 @@
         height:200px;
         overflow-y:auto;
     }
+
+    .pokedex-stats{
+        flex-direction:column;
+    }
 }
