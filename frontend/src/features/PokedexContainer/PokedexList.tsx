@@ -64,18 +64,25 @@ const PokedexList: React.FC<PokedexListProps> = ({
   }, [selectedPokedex]);
 
   return (
-    <div className={styles["pokemon-list-wrapper"]}>
-      {pokemonDetails.map((pokemon, index) => (
-        <PokedexItem
-          pokemon={pokemon}
-          key={index}
-          storedItems={storedItems}
-          handlePokemonClick={handlePokemonClick}
-          handlePokemonRightClick={handlePokemonRightClick}
-          showHiddenPokemon={showHiddenPokemon}
-          versionId={versionId}
-        ></PokedexItem>
-      ))}
+    <div className={styles["pokedex-items"]}>
+      <div className={styles["pokedex-stats"]}>
+        <div
+          className={styles["stat-item"]}
+        >{`Pokemon Caught: ${storedItems.length}/${pokemonDetails.length}`}</div>
+      </div>
+      <div className={styles["pokemon-list-wrapper"]}>
+        {pokemonDetails.map((pokemon, index) => (
+          <PokedexItem
+            pokemon={pokemon}
+            key={index}
+            storedItems={storedItems}
+            handlePokemonClick={handlePokemonClick}
+            handlePokemonRightClick={handlePokemonRightClick}
+            showHiddenPokemon={showHiddenPokemon}
+            versionId={versionId}
+          ></PokedexItem>
+        ))}
+      </div>
     </div>
   );
 };
