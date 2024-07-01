@@ -1,7 +1,7 @@
 import styles from "./EncountersListGroup.module.css";
-import { isItemStored, getCaughtStyle } from "./encounterUtils";
+import { isItemStored, getCaughtStyle } from "../encounterUtils";
 import EncounterCard from "./EncounterCard";
-import { EncounterListGroupProps } from "./types";
+import { EncounterListGroupProps } from "../types";
 
 const EncounterListGroup: React.FC<EncounterListGroupProps> = ({
   encounters,
