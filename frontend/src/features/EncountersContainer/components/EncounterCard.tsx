@@ -48,7 +48,7 @@ const EncounterCard: React.FC<EncounterCardProps> = ({
         return (
           <img
             key={index}
-            src={conditionImages[condition]}
+            src={`/icons/${conditionImages[condition]}`}
             alt={condition}
             className={styles["pokemon-card-condition-image"]}
             title={condition}
@@ -69,7 +69,7 @@ const EncounterCard: React.FC<EncounterCardProps> = ({
   const darkSprite = () => {
     return (
       <img
-        src="/pokeball-dark.png"
+        src="/icons/pokeball-dark.png"
         alt=""
         loading="lazy"
         className={styles["pokeball-icon"]}
@@ -103,8 +103,8 @@ const EncounterCard: React.FC<EncounterCardProps> = ({
         <img
           src={
             encounter.encounterMethod == "grass-spots"
-              ? "grass-spots.gif"
-              : encounter.encounterMethod + ".png"
+              ? "/icons/grass-spots.gif"
+              : `/icons/${encounter.encounterMethod}.png`
           }
           alt=""
           className={styles["pokemon-card-method"]}
