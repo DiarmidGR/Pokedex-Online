@@ -6,9 +6,4 @@
     color: var(--third-light);
     cursor:pointer;
     width:fit-content;
-    transition:background-color ease 0.2s;
-}
-
-.location-select:hover{
-    background-color:var(--primary-dark);
 }
