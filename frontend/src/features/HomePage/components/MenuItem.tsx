@@ -71,7 +71,11 @@ const MenuItem: React.FC<MenuItemProps> = ({ version, versionId }) => {
 
   return (
     <div className="item-container" onClick={handleClick}>
-      <img src={`/boxart/${version}.png`} alt="" className="item-image" />
+      <img
+        src={`/images/boxart/${version}.png`}
+        alt=""
+        className="item-image"
+      />
       <div className="item-overlay">
         <div className="version-text">
           {gameInfo.length > 0 ? gameInfo[0].versionName : ""}
