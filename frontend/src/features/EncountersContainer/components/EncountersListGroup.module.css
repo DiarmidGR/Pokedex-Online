@@ -64,6 +64,24 @@
     width:100%;
     position:relative;
     justify-content: center;
+    position:relative;
+}
+
+.groupHeader img{
+    height:24px;
+    width:24px;
+    image-rendering:pixelated;
+}
+
+.headerStats{
+    position:absolute;
+    padding-left:40px;
+    display:flex;
+    flex-direction:row;
+    align-items: center;
+    justify-content: center;
+    gap:8px;
+    pointer-events: none;
 }
 
 .headerArrow{
