@@ -1,5 +1,9 @@
 import styles from "./EncountersListGroup.module.css";
-import { isItemStored, getCaughtStyle } from "../encounterUtils";
+import {
+  isItemStored,
+  getCaughtStyle,
+  getUniqueEncounterStats,
+} from "../encounterUtils";
 import EncounterCard from "./EncounterCard";
 import { EncounterListGroupProps } from "../types";
 import { useState } from "react";
@@ -16,11 +20,36 @@ const EncounterListGroup: React.FC<EncounterListGroupProps> = ({
 }) => {
   // Constant to toggle this EncounterListGroup's height, used to hide group when user clicks
   const [hideEncounters, setHideEncounters] = useState(false);
+
+  // Data to display # caught pokemon / total pokemon on each header for each locationArea
+  const headerData = getUniqueEncounterStats(
+    encounters,
+    storedItems,
+    versionId
+  );
+
   return (
     <div className={styles["list-container"]}>
       <div className={styles["groupHeader"]}>
         <div className={styles["headerArrow"]}>
           <ArrowIcon hideEncounters={hideEncounters} />
+        </div>
+
+        <div className={styles["headerStats"]}>
+          <img
+            // Display coloured in pokeball if all pokemon in location area are caught, otherwise display dark pokeball
+            src={
+              headerData.uniqueEncountersCount ===
+              headerData.uniqueStoredMatchesCount
+                ? "icons/pokeball.png"
+                : "icons/pokeball-dark.png"
+            }
+            alt=""
+          />
+          <p>{
+            // Display number of caught pokemon in locationArea to user
+            `${headerData.uniqueStoredMatchesCount}/${headerData.uniqueEncountersCount}`
+          }</p>
         </div>
         <h2
           className={styles["encounters-location"]}
