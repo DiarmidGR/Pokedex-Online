@@ -80,7 +80,7 @@ const EncounterCard: React.FC<EncounterCardProps> = ({
   const normalSprite = () => {
     return (
       <img
-        src="/pokeball.png"
+        src="/icons/pokeball.png"
         alt=""
         loading="lazy"
         className={styles["pokeball-icon"]}
