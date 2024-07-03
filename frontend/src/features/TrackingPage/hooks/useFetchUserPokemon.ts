@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import axiosInstance from "../../../shared/utils/axiosInstance";
 import { getToken } from "../../../shared/utils/Auth";
-import { convertCaughtPokemonData } from "../trackingPageUtils";
+import { convertCaughtPokemonData } from "../trackingPage.utils";
 
 const useFetchUserPokemon = (versionId: string) => {
     const [userPokemon, setUserPokemon] = useState<string[]>([]);
