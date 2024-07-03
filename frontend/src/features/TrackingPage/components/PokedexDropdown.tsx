@@ -1,6 +1,6 @@
 import React from "react";
-import useFetchPokedexes from "../hooks/useFetchPokedexes";
 import "./PokedexDropdown.css";
+import useFetchVersionPokedexes from "../hooks/useFetchVersionPokedexes";
 
 interface PokedexDropdownProps {
   versionId: string;
@@ -13,7 +13,8 @@ const PokedexDropdown: React.FC<PokedexDropdownProps> = ({
   defaultIndex,
   onPokedexChange,
 }) => {
-  const { pokedexes, loading, error } = useFetchPokedexes(versionId);
+  const { versionPokedexes, loading, error } =
+    useFetchVersionPokedexes(versionId);
 
   if (loading) {
     return <div>Loading pokedexes...</div>;
@@ -38,7 +39,7 @@ const PokedexDropdown: React.FC<PokedexDropdownProps> = ({
         value={defaultIndex}
       >
         <option value="1">National</option>
-        {pokedexes.map((pokedex) => (
+        {versionPokedexes.map((pokedex) => (
           <option key={pokedex.pokedexId} value={pokedex.pokedexId}>
             {pokedex.pokedexName}
           </option>
