@@ -8,87 +8,44 @@ import { getToken } from "../../shared/utils/Auth";
 import CheckboxComponent from "../../shared/components/Checkbox";
 import axiosInstance from "../../shared/utils/axiosInstance";
 import PokemonCard from "../PokemonCard/PokemonCard";
+import useFetchUserPokemon from "./hooks/useFetchUserPokemon";
 
 interface TrackingPageProps {
   version_id: string;
 }
 
-interface CaughtPokemonProps {
-  pokemon_id: number;
-  version_id: number;
-}
-
 const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
+  const versionId = version_id;
   const [selectedPokemonId, setSelectedPokemonId] = useState<string>("");
   const [selectedLocation, setSelectedLocation] = useState<string>("");
-  const [storedItems, setStoredItems] = useState<string[]>([]); // State to update both Encounters and Pokedex container items together at the same time
-  const versionId = version_id;
   const versionLastPokedexString = versionId + "_lastPokedexId";
   const lastPokedexId = localStorage.getItem(versionLastPokedexString);
   const [selectedPokedex, setSelectedPokedex] = useState<string>(
     lastPokedexId != null ? lastPokedexId : "1"
-  ); // State to manage the selected Pokedex
+  );
   const [hideCaughtPokemon, setHideCaughtPokemon] = useState<boolean>(false); // used for CheckboxComponent and passed to EncountersContainer
   const [showHiddenPokemon, setShowHiddenPokemon] = useState<boolean>(false); // used for CheckboxComponent and passed to PokedexList component
+
+  const { userPokemon, setUserPokemon, loading, error } =
+    useFetchUserPokemon(versionId);
 
   // Save the selected Pokedex to localStorage
   useEffect(() => {
     localStorage.setItem(versionLastPokedexString, selectedPokedex);
   }, [selectedPokedex]);
 
-  // Load stored items from local storage on component mount
-  useEffect(() => {
-    const fetchStoredItems = async () => {
-      // Case for authenticated users
-      try {
-        const token = getToken();
-        const userId = localStorage.getItem("user_id");
-        if (token) {
-          // Fetch stored items from backend API
-          const response = await axiosInstance.get(
-            `${
-              import.meta.env.VITE_API_ENDPOINT
-            }/user-pokemon?version_id=${versionId}&user_id=${userId}`,
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
-          setStoredItems(convertCaughtPokemonData(response.data)); // Assuming your API response includes 'storedItems'
-        } else {
-          // Load stored items from local storage if not authenticated
-          const stored = JSON.parse(
-            localStorage.getItem("storedItems") || "[]"
-          );
-          setStoredItems(stored);
-        }
-      } catch (error) {
-        console.error("Error fetching stored items:", error);
-      }
-    };
-
-    fetchStoredItems();
-  }, [versionId]);
-
-  const convertCaughtPokemonData = (
-    listData: CaughtPokemonProps[]
-  ): string[] => {
-    return listData.map((item) => `${version_id}_${item.pokemon_id}`);
-  };
-
   // Click handler for pokemon catch data in both EncountersContainer and PokedexContainer
   const handlePokemonClick = (versionId: string, item: number) => {
     let storageString = versionId + "_" + item;
     let updatedStoredItems;
-    if (storedItems.includes(storageString)) {
-      updatedStoredItems = storedItems.filter(
+    if (userPokemon.includes(storageString)) {
+      updatedStoredItems = userPokemon.filter(
         (storedItem) => storedItem !== storageString
       );
     } else {
-      updatedStoredItems = [...storedItems, storageString];
+      updatedStoredItems = [...userPokemon, storageString];
     }
-    setStoredItems(updatedStoredItems);
+    setUserPokemon(updatedStoredItems);
     localStorage.setItem("storedItems", JSON.stringify(updatedStoredItems));
   };
 
@@ -98,10 +55,10 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
   ) => {
     // Check storedItems collection if entry exists
     let storageString = versionId + "_" + pokemonId;
-    let updatedStoredItems = storedItems;
+    let updatedStoredItems = userPokemon;
 
     // Item exists, execute delete query
-    if (storedItems.includes(storageString)) {
+    if (userPokemon.includes(storageString)) {
       const userId = localStorage.getItem("user_id");
       axiosInstance
         .post(
@@ -126,7 +83,7 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
             error
           );
         });
-      updatedStoredItems = storedItems.filter(
+      updatedStoredItems = userPokemon.filter(
         (storedItem) => storedItem !== storageString
       );
 
@@ -156,9 +113,9 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
             error
           );
         });
-      updatedStoredItems = [...storedItems, storageString];
+      updatedStoredItems = [...userPokemon, storageString];
     }
-    setStoredItems(updatedStoredItems);
+    setUserPokemon(updatedStoredItems);
   };
 
   const handlePokemonRightClick = (
@@ -176,15 +133,23 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
 
   const isItemStored = (item: string) => {
     let storageString = versionId + "_" + item;
-    return storedItems.includes(storageString);
+    return userPokemon.includes(storageString);
   };
+
+  if (loading) {
+    return <div>Loading</div>;
+  }
+
+  if (error) {
+    return <div>Error fetching pokémon details: {error.message}</div>;
+  }
 
   return (
     <div className={styles["tracker-container"]}>
       <div className={styles["pokedex-container"]}>
         <PokedexList
           versionId={version_id}
-          storedItems={storedItems}
+          storedItems={userPokemon}
           selectedPokedex={selectedPokedex}
           handlePokemonClick={
             getToken() == null
@@ -234,7 +199,7 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
           <EncountersList
             versionId={versionId}
             locationIdentifier={selectedLocation}
-            storedItems={storedItems}
+            storedItems={userPokemon}
             handlePokemonClick={
               getToken() == null
                 ? handlePokemonClick
