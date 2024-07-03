@@ -4,10 +4,10 @@ import LocationDropdown from "./components/LocationDropdown";
 import EncountersList from "../EncountersContainer/EncountersList";
 import PokedexList from "../PokedexContainer/PokedexList";
 import PokedexDropdown from "./components/PokedexDropdown";
-import { getToken } from "../../shared/utils/Auth";
 import CheckboxComponent from "../../shared/components/Checkbox";
 import PokemonCard from "../PokemonCard/PokemonCard";
 import useFetchUserPokemon from "./hooks/useFetchUserPokemon";
+import { handleDeletePokemon } from "./trackingPage.utils";
 import useDeleteUserPokemon from "./hooks/useDeleteUserPokemon";
 import useInsertUserPokemon from "./hooks/useInsertUserPokemon";
 
@@ -31,49 +31,26 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
   const { deleteUserPokemon } = useDeleteUserPokemon();
   const { insertUserPokemon } = useInsertUserPokemon();
 
-  // Save the selected Pokedex to localStorage
+  // Save the selected pokedex region to localStorage
   useEffect(() => {
     localStorage.setItem(versionLastPokedexString, selectedPokedex);
   }, [selectedPokedex]);
 
+  // Insert/Delete pokemon from user-pokemon database
   const handlePokemonClick = (versionId: string, pokemonId: number) => {
-    const userId = localStorage.getItem("user_id");
-    const storageString = versionId + "_" + pokemonId;
-
-    // Add pokemon to database if user is authenticated
-    if (getToken() && userId) {
-      // Check if pokemon exists in userPokemon collection
-      let updatedStoredItems = userPokemon;
-
-      // Item exists, execute delete query
-      if (userPokemon.includes(storageString)) {
-        deleteUserPokemon(pokemonId, versionId, userId);
-        updatedStoredItems = userPokemon.filter(
-          (storedItem) => storedItem !== storageString
-        );
-
-        // Item doesn't exist, execute insert query
-      } else {
-        insertUserPokemon(pokemonId, versionId, userId);
-        updatedStoredItems = [...userPokemon, storageString];
-      }
+    let updatedStoredItems = handleDeletePokemon(
+      versionId,
+      pokemonId,
+      userPokemon,
+      deleteUserPokemon,
+      insertUserPokemon
+    );
+    if (updatedStoredItems) {
       setUserPokemon(updatedStoredItems);
-    }
-    // Handler for unauthenticated users
-    else {
-      let updatedStoredItems;
-      if (userPokemon.includes(storageString)) {
-        updatedStoredItems = userPokemon.filter(
-          (storedItem) => storedItem !== storageString
-        );
-      } else {
-        updatedStoredItems = [...userPokemon, storageString];
-      }
-      setUserPokemon(updatedStoredItems);
-      localStorage.setItem("storedItems", JSON.stringify(updatedStoredItems));
     }
   };
 
+  // Open pokemon in PokemonCard component
   const handlePokemonRightClick = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
     versionId: String,
@@ -87,6 +64,7 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
     setSelectedPokemonId(newPokemonId);
   };
 
+  // Function that checks if user has caught a pokemon already or not
   const isItemStored = (item: string) => {
     let storageString = versionId + "_" + item;
     return userPokemon.includes(storageString);
