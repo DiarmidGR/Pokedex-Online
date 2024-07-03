@@ -6,9 +6,10 @@ import PokedexList from "../PokedexContainer/PokedexList";
 import PokedexDropdown from "./components/PokedexDropdown";
 import { getToken } from "../../shared/utils/Auth";
 import CheckboxComponent from "../../shared/components/Checkbox";
-import axiosInstance from "../../shared/utils/axiosInstance";
 import PokemonCard from "../PokemonCard/PokemonCard";
 import useFetchUserPokemon from "./hooks/useFetchUserPokemon";
+import useDeleteUserPokemon from "./hooks/useDeleteUserPokemon";
+import useInsertUserPokemon from "./hooks/useInsertUserPokemon";
 
 interface TrackingPageProps {
   version_id: string;
@@ -25,9 +26,10 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
   );
   const [hideCaughtPokemon, setHideCaughtPokemon] = useState<boolean>(false); // used for CheckboxComponent and passed to EncountersContainer
   const [showHiddenPokemon, setShowHiddenPokemon] = useState<boolean>(false); // used for CheckboxComponent and passed to PokedexList component
-
   const { userPokemon, setUserPokemon, loading, error } =
     useFetchUserPokemon(versionId);
+  const { deleteUserPokemon } = useDeleteUserPokemon();
+  const { insertUserPokemon } = useInsertUserPokemon();
 
   // Save the selected Pokedex to localStorage
   useEffect(() => {
@@ -35,75 +37,30 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
   }, [selectedPokedex]);
 
   const handlePokemonClick = (versionId: string, pokemonId: number) => {
-    // Handler for authenticated users
-    if (getToken()) {
-      // Check storedItems collection if entry exists
-      let storageString = versionId + "_" + pokemonId;
+    const userId = localStorage.getItem("user_id");
+    const storageString = versionId + "_" + pokemonId;
+
+    // Add pokemon to database if user is authenticated
+    if (getToken() && userId) {
+      // Check if pokemon exists in userPokemon collection
       let updatedStoredItems = userPokemon;
 
       // Item exists, execute delete query
       if (userPokemon.includes(storageString)) {
-        const userId = localStorage.getItem("user_id");
-        axiosInstance
-          .post(
-            `${import.meta.env.VITE_API_ENDPOINT}/user-pokemon/delete`,
-            {
-              pokemon_id: pokemonId,
-              version_id: versionId,
-              user_id: userId,
-            },
-            {
-              headers: {
-                Authorization: `Bearer ${getToken()}`, // Include JWT token in the headers
-              },
-            }
-          )
-          .then((response: any) => {
-            console.log(response.data.message);
-          })
-          .catch((error) => {
-            console.error(
-              "There was an error removing pokemon from the database!",
-              error
-            );
-          });
+        deleteUserPokemon(pokemonId, versionId, userId);
         updatedStoredItems = userPokemon.filter(
           (storedItem) => storedItem !== storageString
         );
 
         // Item doesn't exist, execute insert query
       } else {
-        const userId = localStorage.getItem("user_id");
-        axiosInstance
-          .post(
-            `${import.meta.env.VITE_API_ENDPOINT}/user-pokemon/insert`,
-            {
-              pokemon_id: pokemonId,
-              version_id: versionId,
-              user_id: userId,
-            },
-            {
-              headers: {
-                Authorization: `Bearer ${getToken()}`, // Include JWT token in the headers
-              },
-            }
-          )
-          .then((response: any) => {
-            console.log(response.data.message);
-          })
-          .catch((error) => {
-            console.error(
-              "There was an error inserting pokemon to database!",
-              error
-            );
-          });
+        insertUserPokemon(pokemonId, versionId, userId);
         updatedStoredItems = [...userPokemon, storageString];
       }
       setUserPokemon(updatedStoredItems);
     }
     // Handler for unauthenticated users
     else {
-      let storageString = versionId + "_" + pokemonId;
       let updatedStoredItems;
       if (userPokemon.includes(storageString)) {
         updatedStoredItems = userPokemon.filter(
