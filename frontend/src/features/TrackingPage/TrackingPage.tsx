@@ -34,88 +34,87 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
     localStorage.setItem(versionLastPokedexString, selectedPokedex);
   }, [selectedPokedex]);
 
-  // Click handler for pokemon catch data in both EncountersContainer and PokedexContainer
-  const handlePokemonClick = (versionId: string, item: number) => {
-    let storageString = versionId + "_" + item;
-    let updatedStoredItems;
-    if (userPokemon.includes(storageString)) {
-      updatedStoredItems = userPokemon.filter(
-        (storedItem) => storedItem !== storageString
-      );
-    } else {
-      updatedStoredItems = [...userPokemon, storageString];
-    }
-    setUserPokemon(updatedStoredItems);
-    localStorage.setItem("storedItems", JSON.stringify(updatedStoredItems));
-  };
+  const handlePokemonClick = (versionId: string, pokemonId: number) => {
+    // Handler for authenticated users
+    if (getToken()) {
+      // Check storedItems collection if entry exists
+      let storageString = versionId + "_" + pokemonId;
+      let updatedStoredItems = userPokemon;
 
-  const handlePokemonClickAuthenticated = (
-    versionId: string,
-    pokemonId: number
-  ) => {
-    // Check storedItems collection if entry exists
-    let storageString = versionId + "_" + pokemonId;
-    let updatedStoredItems = userPokemon;
-
-    // Item exists, execute delete query
-    if (userPokemon.includes(storageString)) {
-      const userId = localStorage.getItem("user_id");
-      axiosInstance
-        .post(
-          `${import.meta.env.VITE_API_ENDPOINT}/user-pokemon/delete`,
-          {
-            pokemon_id: pokemonId,
-            version_id: versionId,
-            user_id: userId,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${getToken()}`, // Include JWT token in the headers
+      // Item exists, execute delete query
+      if (userPokemon.includes(storageString)) {
+        const userId = localStorage.getItem("user_id");
+        axiosInstance
+          .post(
+            `${import.meta.env.VITE_API_ENDPOINT}/user-pokemon/delete`,
+            {
+              pokemon_id: pokemonId,
+              version_id: versionId,
+              user_id: userId,
             },
-          }
-        )
-        .then((response: any) => {
-          console.log(response.data.message);
-        })
-        .catch((error) => {
-          console.error(
-            "There was an error removing pokemon from the database!",
-            error
-          );
-        });
-      updatedStoredItems = userPokemon.filter(
-        (storedItem) => storedItem !== storageString
-      );
+            {
+              headers: {
+                Authorization: `Bearer ${getToken()}`, // Include JWT token in the headers
+              },
+            }
+          )
+          .then((response: any) => {
+            console.log(response.data.message);
+          })
+          .catch((error) => {
+            console.error(
+              "There was an error removing pokemon from the database!",
+              error
+            );
+          });
+        updatedStoredItems = userPokemon.filter(
+          (storedItem) => storedItem !== storageString
+        );
 
-      // Item doesn't exist, execute insert query
-    } else {
-      const userId = localStorage.getItem("user_id");
-      axiosInstance
-        .post(
-          `${import.meta.env.VITE_API_ENDPOINT}/user-pokemon/insert`,
-          {
-            pokemon_id: pokemonId,
-            version_id: versionId,
-            user_id: userId,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${getToken()}`, // Include JWT token in the headers
+        // Item doesn't exist, execute insert query
+      } else {
+        const userId = localStorage.getItem("user_id");
+        axiosInstance
+          .post(
+            `${import.meta.env.VITE_API_ENDPOINT}/user-pokemon/insert`,
+            {
+              pokemon_id: pokemonId,
+              version_id: versionId,
+              user_id: userId,
             },
-          }
-        )
-        .then((response: any) => {
-          console.log(response.data.message);
-        })
-        .catch((error) => {
-          console.error(
-            "There was an error inserting pokemon to database!",
-            error
-          );
-        });
-      updatedStoredItems = [...userPokemon, storageString];
+            {
+              headers: {
+                Authorization: `Bearer ${getToken()}`, // Include JWT token in the headers
+              },
+            }
+          )
+          .then((response: any) => {
+            console.log(response.data.message);
+          })
+          .catch((error) => {
+            console.error(
+              "There was an error inserting pokemon to database!",
+              error
+            );
+          });
+        updatedStoredItems = [...userPokemon, storageString];
+      }
+      setUserPokemon(updatedStoredItems);
     }
-    setUserPokemon(updatedStoredItems);
+    // Handler for unauthenticated users
+    else {
+      let storageString = versionId + "_" + pokemonId;
+      let updatedStoredItems;
+      if (userPokemon.includes(storageString)) {
+        updatedStoredItems = userPokemon.filter(
+          (storedItem) => storedItem !== storageString
+        );
+      } else {
+        updatedStoredItems = [...userPokemon, storageString];
+      }
+      setUserPokemon(updatedStoredItems);
+      localStorage.setItem("storedItems", JSON.stringify(updatedStoredItems));
+    }
   };
 
   const handlePokemonRightClick = (
@@ -151,11 +150,7 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
           versionId={version_id}
           storedItems={userPokemon}
           selectedPokedex={selectedPokedex}
-          handlePokemonClick={
-            getToken() == null
-              ? handlePokemonClick
-              : handlePokemonClickAuthenticated
-          }
+          handlePokemonClick={handlePokemonClick}
           handlePokemonRightClick={handlePokemonRightClick}
           showHiddenPokemon={showHiddenPokemon}
         />
@@ -200,11 +195,7 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
             versionId={versionId}
             locationIdentifier={selectedLocation}
             storedItems={userPokemon}
-            handlePokemonClick={
-              getToken() == null
-                ? handlePokemonClick
-                : handlePokemonClickAuthenticated
-            }
+            handlePokemonClick={handlePokemonClick}
             hideCaughtPokemon={hideCaughtPokemon}
             handlePokemonRightClick={handlePokemonRightClick}
           />
