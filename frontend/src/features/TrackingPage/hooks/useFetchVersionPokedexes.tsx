@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { getToken } from "../../../shared/utils/Auth";
-import { PokedexProps } from "../trackingPageTypes";
+import { PokedexProps } from "../trackingPage.types";
 
 const useFetchVersionPokedexes = (versionId: string) => {
   const [versionPokedexes, setVersionPokedexes] = useState<PokedexProps[]>([]);

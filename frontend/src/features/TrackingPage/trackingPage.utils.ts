@@ -1,4 +1,4 @@
-import { CaughtPokemonProps } from "./trackingPageTypes";
+import { CaughtPokemonProps } from "./trackingPage.types";
 
 export const convertCaughtPokemonData = (
     listData: CaughtPokemonProps[],
