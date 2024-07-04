@@ -43,9 +43,9 @@ router.get('/pokemon_locations', (req, res) => {
     const versionId = req.query.version_id;
 
     if (!pokemonId || !versionId)
-        {
-            return res.status(400).send({error: 'version_id and pokemon_id is required to fetch pokemon locations.'})
-        };
+    {
+        return res.status(400).send({error: 'version_id and pokemon_id is required to fetch pokemon locations.'})
+    };
 
     const query = `
         SELECT 
@@ -70,5 +70,52 @@ router.get('/pokemon_locations', (req, res) => {
         res.send(results);
     });
 });
+
+// Get pokemon evolutions by pokemon id
+router.get('/pokemon_evolutions', (req, res) => {
+    const pokemonId = req.query.pokemon_id;
+
+    if(!pokemonId){
+        return res.status(400).send({error:'pokemon_id is required to fetch pokemon evolutions.'})
+    };
+
+    const query = `
+        SELECT
+        psn.name as pokemonName,
+        ps.id as pokemonId,
+        et.identifier as evolutionTrigger,
+        etp.name as evolutionTriggerDesc,
+        pe.minimum_level as evolutionLevel
+        FROM pokemon_species ps
+
+        INNER JOIN pokemon_species_names psn
+        ON psn.pokemon_species_id=ps.id
+
+        LEFT JOIN pokemon_evolution pe
+        ON pe.evolved_species_id=ps.id
+
+        LEFT JOIN evolution_triggers et
+        ON et.id=pe.evolution_trigger_id
+
+        LEFT JOIN evolution_trigger_prose etp
+        ON etp.evolution_trigger_id=et.id
+
+        WHERE evolution_chain_id = (
+            SELECT evolution_chain_id
+            FROM pokemon_species
+            WHERE id = ?
+        )
+
+        ORDER BY pokemonId
+    `;
+
+    db.query(query, [pokemonId], (error, results) => {
+        if (error) {
+            return res.status(500).send({ error: error.message });
+        }
+
+        res.send(results);
+    });
+})
 
 module.exports=router;
