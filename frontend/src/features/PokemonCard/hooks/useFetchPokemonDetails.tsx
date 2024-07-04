@@ -1,12 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { getToken } from "../../../shared/utils/Auth";
-
-interface PokemonDetails {
-  name: string;
-  nationalId: string;
-  types: string;
-}
+import { PokemonDetails } from "../PokemonCard.types";
 
 const useFetchPokemonDetails = (pokemonId: string) => {
   const [pokemonDetails, setPokemonDetails] = useState<PokemonDetails[]>([]);

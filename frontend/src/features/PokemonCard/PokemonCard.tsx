@@ -1,13 +1,7 @@
 import styles from "./PokemonCard.module.css";
 import PokedexLocations from "./components/PokedexLocations";
 import useFetchPokemonDetails from "./hooks/useFetchPokemonDetails";
-
-interface PokemonCardProps {
-  pokemonId: string;
-  versionId: string;
-  setSelectedLocation: (location: string) => void;
-  isCaught: boolean;
-}
+import { PokemonCardProps } from "./PokemonCard.types";
 
 const PokemonCard: React.FC<PokemonCardProps> = ({
   pokemonId,
