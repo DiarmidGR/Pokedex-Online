@@ -70,7 +70,6 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
               />
             ))}
           </div>
-          <h2>{"Locations"}</h2>
           <PokedexLocations
             versionId={versionId}
             pokemonId={pokemonId}
