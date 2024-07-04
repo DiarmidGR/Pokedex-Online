@@ -57,18 +57,22 @@ const PokedexLocations: React.FC<PokedexLocationsProps> = ({
     setSelectedLocation(selectedLocation);
   };
 
-  return (
-    <select
-      onChange={handleChange}
-      className="pokedex-dropdown switzer-regular"
+  return pokemonLocations.length > 0 ? (
+    <div
+      style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
     >
-      <option value="">Select a location</option>
-      {pokemonLocations.map((location, index) => (
-        <option key={index} value={location.locationIdentifier}>
-          {location.locationName}
-        </option>
-      ))}
-    </select>
+      <h2>{"Locations"}</h2>
+      <select onChange={handleChange} className="pokedex-dropdown">
+        <option value="">Select a location</option>
+        {pokemonLocations.map((location, index) => (
+          <option key={index} value={location.locationIdentifier}>
+            {location.locationName}
+          </option>
+        ))}
+      </select>
+    </div>
+  ) : (
+    <h2>{"Locations unavailable"}</h2>
   );
 };
 
