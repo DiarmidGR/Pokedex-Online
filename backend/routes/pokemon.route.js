@@ -105,6 +105,8 @@ router.get('/pokemon_evolutions', (req, res) => {
             FROM pokemon_species
             WHERE id = ?
         )
+        
+        GROUP BY pokemonName, pokemonId, evolutionTrigger, evolutionTriggerDesc, evolutionLevel
 
         ORDER BY pokemonId
     `;
