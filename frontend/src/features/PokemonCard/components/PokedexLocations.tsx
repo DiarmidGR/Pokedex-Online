@@ -1,61 +1,30 @@
-import { useEffect, useState } from "react";
-import axiosInstance from "../../../shared/utils/axiosInstance";
-import { getToken } from "../../../shared/utils/Auth";
 import "./PokedexLocations.css";
-
-interface PokedexLocationsProps {
-  pokemonId: string;
-  versionId: string;
-  setSelectedLocation: (location: string) => void;
-}
-
-interface LocationDetails {
-  locationIdentifier: string;
-  locationName: string;
-}
+import useFetchPokemonLocations from "../hooks/useFetchPokemonLocations";
+import { PokedexLocationsProps } from "../PokemonCard.types";
 
 const PokedexLocations: React.FC<PokedexLocationsProps> = ({
   pokemonId,
   versionId,
   setSelectedLocation,
 }) => {
-  const [pokemonLocations, setPokemonLocations] = useState<LocationDetails[]>(
-    []
+  const { pokemonLocations, loading, error } = useFetchPokemonLocations(
+    pokemonId,
+    versionId
   );
-
-  // fetch data from API using pokemonId
-  useEffect(() => {
-    // dont attempt to fetch data if pokemonId isn't provided
-    if (pokemonId !== "") {
-      // Fetch pokedex details from the API
-      axiosInstance
-        .get(
-          `${
-            import.meta.env.VITE_API_ENDPOINT
-          }/pokemon_locations?pokemon_id=${pokemonId}&version_id=${versionId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${getToken()}`, // Include JWT token in the headers
-            },
-          }
-        )
-        .then((response) => {
-          setPokemonLocations(response.data);
-        })
-        .catch((error) => {
-          console.error(
-            "There was an error fetching the pokemon details!",
-            error
-          );
-        });
-    }
-  }, [pokemonId, versionId]);
 
   // change handler to set selected location to locationName
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedLocation = event.target.value;
     setSelectedLocation(selectedLocation);
   };
+
+  if (loading) {
+    return null;
+  }
+
+  if (error) {
+    return <div>Error fetching pokémon locations: {error.message}</div>;
+  }
 
   return pokemonLocations.length > 0 ? (
     <div
