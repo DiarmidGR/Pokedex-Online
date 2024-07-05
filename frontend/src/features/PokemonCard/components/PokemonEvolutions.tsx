@@ -26,11 +26,12 @@ const PokemonEvolutions: React.FC<PokemonEvolutionsProps> = ({
           <h2>{"Evolution Details"}</h2>
           <div className={styles["evolutionsContainer"]}>
             {evolutionDetails.map((item: any, index: any) => (
-              <div className={styles["evolutionsItem"]}>
-                <p key={index}>{item.pokemonName}</p>
+              <div className={styles["evolutionsItem"]} key={index}>
+                <p>{item.pokemonName}</p>
                 <PokedexItem
                   pokemon={mapEvolutionToPokemonDetails(item)}
                   versionId={versionId}
+                  showHiddenPokemon={true}
                 />
                 <p>{item.evolutionTriggerDesc}</p>
                 {/* Display what level pokemon evolves at if field is not null */}
