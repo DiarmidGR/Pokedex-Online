@@ -1,0 +1,47 @@
+import styles from "../PokemonCard.module.css";
+import useFetchPokemonEvolutions from "../hooks/useFetchPokemonEvolutions";
+import { PokemonEvolutionsProps } from "../PokemonCard.types";
+import PokedexItem from "../../PokedexContainer/components/PokedexItem";
+import { mapEvolutionToPokemonDetails } from "../pokemonCard.utils";
+
+const PokemonEvolutions: React.FC<PokemonEvolutionsProps> = ({
+  pokemonId,
+  versionId,
+}) => {
+  const { evolutionDetails, loading, error } =
+    useFetchPokemonEvolutions(pokemonId);
+
+  if (loading) {
+    return null;
+  }
+
+  if (error) {
+    return <div>Error fetching pokémon evolutions: {error.message}</div>;
+  }
+
+  return (
+    <>
+      {evolutionDetails.length > 1 && (
+        <div className={styles["evolutionsLayout"]}>
+          <h2>{"Evolution Details"}</h2>
+          <div className={styles["evolutionsContainer"]}>
+            {evolutionDetails.map((item: any, index: any) => (
+              <div className={styles["evolutionsItem"]}>
+                <p key={index}>{item.pokemonName}</p>
+                <PokedexItem
+                  pokemon={mapEvolutionToPokemonDetails(item)}
+                  versionId={versionId}
+                />
+                <p>{item.evolutionTriggerDesc}</p>
+                {/* Display what level pokemon evolves at if field is not null */}
+                <p>{item.evolutionLevel && `Lvl. ${item.evolutionLevel}`}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </>
+  );
+};
+
+export default PokemonEvolutions;
