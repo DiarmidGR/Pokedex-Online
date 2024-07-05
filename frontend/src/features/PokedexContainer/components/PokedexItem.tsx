@@ -70,9 +70,14 @@ const PokedexItem: React.FC<PokedexItemProps> = ({
         handlePokemonRightClick?.(event, versionId, pokemon.pokemonId)
       }
     >
-      {isItemStored(pokemon.pokemonId)
+      {/* {isItemStored(pokemon.pokemonId)
         ? normalSprite()
         : showHiddenPokemon
+        ? normalSprite()
+        : darkSprite()} */}
+      {showHiddenPokemon
+        ? normalSprite()
+        : isItemStored(pokemon.pokemonId)
         ? normalSprite()
         : darkSprite()}
     </div>
