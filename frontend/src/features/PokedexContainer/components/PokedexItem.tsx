@@ -2,14 +2,14 @@ import styles from "./PokedexItem.module.css";
 
 interface PokedexItemProps {
   pokemon: PokemonDetails;
-  storedItems: string[];
-  handlePokemonClick: (versionId: string, item: number) => void;
-  handlePokemonRightClick: (
+  storedItems?: string[];
+  handlePokemonClick?: (versionId: string, item: number) => void;
+  handlePokemonRightClick?: (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
     versionId: String,
     pokemonId: number
   ) => void;
-  showHiddenPokemon: boolean;
+  showHiddenPokemon?: boolean;
   versionId: string;
 }
 
@@ -31,7 +31,9 @@ const PokedexItem: React.FC<PokedexItemProps> = ({
   // is used to determine background color of pokedex item
   const isItemStored = (item: number) => {
     let storageString = versionId + "_" + item;
-    return storedItems.includes(storageString);
+
+    // Return false if storedItems is undefined
+    return storedItems?.includes(storageString) ?? false;
   };
 
   const darkSprite = () => {
@@ -63,9 +65,9 @@ const PokedexItem: React.FC<PokedexItemProps> = ({
           ? styles["caught"]
           : styles["not-caught"]
       }`}
-      onClick={() => handlePokemonClick(versionId, pokemon.pokemonId)}
+      onClick={() => handlePokemonClick?.(versionId, pokemon.pokemonId)}
       onContextMenu={(event) =>
-        handlePokemonRightClick(event, versionId, pokemon.pokemonId)
+        handlePokemonRightClick?.(event, versionId, pokemon.pokemonId)
       }
     >
       {isItemStored(pokemon.pokemonId)
