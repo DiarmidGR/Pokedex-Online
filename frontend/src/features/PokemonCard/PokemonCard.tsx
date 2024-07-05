@@ -2,6 +2,7 @@ import styles from "./PokemonCard.module.css";
 import PokedexLocations from "./components/PokedexLocations";
 import useFetchPokemonDetails from "./hooks/useFetchPokemonDetails";
 import { PokemonCardProps } from "./PokemonCard.types";
+import PokemonEvolutions from "./components/PokemonEvolutions";
 
 const PokemonCard: React.FC<PokemonCardProps> = ({
   pokemonId,
@@ -69,6 +70,7 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
             pokemonId={pokemonId}
             setSelectedLocation={setSelectedLocation}
           />
+          <PokemonEvolutions pokemonId={pokemonId} versionId={versionId} />
         </div>
       ))}
     </>

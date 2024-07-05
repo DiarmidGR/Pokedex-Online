@@ -49,3 +49,28 @@
     image-rendering:auto;
     transform:translate(-20%, -20%)
 }
+
+.evolutionsLayout{
+    text-align: center;
+}
+
+.evolutionsContainer{
+    display:flex;
+    flex-direction: row;
+    gap:10px;
+    text-align: center;
+}
+
+.evolutionsItem{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.evolutionsItem p{
+    margin:0;
+}
+
+.evolutionsItem img{
+    width:56px;
+}

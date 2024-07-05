@@ -21,3 +21,16 @@ export interface PokemonDetails {
     nationalId: string;
     types: string;
 }
+
+export interface EvolutionDetails {
+    pokemonName: string;
+    pokemonId: number;
+    evolutionTrigger: string;
+    evolutionTriggerDesc: string;
+    evolutionLevel: string;
+}
+
+export interface PokemonEvolutionsProps {
+    pokemonId: string;
+    versionId: string;
+}
