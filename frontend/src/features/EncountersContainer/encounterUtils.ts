@@ -6,6 +6,11 @@ export const modifyEncounterData = (data: EncounterData[]): EncounterData[] => {
     for (let j = i + 1; j < modifiedData.length; j++) {
       const encounter1 = modifiedData[i];
       const encounter2 = modifiedData[j];
+
+      // Safely check if encounterCondition is not null or undefined
+      const encounter1Condition = encounter1.encounterCondition || '';
+      const encounter2Condition = encounter2.encounterCondition || '';
+
       if (
         encounter1.locationArea === encounter2.locationArea &&
         encounter1.minLevel === encounter2.minLevel &&
@@ -13,15 +18,13 @@ export const modifyEncounterData = (data: EncounterData[]): EncounterData[] => {
         encounter1.pokemonName === encounter2.pokemonName &&
         encounter1.encounterMethod === encounter2.encounterMethod &&
         encounter1.encounterRate === encounter2.encounterRate &&
-        ((encounter1.encounterCondition.includes("time") &&
-          encounter2.encounterCondition.includes("time")) ||
-          (encounter1.encounterCondition.includes("season") &&
-            encounter2.encounterCondition.includes("season")))
+        (
+          (encounter1Condition.includes("time") && encounter2Condition.includes("time")) ||
+          (encounter1Condition.includes("season") && encounter2Condition.includes("season"))
+        )
       ) {
         // Merge time-based encounter conditions
-        modifiedData[
-          i
-        ].encounterCondition += ` ${encounter2.encounterCondition}`;
+        modifiedData[i].encounterCondition += ` ${encounter2.encounterCondition}`;
 
         // Remove encounter2 from modifiedData
         modifiedData.splice(j, 1);
@@ -32,6 +35,7 @@ export const modifyEncounterData = (data: EncounterData[]): EncounterData[] => {
   }
   return modifiedData;
 };
+
 
 export const isItemStored = (storedItems:string[],item: number, versionId:string) => {
   let storageString = versionId + "_" + item;
