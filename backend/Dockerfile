@@ -1,5 +1,5 @@
-# Use official Node.js image as the base image
-FROM node:14
+# Use official Node.js imagebased on alpine for a smaller image size
+FROM node:14-alpine
 
 # Set the working directory in the container
 WORKDIR /usr/src/app
@@ -8,12 +8,10 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 
 # Install dependencies
-RUN npm install
+RUN npm install --production
 
 # Install PM2 globally
-RUN npm install pm2 -g
-
-RUN npm install cors
+RUN npm install -g pm2 cors
 
 # Copy the rest of the application code
 COPY . .
