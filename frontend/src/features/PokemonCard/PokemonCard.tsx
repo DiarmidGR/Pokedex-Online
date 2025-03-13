@@ -4,11 +4,12 @@ import useFetchPokemonDetails from "./hooks/useFetchPokemonDetails";
 import { PokemonCardProps } from "./PokemonCard.types";
 import PokemonEvolutions from "./components/PokemonEvolutions";
 
-const PokemonCard: React.FC<PokemonCardProps> = ({
+const PokemonCard: React.FC<PokemonCardProps & {togglePokemonCard: () => void}> = ({
   pokemonId,
   setSelectedLocation,
   versionId,
   isCaught,
+  togglePokemonCard,
 }) => {
   // Fetch pokemon details from api
   const { pokemonDetails, loading, error } = useFetchPokemonDetails(pokemonId);
@@ -52,6 +53,9 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
           }`}
           key={index}
         >
+          <div className={styles["pokedex-card-item-exit"]} onClick={togglePokemonCard}>
+            &times;
+          </div>
           {isCaught ? normalSprite() : darkSprite()}
           <h1>{pokemon.name}</h1>
           <h2>#{pokemon.nationalId}</h2>
