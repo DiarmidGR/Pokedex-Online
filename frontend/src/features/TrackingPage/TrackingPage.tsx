@@ -31,6 +31,8 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
   const { deleteUserPokemon } = useDeleteUserPokemon();
   const { insertUserPokemon } = useInsertUserPokemon();
 
+  const [isPokemonCardVisible, setIsPokemonCardVisible] = useState<boolean>(false);
+
   // Save the selected pokedex region to localStorage
   useEffect(() => {
     localStorage.setItem(versionLastPokedexString, selectedPokedex);
@@ -62,6 +64,13 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
     );
     let newPokemonId = pokemonId.toString();
     setSelectedPokemonId(newPokemonId);
+
+    setIsPokemonCardVisible(true);
+  };
+
+  // Function to toggle PokemonCard visibility
+  const togglePokemonCard = () => {
+    setIsPokemonCardVisible((prevState) => !prevState);
   };
 
   // Function that checks if user has caught a pokemon already or not
@@ -136,12 +145,15 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
           />
         </div>
         <div className={styles["pokemon-container"]}>
-          <PokemonCard
+          {isPokemonCardVisible && (
+            <PokemonCard
             pokemonId={selectedPokemonId}
             versionId={version_id}
             setSelectedLocation={setSelectedLocation}
             isCaught={isItemStored(selectedPokemonId)}
+            togglePokemonCard={togglePokemonCard}
           />
+          )}
         </div>
       </div>
     </div>

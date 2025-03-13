@@ -14,6 +14,19 @@
     
 }
 
+.pokedex-card-item-exit{
+    position:absolute;
+    right:10px;
+    font-size:40px;
+    cursor:pointer;
+    color: var(--secondary-color);
+    transition: color 0.3s ease;
+}
+
+.pokedex-card-item-exit:hover{
+    color: red;
+}
+
 .caught{
     background-color:var(--primary-light);
     border:solid var(--primary-dark) 3px;
