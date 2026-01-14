@@ -105,9 +105,17 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
             isChecked={showHiddenPokemon}
             setIsChecked={setShowHiddenPokemon}
           ></CheckboxComponent>
-          <p className="switzer-regular">{"Show hidden pokemon?"}</p>
+          <p className="switzer-regular">{"Show uncaught pokemon?"}</p>
         </div>
 
+        <div className={styles["controls-child"]}>
+          <CheckboxComponent
+            isChecked={hideCaughtPokemon}
+            setIsChecked={setHideCaughtPokemon}
+          ></CheckboxComponent>
+          <p className="switzer-regular">{"Hide caught Pokemon?"}</p>
+        </div>
+        
         <div className={styles["controls-child"]}>
           <p className="switzer-regular">{"Pokedex"}</p>
           <PokedexDropdown
@@ -124,13 +132,6 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
             onLocationChange={setSelectedLocation}
             selectedLocation={selectedLocation}
           />
-        </div>
-        <div className={styles["controls-child"]}>
-          <CheckboxComponent
-            isChecked={hideCaughtPokemon}
-            setIsChecked={setHideCaughtPokemon}
-          ></CheckboxComponent>
-          <p className="switzer-regular">{"Hide caught Pokemon?"}</p>
         </div>
       </div>
       <div className={styles["encounters-layout"]}>
