@@ -7,7 +7,7 @@
 .layout-content{
     display:flex;
     flex:1;
-    padding:30px;
+    padding-top:30px;
 }
 
 .layout-footer{
