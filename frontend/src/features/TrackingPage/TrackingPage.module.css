@@ -14,6 +14,12 @@
     padding:2px;
 }
 
+@media screen and (orientation: portrait){
+.pokedex-container{
+    height:50vh;
+}
+} 
+
 .controls-container{
     display:flex;
     flex-direction: row;
