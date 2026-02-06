@@ -2,12 +2,44 @@ const express = require('express');
 const router = express.Router();
 const db = require('../config/db.config');
 
-// Get pokedex by version_id
+// Get pokedex by pokedex_id
 router.get('/pokedex', (req, res) => {
+    const pokedexId = req.query.pokedex_id;
     const versionId = req.query.version_id;
 
-    if (!versionId) {
-        return res.status(400).send({ error: 'version_id is required' });
+    // Ghetto method of limiting national dex based on the version
+    let limit;
+    switch(versionId){
+        case '1'||'2'||'3':
+            limit=151;
+            break;
+        case '4'||'5'||'6':
+            limit=251;
+            break;
+        case '7'||'8'||'9'||'10'||'11':
+            limit=386;
+            break;
+        case '12'||'13'||'14'||'15'||'16'||'37'||'38':
+            limit=493;
+            break;
+        case '17'||'18'||'21'||'22'||'16':
+            limit=649;
+            break;
+        case '23'||'24'||'25'||'26':
+            limit=721;
+            break;
+        case '27'||'28'||'29'||'30':
+            limit=809;
+            break;
+        case '27'||'28'||'29'||'30':
+            limit=905;
+            break;
+        default:
+            limit=null;
+    }
+
+    if (!pokedexId || !versionId) {
+        return res.status(400).send({ error: 'pokedex_id and version_id is required' });
     }
 
     const query = `
@@ -15,10 +47,11 @@ router.get('/pokedex', (req, res) => {
         pdn.species_id AS pokemonId
         FROM pokemon_dex_numbers pdn
         WHERE pdn.pokedex_id = ?
-        ORDER BY pdn.pokedex_number;
+        ORDER BY pdn.pokedex_number
+        ${limit?`LIMIT ${limit}` : `;`}
     `;
 
-    db.query(query, [versionId], (error, results) => {
+    db.query(query, [pokedexId], (error, results) => {
         if (error) {
             return res.status(500).send({ error: error.message });
         }
