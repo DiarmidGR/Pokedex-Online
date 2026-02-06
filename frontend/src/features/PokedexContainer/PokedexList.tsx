@@ -45,7 +45,7 @@ const PokedexList: React.FC<PokedexListProps> = ({
         .get(
           `${
             import.meta.env.VITE_API_ENDPOINT
-          }/pokedex?version_id=${selectedPokedex}`,
+          }/pokedex?pokedex_id=${selectedPokedex}&version_id=${versionId}`,
           {
             headers: {
               Authorization: `Bearer ${getToken()}`, // Include JWT token in the headers
