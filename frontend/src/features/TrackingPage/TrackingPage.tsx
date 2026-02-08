@@ -59,9 +59,6 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
     pokemonId: number
   ) => {
     event.preventDefault();
-    console.log(
-      `Pokemon with ID ${pokemonId} from version with ID ${versionId} opened in pokedex.`
-    );
     let newPokemonId = pokemonId.toString();
     setSelectedPokemonId(newPokemonId);
 
