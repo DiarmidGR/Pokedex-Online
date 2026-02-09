@@ -18,7 +18,6 @@ export interface EncountersListProps {
     hideCaughtPokemon: boolean;
     handlePokemonRightClick: (
       event: React.MouseEvent<HTMLDivElement, MouseEvent>,
-      versionId: String,
       pokemonId: number
     ) => void;
 }
@@ -30,7 +29,6 @@ export interface EncounterListGroupProps {
     locationArea: string;
     handlePokemonRightClick: (
         event: React.MouseEvent<HTMLDivElement, MouseEvent>,
-        versionId: string,
         pokemonId: number
     ) => void;
     handlePokemonClick: (versionId: string, item: number) => void;

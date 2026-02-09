@@ -18,7 +18,6 @@ interface PokedexListProps {
   handlePokemonClick: (versionId: string, item: number) => void;
   handlePokemonRightClick: (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    versionId: String,
     pokemonId: number
   ) => void;
   showHiddenPokemon: boolean;
