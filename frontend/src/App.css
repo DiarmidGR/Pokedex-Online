@@ -16,6 +16,8 @@
   --third-darker: #717473;
 
   background-color:var(--third-light);
+  min-height:100%;
+  height:max-content;
   color:var(--secondary-color);
   display:flex;
   height:100%;
