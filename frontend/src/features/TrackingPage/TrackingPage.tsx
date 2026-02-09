@@ -55,7 +55,6 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
   // Open pokemon in PokemonCard component
   const handlePokemonRightClick = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    versionId: String,
     pokemonId: number
   ) => {
     event.preventDefault();

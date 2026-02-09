@@ -75,7 +75,7 @@ const EncounterListGroup: React.FC<EncounterListGroupProps> = ({
                 : styles["not-caught"]
             }`}
             onContextMenu={(event) =>
-              handlePokemonRightClick(event, versionId, encounter.pokemonId)
+              handlePokemonRightClick(event, encounter.pokemonId)
             }
             onClick={() => handlePokemonClick(versionId, encounter.pokemonId)}
             style={getCaughtStyle(

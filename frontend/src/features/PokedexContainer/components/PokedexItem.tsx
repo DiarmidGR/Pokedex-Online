@@ -6,7 +6,6 @@ interface PokedexItemProps {
   handlePokemonClick?: (versionId: string, item: number) => void;
   handlePokemonRightClick?: (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    versionId: String,
     pokemonId: number
   ) => void;
   showHiddenPokemon?: boolean;
@@ -67,7 +66,7 @@ const PokedexItem: React.FC<PokedexItemProps> = ({
       }`}
       onClick={() => handlePokemonClick?.(versionId, pokemon.pokemonId)}
       onContextMenu={(event) =>
-        handlePokemonRightClick?.(event, versionId, pokemon.pokemonId)
+        handlePokemonRightClick?.(event, pokemon.pokemonId)
       }
     >
       {/* {isItemStored(pokemon.pokemonId)
