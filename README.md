@@ -27,3 +27,46 @@ backend:
 `JWT_REFRESH_SECRET=`  
 
 Make sure the backend info matches your database connection details, don't leave them blank. Also make sure both your JWT_SECRET and JWT_REFRESH_SECRET remain secure.
+
+## Building Docker Image
+Replace {registry} in the following commands with the registry URL you are currently pushing/pulling your docker image from.
+### Frontend
+
+```docker build -t {registry}/pokemon-tracker-frontend .```
+
+```docker push {registry}/pokemon-tracker-frontend```
+
+### Backend
+
+```docker build -t {registry}/pokemon-tracker-backend .```
+
+```docker push {registry}/pokemon-tracker-backend```
+
+## Deploying Docker Container
+### Docker Compose Template
+Replace {registry} in the following docker-compose template with the URL of wherever you are storying your docker images.
+
+Also ensure to replace {your domain} with whatever domain you plan on hosting your page on.
+```
+version: "3.8"
+services:
+  poketracker-frontend:
+    image: {registry}/pokemon-tracker-frontend
+    ports:
+     - "7001:8080"
+    environment:
+    - VITE_API_ENDPOINT="{your domain}/api"
+    restart: unless-stopped
+    container_name: "poketracker-frontend"
+
+
+
+  poketracker-backend:
+    image: {registry}/pokemon-tracker-backend
+    ports:
+     - "3000:3000"
+    restart: unless-stopped
+    container_name: "poketracker-backend"
+    links:
+     - poketracker-frontend
+```
