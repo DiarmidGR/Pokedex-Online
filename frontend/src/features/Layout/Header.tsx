@@ -3,6 +3,8 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import SignoutButton from "./SignoutButton";
 import { getUsername, getToken } from "../../shared/utils/Auth";
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faSun, faMoon} from '@fortawesome/free-solid-svg-icons';
 
 interface HeaderProps {
   toggleTheme: () => void;
@@ -35,10 +37,7 @@ const Header: React.FC<HeaderProps> = ({toggleTheme, isDark}) => {
           onClick={toggleTheme}
           title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
         >
-          <img 
-            src={isDark ? '/icons/sun.png' : '/icons/moon.png'} 
-            alt={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-          />
+          <FontAwesomeIcon icon={isDark?faSun:faMoon}/>
         </button>
       </div>
     </header>
