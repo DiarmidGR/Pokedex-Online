@@ -33,10 +33,72 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
 
   const [isPokemonCardVisible, setIsPokemonCardVisible] = useState<boolean>(false);
 
+  // State variables for pokedex-container resizing function
+  const savedHeight = localStorage.getItem("pokedexHeight");
+  const [pokedexHeight, setPokedexHeight] = useState<number | null>(
+    savedHeight ? parseInt(savedHeight) : null
+  );
+  const [isResizing, setIsResizing] = useState<boolean>(false);
+  const [startY, setStartY] = useState<number>(0);
+  const [startHeight, setStartHeight] = useState<number>(0);
+
   // Save the selected pokedex region to localStorage
   useEffect(() => {
     localStorage.setItem(versionLastPokedexString, selectedPokedex);
   }, [selectedPokedex]);
+
+  // Save pokedex height to localStorage whenever it changes
+  useEffect(() => {
+    if(pokedexHeight!==null){
+      localStorage.setItem("pokedexHeight", pokedexHeight.toString());
+    }
+  }, [pokedexHeight]);
+
+  // Resize event handlers
+  const handleMouseDown = (e: React.MouseEvent) => {
+    setIsResizing(true);
+    setStartY(e.clientY);
+    const pokedexElement = document.querySelector(`.${styles["pokedex-container"]}`) as HTMLElement;
+    if (pokedexElement){
+      setStartHeight(pokedexElement.offsetHeight);
+    }
+  };
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!isResizing) return;
+
+      const deltaY = e.clientY - startY;
+      // I dont know why the -8 is necessary im assuming its to do with some border causing issues
+      const newHeight = (startHeight + deltaY)-8;
+
+      // Set minimum height of 100px, no maximum (allows max-content)
+      if (newHeight >= 100){
+        setPokedexHeight(newHeight)
+      }
+    };
+
+    const handleMouseUp = () => {
+      setIsResizing(false);
+    };
+
+    if (isResizing){
+      document.addEventListener('mousemove', handleMouseMove);
+      document.addEventListener('mouseup', handleMouseUp);
+      // Prevent text selection and user interactions during resize
+      document.body.style.userSelect='none';
+      document.body.style.cursor = 'ns-resize'; // To keep our cursor consistent
+    }else{
+      // Reset styles when not resizing
+      document.body.style.userSelect='';
+      document.body.style.cursor='';
+    }
+
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [isResizing, startY, startHeight])
 
   // Insert/Delete pokemon from user-pokemon database
   const handlePokemonClick = (versionId: string, pokemonId: number) => {
@@ -85,7 +147,10 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
 
   return (
     <div className={styles["tracker-container"]}>
-      <div className={styles["pokedex-container"]}>
+      <div
+        className={styles["pokedex-container"]}
+        style={{height: pokedexHeight ? `${pokedexHeight}px` : 'max-content'}}
+      >
         <PokedexList
           versionId={version_id}
           storedItems={userPokemon}
@@ -94,6 +159,12 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
           handlePokemonRightClick={handlePokemonRightClick}
           showHiddenPokemon={showHiddenPokemon}
         />
+        <div
+          className={styles["resize-handle"]}
+          onMouseDown={handleMouseDown}
+        >
+
+        </div>
       </div>
       <div className={styles["controls-container"]}>
         <div className={styles["controls-child"]}>
