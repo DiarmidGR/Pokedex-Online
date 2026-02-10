@@ -168,19 +168,19 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
       </div>
       <div className={styles["controls-container"]}>
         <div className={styles["controls-child"]}>
+          <p className="switzer-regular">{"Show uncaught pokemon?"}</p>
           <CheckboxComponent
             isChecked={showHiddenPokemon}
             setIsChecked={setShowHiddenPokemon}
           ></CheckboxComponent>
-          <p className="switzer-regular">{"Show uncaught pokemon?"}</p>
         </div>
 
         <div className={styles["controls-child"]}>
+          <p className="switzer-regular">{"Hide caught Pokemon?"}</p>
           <CheckboxComponent
             isChecked={hideCaughtPokemon}
             setIsChecked={setHideCaughtPokemon}
           ></CheckboxComponent>
-          <p className="switzer-regular">{"Hide caught Pokemon?"}</p>
         </div>
         
         <div className={styles["controls-child"]}>
