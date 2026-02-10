@@ -46,9 +46,13 @@
 }
 
 @media screen and (orientation: portrait){
-.pokedex-container{
-    height:50vh;
-}
+    .pokedex-container{
+        height:50vh;
+    }
+
+    .controls-child{
+        flex-direction:column-reverse;
+    }
 } 
 
 .controls-container{
@@ -102,10 +106,6 @@
     .controls-container{
         flex-direction:column;
         align-items: center;
-    }
-
-    .controls-child{
-        flex-direction:column;
     }
 
     .pokedex-container, .encounters-container{
