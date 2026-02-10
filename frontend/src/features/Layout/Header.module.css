@@ -31,13 +31,42 @@ header{
     right:6px;
 }
 
+.header-dark-toggle{
+    position:absolute;
+    right:150px;
+}
+
+.toggle-button{
+    text-wrap:nowrap;
+    padding:12px;
+    border:none;
+    border-radius:14px;
+    font-size:18px;
+    background-color:var(--primary-color);
+    transition: background-color ease 0.2s;
+    cursor:pointer;
+    color:var(--third-light);
+    text-align: left;
+}
+
+.toggle-button:hover{
+    background-color:var(--primary-dark);
+}
+
+.toggle-button img{
+    width:32px;
+    height:32px;
+    display:block;
+}
+
 @media only screen and (max-width: 600px) {
     header{
         text-align:center;
         flex-direction:column;
     }
 
-    .header-logout, .header-user{
+    .header-logout, .header-user, .header-dark-toggle{
         position:relative;
+        left:0;
     }
 }

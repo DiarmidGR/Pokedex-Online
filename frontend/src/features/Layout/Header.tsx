@@ -4,9 +4,12 @@ import { useNavigate } from "react-router-dom";
 import SignoutButton from "./SignoutButton";
 import { getUsername, getToken } from "../../shared/utils/Auth";
 
-interface HeaderProps {}
+interface HeaderProps {
+  toggleTheme: () => void;
+  isDark: boolean;
+}
 
-const Header: React.FC<HeaderProps> = ({}) => {
+const Header: React.FC<HeaderProps> = ({toggleTheme, isDark}) => {
   // Click handler for home page button
   const navigate = useNavigate();
 
@@ -25,6 +28,18 @@ const Header: React.FC<HeaderProps> = ({}) => {
       </div>
       <div className={styles["header-logout"]}>
         <SignoutButton label="Sign Out" />
+      </div>
+      <div className={styles["header-dark-toggle"]}>
+        <button 
+          className={styles["toggle-button"]} 
+          onClick={toggleTheme}
+          title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+        >
+          <img 
+            src={isDark ? '/icons/sun.png' : '/icons/moon.png'} 
+            alt={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+          />
+        </button>
       </div>
     </header>
   );

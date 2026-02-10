@@ -2,6 +2,19 @@
     display:flex;
     flex-direction: column;
     width:100%;
+    background-color:var(--third-light);
+    min-height:100vh;
+    height:max-content;
+}
+
+.dark{
+    background-color:var(--secondary-dark);
+    color:var(--primary-color);
+}
+
+.light{
+    background-color:var(--third-light);
+    color:var(--secondary-color);
 }
 
 .layout-content{

@@ -16,14 +16,13 @@
   --third-darker: #717473;
 
   background-color:var(--third-light);
-  min-height:100%;
-  height:max-content;
   color:var(--secondary-color);
   display:flex;
-  height:100%;
   font-family: 'Switzer', sans-serif;
   font-weight:400;
 }
+
+
 
 h2{
   padding:0;
