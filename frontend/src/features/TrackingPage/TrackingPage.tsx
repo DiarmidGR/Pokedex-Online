@@ -184,7 +184,6 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
         </div>
         
         <div className={styles["controls-child"]}>
-          <p className="switzer-regular">{"Pokedex"}</p>
           <PokedexDropdown
             versionId={versionId}
             onPokedexChange={setSelectedPokedex}
@@ -193,7 +192,6 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
         </div>
 
         <div className={styles["controls-child"]}>
-          <p className="switzer-regular">{"Location"}</p>
           <LocationDropdown
             versionId={version_id}
             onLocationChange={setSelectedLocation}
