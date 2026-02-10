@@ -46,17 +46,13 @@ header{
     transition: background-color ease 0.2s;
     cursor:pointer;
     color:var(--third-light);
-    text-align: left;
+    text-align: center;
+    width:48px;
+    height:48px;
 }
 
 .toggle-button:hover{
     background-color:var(--primary-dark);
-}
-
-.toggle-button img{
-    width:32px;
-    height:32px;
-    display:block;
 }
 
 @media only screen and (max-width: 600px) {
