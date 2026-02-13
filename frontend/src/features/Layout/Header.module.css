@@ -23,17 +23,17 @@ header{
 
 .header-logout{
     position:absolute;
-    left:6px;
+    left:16px;
 }
 
 .header-user{
     position:absolute;
-    right:6px;
+    right:80px;
 }
 
 .header-dark-toggle{
     position:absolute;
-    right:150px;
+    right:16px;
 }
 
 .toggle-button{
