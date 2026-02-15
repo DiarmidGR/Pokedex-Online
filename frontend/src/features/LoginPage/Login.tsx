@@ -1,7 +1,7 @@
 import "./Login.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axiosInstance from "../../shared/utils/axiosInstance";
+import axios from "axios";
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -13,7 +13,7 @@ function Login() {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     try {
-      const res = await axiosInstance.post(
+      const res = await axios.post(
         `${import.meta.env.VITE_API_ENDPOINT}/login`,
         {
           username,
