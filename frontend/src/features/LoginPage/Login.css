@@ -101,10 +101,6 @@
     text-align:center;
 }
 
-.login-message{
-    color:red;
-}
-
 .login-child{
     display:flex;
     flex-direction: column;
