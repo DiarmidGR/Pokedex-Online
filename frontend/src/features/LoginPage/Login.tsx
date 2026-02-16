@@ -24,7 +24,7 @@ function Login() {
   const searchParams = new URLSearchParams(window.location.search);
   useEffect(() => {
     if (searchParams.get('message') === 'refresh-error') {
-      toast.error('Session expired. Login again to continue.');
+      toast.error('Session expired. Login to continue.');
     }
   }, []);
 
