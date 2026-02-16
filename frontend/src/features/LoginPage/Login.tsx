@@ -2,11 +2,11 @@ import "./Login.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
 
   let navigate = useNavigate();
 
@@ -26,7 +26,7 @@ function Login() {
       localStorage.setItem("username", username);
       navigate("/");
     } catch (err) {
-      setError("Invalid credentials.");
+      toast.error("Invalid credentials.");
     }
   };
 
@@ -63,7 +63,6 @@ function Login() {
             Sign In
           </button>
 
-          {error && <p className="login-message">{error}</p>}
         </form>
       </div>
       <div className="register-container">
