@@ -110,7 +110,7 @@ axiosInstance.interceptors.response.use(
 );
 
 const redirectToLogin = () => {
-  window.location.href = "/login";
+  window.location.href = "/login?message=refresh-error";
 };
 
 export default axiosInstance;

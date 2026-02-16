@@ -1,14 +1,32 @@
 import "./Login.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import toast from "react-hot-toast";
+import toast, {useToasterStore} from "react-hot-toast";
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  // Code to limit toasts on screen to 1, obtained from https://stackoverflow.com/a/72932186
+  const {toasts} = useToasterStore();
+  const TOAST_LIMIT = 1;
+  useEffect(() => {
+    toasts
+      .filter((t) => t.visible) // Only consider visible toasts
+      .filter((_, i) => i >= TOAST_LIMIT) // Is toast index over limit
+      .forEach((t) => toast.remove(t.id)); // Remove the toast
+  }, [toasts]);
+
   let navigate = useNavigate();
+
+  // Code to show error message toast if user was redirected from a token refresh error
+  const searchParams = new URLSearchParams(window.location.search);
+  useEffect(() => {
+    if (searchParams.get('message') === 'refresh-error') {
+      toast.error('Session expired. Login again to continue.');
+    }
+  }, []);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
