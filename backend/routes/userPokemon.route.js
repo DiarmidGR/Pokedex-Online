@@ -57,10 +57,15 @@ router.post('/user-pokemon/insert', verifyToken, async (req, res) => {
 
     const query = `
       INSERT IGNORE INTO users_pokemon (user_id, pokemon_id, version_id) VALUES (?, ?, ?)`;
-    db.query(query, [user_id, pokemon_id, version_id], (error, results) => {
+    db.query(query, [user_id, pokemon_id, version_id], async (error, results) => {
         if (error) {
             return res.status(500).json({ error: error.message });
         }
+
+        // Invalidate cache
+        const cacheKey = `user:${user_id}:version:${version_id}:pokemon`;
+        await redis.del(cacheKey);
+
         res.status(201).json({ message: 'Pokemon added successfully', id: results.insertId });
     });
 });
