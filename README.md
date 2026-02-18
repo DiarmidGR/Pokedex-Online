@@ -67,6 +67,17 @@ services:
      - "3000:3000"
     restart: unless-stopped
     container_name: "poketracker-backend"
+    depends_on:
+     - redis
     links:
      - poketracker-frontend
+     - redis
+    environment:
+     - REDIS_URL=redis://cache
+
+  redis:
+    image: redis:4
+    container_name: cache
+    ports:
+     - "6379:6379"
 ```
