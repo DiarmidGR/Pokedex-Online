@@ -137,10 +137,6 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
     return userPokemon.includes(storageString);
   };
 
-  if (loading) {
-    return <div>Loading</div>;
-  }
-
   if (error) {
     return <div>Error fetching pokémon details: {error.message}</div>;
   }
