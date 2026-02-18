@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const db = require('../config/db.config');
 const verifyToken = require('../middleware/auth.middleware');
+const redis = require('../config/redis.config');
 
 // Get a user's caught pokemon
 router.get('/user-pokemon', verifyToken, async (req, res) => {
@@ -11,19 +12,39 @@ router.get('/user-pokemon', verifyToken, async (req, res) => {
         return res.status(400).send({ error: 'version_id and user_id are required' });
     }
 
-    const query = `
-        SELECT pokemon_id
-        FROM users_pokemon
-        WHERE version_id = ? AND user_id = ?;
-    `;
+    const cacheKey = `user:${user_id}:version:${version_id}:pokemon`;
 
-    db.query(query, [version_id, user_id], (error, results) => {
-        if (error) {
-            return res.status(500).send({ error: error.message });
+    try {
+        // Check cache first
+        const cachedData = await redis.get(cacheKey);
+
+        if (cachedData) {
+            console.log('Serving from Redis');
+            return res.json(JSON.parse(cachedData));
         }
 
-        res.send(results);
-    });
+        // If not in cache, query DB
+        const query = `
+            SELECT pokemon_id
+            FROM users_pokemon
+            WHERE version_id = ? AND user_id = ?;
+        `;
+
+        db.query(query, [version_id, user_id], async (error, results) => {
+            if (error) {
+                return res.status(500).send({ error: error.message });
+            }
+
+            // Store in Redis (set TTL = 5 minutes)
+            await redis.setEx(cacheKey, 300, JSON.stringify(results));
+
+            console.log('Serving from MySQL + cached');
+            res.send(results);
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({error: 'Redis error'});
+    }
 });
 
 // Insert pokemon in user-pokemon db
