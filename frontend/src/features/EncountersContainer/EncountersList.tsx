@@ -3,6 +3,7 @@ import EncounterListGroup from "./components/EncounterListGroup";
 import { EncounterData, EncountersListProps } from "./types";
 import useFetchEncounterDetails from "./useFetchEncounterDetails";
 import { modifyEncounterData } from "./encounterUtils";
+import { ScaleLoader } from "react-spinners";
 
 const EncountersList: React.FC<EncountersListProps> = ({
   versionId,
@@ -38,7 +39,7 @@ const EncountersList: React.FC<EncountersListProps> = ({
   }, [encounterDetails]);
 
   if (loading) {
-    return null;
+    return <ScaleLoader color={"var(--primary-dark)"}/>;
   }
 
   if (error) {
