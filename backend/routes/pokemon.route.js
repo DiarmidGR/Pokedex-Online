@@ -1,15 +1,30 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../config/db.config');
+const redisClient = require('../config/redis.config');
+
+const CACHE_TTL = 3600;
 
 // Get pokemon details by pokemon_id
-router.get('/pokemon_details', (req, res) => {
+router.get('/pokemon_details', async (req, res) => {
     const pokemonId = req.query.pokemon_id;
 
     if (!pokemonId)
-        {
-            return res.status(400).send({error: 'pokemon_id is required to fetch pokemon details.'})
-        };
+    {
+        return res.status(400).send({error: 'pokemon_id is required to fetch pokemon details.'})
+    };
+
+    const cacheKey = `pokemon_detail:${pokemonId}`;
+
+    try {
+        console.log('fetching pokemon details from cache');
+        const cached = await redisClient.get(cacheKey);
+        if (cached) {
+            return res.send(JSON.parse(cached));
+        }
+    } catch (err) {
+        console.error('Redis get error:', err);
+    }
 
     const query = `
         SELECT
@@ -28,13 +43,25 @@ router.get('/pokemon_details', (req, res) => {
         LIMIT 1;
     `
 
-    db.query(query, [pokemonId], (error, results) => {
-        if (error) {
-            return res.status(500).send({ error: error.message });
+    try {
+        console.log('fetching pokemon details from api');
+        const results = await new Promise((resolve, reject) => {
+            db.query(query, [pokemonId], (error, results) => {
+                if (error) reject(error);
+                else resolve(results);
+            });
+        });
+
+        try {
+            await redisClient.setEx(cacheKey, CACHE_TTL, JSON.stringify(results));
+        } catch (err) {
+            console.error('Redis set error:', err);
         }
 
         res.send(results);
-    });
+    } catch (error) {
+        res.status(500).send({ error: error.message});
+    }
 });
 
 // Get pokemon locations by pokemon_id and version_id
