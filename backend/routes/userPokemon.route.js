@@ -81,13 +81,20 @@ router.post('/user-pokemon/delete', verifyToken, async (req, res) => {
     const query = `
       DELETE FROM users_pokemon
       WHERE user_id = ? AND pokemon_id = ? AND version_id = ?`;
-    db.query(query, [user_id, pokemon_id, version_id], (error, results) => {
+
+    db.query(query, [user_id, pokemon_id, version_id], async (error, results) => {
         if (error) {
             return res.status(500).json({ error: error.message });
         }
+
         if (results.affectedRows === 0) {
             return res.status(404).json({ message: 'No entry found to delete' });
         }
+
+        // Invalidate cache
+        const cacheKey = `user:${user_id}:version:${version_id}:pokemon`;
+        await redis.del(cacheKey);
+
         res.status(200).json({ message: 'Pokemon removed successfully' });
     });
 });
