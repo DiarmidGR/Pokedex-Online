@@ -8,7 +8,7 @@ const useFetchEncounterDetails = (
   versionId: string
 ) => {
   const [encounterDetails, setEncounterDetails] = useState<EncounterData[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
