@@ -1,5 +1,5 @@
 # Use official Node.js imagebased on alpine for a smaller image size
-FROM node:14-alpine
+FROM node:18-alpine
 
 # Set the working directory in the container
 WORKDIR /usr/src/app
@@ -17,7 +17,7 @@ RUN npm install -g pm2 cors
 COPY . .
 
 # Expose the port your app runs on
-ENV PORT = 3000
+ENV port=3000
 
 # Command to run the application
 CMD ["pm2-runtime", "server.js"]
