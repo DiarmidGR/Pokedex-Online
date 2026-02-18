@@ -35,34 +35,38 @@ const PokedexList: React.FC<PokedexListProps> = ({
   const [filteredPokemonDetails, setFilteredPokemonFetails] = useState<
     PokemonDetails[]
   >([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
 
   // fetch data from API using selectedPokedex
   useEffect(() => {
     if (storedItems) {
+      setLoading(true);
       // Fetch pokedex details from the API
-      axiosInstance
-        .get(
-          `${
-            import.meta.env.VITE_API_ENDPOINT
-          }/pokedex?pokedex_id=${selectedPokedex}&version_id=${versionId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${getToken()}`, // Include JWT token in the headers
-            },
-          }
-        )
-        .then((response) => {
-          const filteredData = response.data.filter(
-            (detail: PokemonDetails) => detail.pokemonName !== null
-          );
-          setPokemonDetails(filteredData);
-        })
-        .catch((error) => {
-          console.error(
-            "There was an error fetching the encounter details!",
-            error
-          );
-        });
+      try{
+        axiosInstance
+          .get(
+            `${
+              import.meta.env.VITE_API_ENDPOINT
+            }/pokedex?pokedex_id=${selectedPokedex}&version_id=${versionId}`,
+            {
+              headers: {
+                Authorization: `Bearer ${getToken()}`, // Include JWT token in the headers
+              },
+            }
+          )
+          .then((response) => {
+            const filteredData = response.data.filter(
+              (detail: PokemonDetails) => detail.pokemonName !== null
+            );
+            setPokemonDetails(filteredData);
+            setError(null); // Clear previous errors if there were any
+          })
+      }catch(err:any){
+        setError(err);
+      }finally{
+        setLoading(false);
+      }
     }
   }, [selectedPokedex]);
 
@@ -76,6 +80,29 @@ const PokedexList: React.FC<PokedexListProps> = ({
       pokemon.pokemonName.toLowerCase().includes(searchTerm)
     );
     setFilteredPokemonFetails(filteredPokemonDetails);
+  };
+
+  if (loading){
+    return (
+      <div className={styles["pokedex-items"]}>
+        <div className={styles["pokedex-stats"]}>
+          <div className={styles["statsItem"]}>
+            {`Pokémon Caught: ${storedItems.length}/${pokemonDetails.length}`}
+          </div>
+          <div className={styles["statsItem"]}>
+            <PokedexSearch onChange={handlePokedexSearchChange} />
+          </div>
+        </div>
+
+        <div className={styles["pokemon-list-wrapper"]}>
+          Fetching Data . . .
+        </div>
+      </div>
+    );
+  };
+
+  if (error){
+    return <div>Data failed to fetch . . .</div>
   };
 
   return (
