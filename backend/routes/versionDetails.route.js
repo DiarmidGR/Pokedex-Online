@@ -2,6 +2,12 @@ const express = require('express');
 const router = express.Router();
 const db = require('../config/db.config');
 const verifyToken = require('../middleware/auth.middleware');
+const redis = require('../config/redis.config');
+
+const CACHE_TTL = {
+    unauthenticated: 60 * 60 * 24, // 24 hours - static data, rarely changes
+    authenticated: 60 * 5,         // 5 minutes - user-specific, changes on catches
+};
 
 // Middleware to check for user_id and apply verifyToken if present
 const checkUserId = (req, res, next) => {
@@ -24,6 +30,18 @@ router.get('/version_details', checkUserId, async (req, res) => {
             return res.status(400).send({error: 'version_id is required to fetch game details when authenticated.'})
         }
 
+        const cacheKey = `version_details:user:${userId}:version:${versionId}`;
+
+        try {
+            const cached = await redis.get(cacheKey);
+            if (cached) {
+                return res.send(JSON.parse(cached));
+            }
+        } catch (err) {
+            console.error('Redis GET error (authenticated):', err.message);
+            // non-fatal, fall through to DB
+        }
+
         const query = `
             SELECT vn.name as versionName,
             COUNT(DISTINCT pdn.species_id) as dexTotal,
@@ -39,11 +57,18 @@ router.get('/version_details', checkUserId, async (req, res) => {
             ON v.id=up.version_id AND up.user_id=?
             WHERE v.id = ?
             GROUP BY vn.name;
-        `
+        `;
     
-        db.query(query, [userId, versionId], (error, results) => {
+        db.query(query, [userId, versionId], async (error, results) => {
             if (error) {
                 return res.status(500).send({ error: error.message });
+            }
+
+            try {
+                await redis.setEx(cacheKey, CACHE_TTL.authenticated, JSON.stringify(results));
+            } catch (err) {
+                console.error('Redis SET error (authenticated):', err.message);
+                // non-fatal, still return results
             }
     
             res.send(results);
@@ -52,9 +77,20 @@ router.get('/version_details', checkUserId, async (req, res) => {
     else
     {
         if(!versionId)
-            {
-                return res.status(400).send({error: 'version_id is required to fetch game details when authenticated.'})
+        {
+            return res.status(400).send({error: 'version_id is required to fetch game details when authenticated.'})
+        }
+
+        const cacheKey = `version_details:version${versionId}`;
+
+        try {
+            const cached = await redis.get(cacheKey);
+            if (cached) {
+                return res.send(JSON.parse(cached));
             }
+        } catch (err) {
+            console.error('Redis GET error (unauthenticated):', err.message);
+        }
 
         const query = `
             SELECT vn.name as versionName,
@@ -70,9 +106,15 @@ router.get('/version_details', checkUserId, async (req, res) => {
             GROUP BY vn.name;
         `
 
-        db.query(query, [versionId], (error, results) => {
+        db.query(query, [versionId], async (error, results) => {
             if (error) {
                 return res.status(500).send({ error: error.message });
+            }
+
+            try {
+                await redis.setEx(cacheKey, CACHE_TTL.unauthenticated, JSON.stringify(results));
+            } catch (err) {
+                console.error('Redis SET error (unauthenticated):', err.message);
             }
 
             res.send(results);
