@@ -26,7 +26,7 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
   );
   const [hideCaughtPokemon, setHideCaughtPokemon] = useState<boolean>(false); // used for CheckboxComponent and passed to EncountersContainer
   const [showHiddenPokemon, setShowHiddenPokemon] = useState<boolean>(false); // used for CheckboxComponent and passed to PokedexList component
-  const { userPokemon, setUserPokemon, loading, error } =
+  const { userPokemon, setUserPokemon, error } =
     useFetchUserPokemon(versionId);
   const { deleteUserPokemon } = useDeleteUserPokemon();
   const { insertUserPokemon } = useInsertUserPokemon();
