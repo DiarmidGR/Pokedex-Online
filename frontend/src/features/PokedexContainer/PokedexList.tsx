@@ -4,6 +4,7 @@ import styles from "./PokedexList.module.css";
 import { getToken } from "../../shared/utils/Auth";
 import PokedexItem from "./components/PokedexItem";
 import PokedexSearch from "./components/PokedexSearch";
+import { MoonLoader } from "react-spinners";
 
 // interface for pokemon data received from api
 interface PokemonDetails {
@@ -41,32 +42,30 @@ const PokedexList: React.FC<PokedexListProps> = ({
   // fetch data from API using selectedPokedex
   useEffect(() => {
     if (storedItems) {
-      setLoading(true);
-      // Fetch pokedex details from the API
-      try{
-        axiosInstance
-          .get(
-            `${
-              import.meta.env.VITE_API_ENDPOINT
-            }/pokedex?pokedex_id=${selectedPokedex}&version_id=${versionId}`,
+      const fetchPokedexData = async() => {
+        setLoading(true);
+        try {
+          const response = await axiosInstance.get(
+            `${import.meta.env.VITE_API_ENDPOINT}/pokedex?pokedex_id=${selectedPokedex}&version_id=${versionId}`,
             {
               headers: {
                 Authorization: `Bearer ${getToken()}`, // Include JWT token in the headers
               },
             }
-          )
-          .then((response) => {
-            const filteredData = response.data.filter(
-              (detail: PokemonDetails) => detail.pokemonName !== null
-            );
-            setPokemonDetails(filteredData);
-            setError(null); // Clear previous errors if there were any
-          })
-      }catch(err:any){
-        setError(err);
-      }finally{
-        setLoading(false);
-      }
+          );
+          const filteredData = response.data.filter(
+            (detail: PokemonDetails) => detail.pokemonName !== null
+          );
+          setPokemonDetails(filteredData);
+          setError(null);
+        } catch(err: any) {
+          setError(err);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      fetchPokedexData();
     }
   }, [selectedPokedex]);
 
@@ -95,7 +94,7 @@ const PokedexList: React.FC<PokedexListProps> = ({
         </div>
 
         <div className={styles["pokemon-list-wrapper"]}>
-          Fetching Data . . .
+          <MoonLoader color="var(--secondary-color)"/>
         </div>
       </div>
     );
