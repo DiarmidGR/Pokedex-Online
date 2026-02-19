@@ -17,7 +17,6 @@ router.get('/locations', async (req, res) => {
 
     // Try to fetch data from redis cache first
     try {
-        console.log('Querying locations data using Redis cache');
         const cached = await redis.get(cacheKey);
         if (cached) {
             return res.send(JSON.parse(cached));
@@ -44,7 +43,6 @@ router.get('/locations', async (req, res) => {
 
     // Query api if redis cache is unavailable
     db.query(query, [versionId], async (error, results) => {
-        console.log('Querying locations data using API');
         if (error) {
             return res.status(500).send({ error: error.message });
         }
