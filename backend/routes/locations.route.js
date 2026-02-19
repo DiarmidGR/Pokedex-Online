@@ -1,13 +1,29 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../config/db.config');
+const redis = require('../config/redis.config');
+
+const CACHE_TTL = 86400 // 24 hours - static data
 
 // Get location identifiers by version_id
-router.get('/locations', (req, res) => {
+router.get('/locations', async (req, res) => {
     const versionId = req.query.version_id;
 
     if (!versionId) {
         return res.status(400).send({ error: 'version_id is required' });
+    }
+
+    const cacheKey = `locations:${versionId}`;
+
+    // Try to fetch data from redis cache first
+    try {
+        console.log('Querying locations data using Redis cache');
+        const cached = await redis.get(cacheKey);
+        if (cached) {
+            return res.send(JSON.parse(cached));
+        }
+    } catch (err) {
+        console.error('Redis GET error', err.message);
     }
 
     const query = `
@@ -26,9 +42,17 @@ router.get('/locations', (req, res) => {
             locationName;
     `;
 
-    db.query(query, [versionId], (error, results) => {
+    // Query api if redis cache is unavailable
+    db.query(query, [versionId], async (error, results) => {
+        console.log('Querying locations data using API');
         if (error) {
             return res.status(500).send({ error: error.message });
+        }
+
+        try {
+            await redis.setEx(cacheKey, CACHE_TTL, JSON.stringify(results));
+        } catch (err) {
+            console.error('Redis SET error:', err.message);
         }
 
         res.send(results);
