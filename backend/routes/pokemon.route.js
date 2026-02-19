@@ -123,12 +123,24 @@ router.get('/pokemon_locations', async (req, res) => {
 });
 
 // Get pokemon evolutions by pokemon id
-router.get('/pokemon_evolutions', (req, res) => {
+router.get('/pokemon_evolutions', async (req, res) => {
     const pokemonId = req.query.pokemon_id;
 
     if(!pokemonId){
         return res.status(400).send({error:'pokemon_id is required to fetch pokemon evolutions.'})
     };
+
+    const cacheKey = `pokemon_evolutions:${pokemonId}`;
+
+    try {
+        console.log('{/pokemon_evolutions} fetching pokemon details from cache');
+        const cached = await redisClient.get(cacheKey);
+        if (cached) {
+            return res.send(JSON.parse(cached));
+        }
+    } catch (err) {
+        console.error('Redis get error:', err);
+    }
 
     const query = `
         SELECT
@@ -162,13 +174,25 @@ router.get('/pokemon_evolutions', (req, res) => {
         ORDER BY pokemonId
     `;
 
-    db.query(query, [pokemonId], (error, results) => {
-        if (error) {
-            return res.status(500).send({ error: error.message });
+    try {
+        console.log('{/pokemon_evolutions} fetching pokemon details from api');
+        const results = await new Promise((resolve, reject) => {
+            db.query(query, [pokemonId], (error, results) => {
+                if (error) reject(error);
+                else resolve(results);
+            });
+        });
+
+        try {
+            await redisClient.setEx(cacheKey, CACHE_TTL, JSON.stringify(results));
+        } catch (err) {
+            console.error('Redis set error:', err);
         }
 
         res.send(results);
-    });
-})
+    } catch (error) {
+        res.status(500).send({error: error.message});
+    }
+});
 
 module.exports=router;
