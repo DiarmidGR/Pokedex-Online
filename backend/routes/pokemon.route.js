@@ -17,7 +17,6 @@ router.get('/pokemon_details', async (req, res) => {
     const cacheKey = `pokemon_detail:${pokemonId}`;
 
     try {
-        console.log('{/pokemon_details} fetching pokemon details from cache');
         const cached = await redisClient.get(cacheKey);
         if (cached) {
             return res.send(JSON.parse(cached));
@@ -44,7 +43,6 @@ router.get('/pokemon_details', async (req, res) => {
     `
 
     try {
-        console.log('{/pokemon_details} fetching pokemon details from api');
         const results = await new Promise((resolve, reject) => {
             db.query(query, [pokemonId], (error, results) => {
                 if (error) reject(error);
@@ -77,7 +75,6 @@ router.get('/pokemon_locations', async (req, res) => {
     const cacheKey = `pokemon_location:${pokemonId}:${versionId}`;
 
         try {
-        console.log('{/pokemon_locations} fetching pokemon details from cache');
         const cached = await redisClient.get(cacheKey);
         if (cached) {
             return res.send(JSON.parse(cached));
@@ -102,7 +99,6 @@ router.get('/pokemon_locations', async (req, res) => {
     `
 
     try {
-        console.log('{/pokemon_locations} fetching pokemon location from api');
         const results = await new Promise((resolve, reject) => {
             db.query(query, [versionId, pokemonId], (error, results) => {
                 if (error) reject(error);
@@ -133,7 +129,6 @@ router.get('/pokemon_evolutions', async (req, res) => {
     const cacheKey = `pokemon_evolutions:${pokemonId}`;
 
     try {
-        console.log('{/pokemon_evolutions} fetching pokemon details from cache');
         const cached = await redisClient.get(cacheKey);
         if (cached) {
             return res.send(JSON.parse(cached));
@@ -175,7 +170,6 @@ router.get('/pokemon_evolutions', async (req, res) => {
     `;
 
     try {
-        console.log('{/pokemon_evolutions} fetching pokemon details from api');
         const results = await new Promise((resolve, reject) => {
             db.query(query, [pokemonId], (error, results) => {
                 if (error) reject(error);

@@ -19,7 +19,6 @@ router.get('/user-pokemon', verifyToken, async (req, res) => {
         const cachedData = await redis.get(cacheKey);
 
         if (cachedData) {
-            console.log('Serving from Redis');
             return res.json(JSON.parse(cachedData));
         }
 
@@ -38,7 +37,6 @@ router.get('/user-pokemon', verifyToken, async (req, res) => {
             // Store in Redis (set TTL = 5 minutes)
             await redis.setEx(cacheKey, 300, JSON.stringify(results));
 
-            console.log('Serving from MySQL + cached');
             res.send(results);
         });
     } catch (err) {
