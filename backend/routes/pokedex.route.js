@@ -110,11 +110,24 @@ router.get('/pokedex', async (req, res) => {
 });
 
 // Get pokedex ids and names by version_id
-router.get('/pokedex_versions', (req, res) => {
+router.get('/pokedex_versions', async (req, res) => {
     const versionId = req.query.version_id;
 
     if (!versionId) {
         return res.status(400).send({error: 'version_id is required to fex pokedex data.'})
+    }
+
+    const cacheKey = `pokedex_versions:${versionId}`;
+
+    // Try to fetch data from redis cache first
+    
+    try {
+        const cached = await redis.get(cacheKey);
+        if (cached) {
+            return res.send(JSON.parse(cached));
+        }
+    } catch (err) {
+        console.error('Redis GET error', err.message);
     }
 
     const query = `
@@ -126,9 +139,15 @@ router.get('/pokedex_versions', (req, res) => {
         WHERE v.id = ?;
     `;
 
-    db.query(query, [versionId], (error, results) => {
+    // Query api if redis cache is unavailable
+    db.query(query, [versionId], async (error, results) => {
         if (error) {
             return res.status(500).send({ error: error.message });
+        }
+        try {
+            await redis.setEx(cacheKey, CACHE_TTL, JSON.stringify(results));
+        } catch (err) {
+            console.error('Redis SET error:', err.message);
         }
 
         res.send(results);
