@@ -17,7 +17,7 @@ router.get('/pokemon_details', async (req, res) => {
     const cacheKey = `pokemon_detail:${pokemonId}`;
 
     try {
-        console.log('fetching pokemon details from cache');
+        console.log('{/pokemon_details} fetching pokemon details from cache');
         const cached = await redisClient.get(cacheKey);
         if (cached) {
             return res.send(JSON.parse(cached));
@@ -44,7 +44,7 @@ router.get('/pokemon_details', async (req, res) => {
     `
 
     try {
-        console.log('fetching pokemon details from api');
+        console.log('{/pokemon_details} fetching pokemon details from api');
         const results = await new Promise((resolve, reject) => {
             db.query(query, [pokemonId], (error, results) => {
                 if (error) reject(error);
@@ -65,7 +65,7 @@ router.get('/pokemon_details', async (req, res) => {
 });
 
 // Get pokemon locations by pokemon_id and version_id
-router.get('/pokemon_locations', (req, res) => {
+router.get('/pokemon_locations', async (req, res) => {
     const pokemonId = req.query.pokemon_id;
     const versionId = req.query.version_id;
 
@@ -73,6 +73,18 @@ router.get('/pokemon_locations', (req, res) => {
     {
         return res.status(400).send({error: 'version_id and pokemon_id is required to fetch pokemon locations.'})
     };
+
+    const cacheKey = `pokemon_location:${pokemonId}:${versionId}`;
+
+        try {
+        console.log('{/pokemon_locations} fetching pokemon details from cache');
+        const cached = await redisClient.get(cacheKey);
+        if (cached) {
+            return res.send(JSON.parse(cached));
+        }
+    } catch (err) {
+        console.error('Redis get error:', err);
+    }
 
     const query = `
         SELECT 
@@ -89,13 +101,25 @@ router.get('/pokemon_locations', (req, res) => {
         group by l.identifier, ln.name;
     `
 
-    db.query(query, [versionId, pokemonId], (error, results) => {
-        if (error) {
-            return res.status(500).send({ error: error.message });
+    try {
+        console.log('{/pokemon_locations} fetching pokemon location from api');
+        const results = await new Promise((resolve, reject) => {
+            db.query(query, [versionId, pokemonId], (error, results) => {
+                if (error) reject(error);
+                else resolve(results);
+            });
+        });
+
+        try {
+            await redisClient.setEx(cacheKey, CACHE_TTL, JSON.stringify(results));
+        } catch (err) {
+            console.error('Redis set error:', err);
         }
 
         res.send(results);
-    });
+    } catch (error) {
+        res.status(500).send({ error: error.message });
+    }
 });
 
 // Get pokemon evolutions by pokemon id
