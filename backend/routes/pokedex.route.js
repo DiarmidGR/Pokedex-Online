@@ -1,9 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../config/db.config');
+const redis = require('../config/redis.config');
+
+const CACHE_TTL = 86400 // 24 hours - static data
 
 // Get pokedex by pokedex_id
-router.get('/pokedex', (req, res) => {
+router.get('/pokedex', async (req, res) => {
     const pokedexId = req.query.pokedex_id;
     const versionId = req.query.version_id;
 
@@ -69,6 +72,18 @@ router.get('/pokedex', (req, res) => {
         return res.status(400).send({ error: 'pokedex_id and version_id is required' });
     }
 
+    const cacheKey = `pokedex:${pokedexId}:${versionId}`;
+
+    // Try to fetch data from redis cache first
+    try {
+        const cached = await redis.get(cacheKey);
+        if (cached) {
+            return res.send(JSON.parse(cached));
+        }
+    } catch (err) {
+        console.error('Redis GET error', err.message);
+    }
+
     const query = `
         SELECT (SELECT psn.name FROM pokemon_species_names psn WHERE psn.pokemon_species_id = pdn.species_id) AS pokemonName,
         pdn.species_id AS pokemonId
@@ -78,9 +93,16 @@ router.get('/pokedex', (req, res) => {
         ${limit?`LIMIT ${limit}` : `;`}
     `;
 
-    db.query(query, [pokedexId], (error, results) => {
+    // Query API if redis cache is unavailable
+
+    db.query(query, [pokedexId], async (error, results) => {
         if (error) {
             return res.status(500).send({ error: error.message });
+        }
+        try {
+            await redis.setEx(cacheKey, CACHE_TTL, JSON.stringify(results));
+        } catch (err) {
+            console.error('Redis SET error:', err.message);
         }
 
         res.send(results);
