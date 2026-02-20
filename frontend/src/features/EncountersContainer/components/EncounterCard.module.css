@@ -21,7 +21,7 @@
     image-rendering: pixelated;
     position: absolute;
     bottom:0;
-    right:0;
+    right:-10px;
 }
 
 .pokemon-card-condition-container{
