@@ -10,6 +10,7 @@ import useFetchUserPokemon from "./hooks/useFetchUserPokemon";
 import { handleDeletePokemon } from "./trackingPage.utils";
 import useDeleteUserPokemon from "./hooks/useDeleteUserPokemon";
 import useInsertUserPokemon from "./hooks/useInsertUserPokemon";
+import { useSearchParams } from "react-router-dom";
 
 interface TrackingPageProps {
   version_id: string;
@@ -18,7 +19,10 @@ interface TrackingPageProps {
 const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
   const versionId = version_id;
   const [selectedPokemonId, setSelectedPokemonId] = useState<string>("");
-  const [selectedLocation, setSelectedLocation] = useState<string>("");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [selectedLocation, setSelectedLocation] = useState<string>(
+    searchParams.get("location") ?? ""
+  );
   const versionLastPokedexString = versionId + "_lastPokedexId";
   const lastPokedexId = localStorage.getItem(versionLastPokedexString);
   const [selectedPokedex, setSelectedPokedex] = useState<string>(
@@ -41,6 +45,15 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
   const [isResizing, setIsResizing] = useState<boolean>(false);
   const [startY, setStartY] = useState<number>(0);
   const [startHeight, setStartHeight] = useState<number>(0);
+
+  // Sync LocationDropdown selectedLocation with url search parameter for location
+  useEffect(() => {
+    if (selectedLocation) {
+      setSearchParams({ location: selectedLocation }, {replace: true});
+    } else {
+      setSearchParams({}, {replace:true});
+    }
+  }, [selectedLocation]);
 
   // Save the selected pokedex region to localStorage
   useEffect(() => {
