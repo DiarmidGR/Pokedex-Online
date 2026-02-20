@@ -24,14 +24,13 @@
 }
 
 .encounters-item{
-    display: block;
     flex-direction: column;
     justify-content:baseline;
     align-items: center;
     width:168px;
     position:relative;
     box-sizing: border-box;
-    padding:6px;
+    padding:16px;
     cursor:pointer;
     transition: background-color 0.2s ease;
     border-radius:10px;
