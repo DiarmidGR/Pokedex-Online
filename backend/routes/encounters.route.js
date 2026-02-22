@@ -3,7 +3,7 @@ const router = express.Router();
 const db = require('../config/db.config');
 const redisClient = require('../config/redis.config');
 
-const CACHE_TTL = 3600;
+const CACHE_TTL = 86400;
 
 router.get('/encounter-details', async (req, res) => {
     const versionId = req.query.version_id;
