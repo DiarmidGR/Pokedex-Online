@@ -28,6 +28,7 @@ export interface EvolutionDetails {
     evolutionTrigger: string;
     evolutionTriggerDesc: string;
     evolutionLevel: string;
+    evolutionItem: string;
 }
 
 export interface PokemonEvolutionsProps {
