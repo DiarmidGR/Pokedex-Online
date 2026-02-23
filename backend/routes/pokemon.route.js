@@ -143,7 +143,8 @@ router.get('/pokemon_evolutions', async (req, res) => {
         ps.id as pokemonId,
         et.identifier as evolutionTrigger,
         etp.name as evolutionTriggerDesc,
-        pe.minimum_level as evolutionLevel
+        pe.minimum_level as evolutionLevel,
+        i.identifier as evolutionItem
         FROM pokemon_species ps
 
         INNER JOIN pokemon_species_names psn
@@ -158,13 +159,16 @@ router.get('/pokemon_evolutions', async (req, res) => {
         LEFT JOIN evolution_trigger_prose etp
         ON etp.evolution_trigger_id=et.id
 
+        LEFT JOIN items i
+        ON i.id = pe.trigger_item_id
+
         WHERE evolution_chain_id = (
             SELECT evolution_chain_id
             FROM pokemon_species
             WHERE id = ?
         )
         
-        GROUP BY pokemonName, pokemonId, evolutionTrigger, evolutionTriggerDesc, evolutionLevel
+        GROUP BY pokemonName, pokemonId, evolutionTrigger, evolutionTriggerDesc, evolutionLevel, evolutionItem
 
         ORDER BY pokemonId
     `;
