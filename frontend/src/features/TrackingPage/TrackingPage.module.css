@@ -72,7 +72,7 @@
 
 .controls-child p{
     font-size:larger;
-    padding:6px;
+    margin: 4px;
 }
 
 .encounters-layout{
@@ -108,6 +108,7 @@
     .controls-container{
         flex-direction:column;
         align-items: center;
+        padding-top:10px;
     }
 
     .pokedex-container, .encounters-container{
