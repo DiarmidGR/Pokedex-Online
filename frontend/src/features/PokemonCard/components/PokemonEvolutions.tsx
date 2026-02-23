@@ -36,7 +36,7 @@ const PokemonEvolutions: React.FC<PokemonEvolutionsProps> = ({
                 <p>{item.evolutionTriggerDesc}</p>
                 {/* Display what level pokemon evolves at if field is not null */}
                 <p>{item.evolutionLevel && `Lvl. ${item.evolutionLevel}`}</p>
-                <img src={`/sprites/evolution-items/${item.evolutionItem}.png`} style={{"width":"48px"}} alt="" />
+                <img src={`/sprites/evolution-items/${item.evolutionItem}.png`} style={{"width":"48px"}} alt="" title={item.evolutionItem}/>
               </div>
             ))}
           </div>
