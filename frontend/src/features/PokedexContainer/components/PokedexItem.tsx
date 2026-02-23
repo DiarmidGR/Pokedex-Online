@@ -68,6 +68,7 @@ const PokedexItem: React.FC<PokedexItemProps> = ({
       onContextMenu={(event) =>
         handlePokemonRightClick?.(event, pokemon.pokemonId)
       }
+      title="right click to view pokemon details"
     >
       {/* {isItemStored(pokemon.pokemonId)
         ? normalSprite()
