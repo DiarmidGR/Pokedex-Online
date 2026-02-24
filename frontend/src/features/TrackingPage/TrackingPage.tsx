@@ -135,7 +135,6 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
     event.preventDefault();
     let newPokemonId = pokemonId.toString();
     setSelectedPokemonId(newPokemonId);
-
     setIsPokemonCardVisible(true);
   };
 
@@ -227,6 +226,7 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
             setSelectedLocation={setSelectedLocation}
             isCaught={isItemStored(selectedPokemonId)}
             togglePokemonCard={togglePokemonCard}
+            handlePokemonRightClick={handlePokemonRightClick}
           />
           )}
         </div>

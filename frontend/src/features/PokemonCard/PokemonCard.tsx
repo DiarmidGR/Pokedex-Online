@@ -10,6 +10,7 @@ const PokemonCard: React.FC<PokemonCardProps & {togglePokemonCard: () => void}> 
   versionId,
   isCaught,
   togglePokemonCard,
+  handlePokemonRightClick
 }) => {
   // Fetch pokemon details from api
   const { pokemonDetails, loading, error } = useFetchPokemonDetails(pokemonId);
@@ -74,7 +75,7 @@ const PokemonCard: React.FC<PokemonCardProps & {togglePokemonCard: () => void}> 
             pokemonId={pokemonId}
             setSelectedLocation={setSelectedLocation}
           />
-          <PokemonEvolutions pokemonId={pokemonId} versionId={versionId} />
+          <PokemonEvolutions pokemonId={pokemonId} versionId={versionId} handlePokemonRightClick={handlePokemonRightClick} />
         </div>
       ))}
     </>

@@ -14,6 +14,7 @@ export interface PokemonCardProps {
     versionId: string;
     setSelectedLocation: (location: string) => void;
     isCaught: boolean;
+    handlePokemonRightClick: (event: React.MouseEvent<HTMLDivElement, MouseEvent>, pokemonId: number) => void;
 }
 
 export interface PokemonDetails {
@@ -34,4 +35,5 @@ export interface EvolutionDetails {
 export interface PokemonEvolutionsProps {
     pokemonId: string;
     versionId: string;
+    handlePokemonRightClick: (event: React.MouseEvent<HTMLDivElement, MouseEvent>, pokemonId: number) => void;
 }
