@@ -26,7 +26,7 @@ header{
     left:16px;
 }
 
-.header-user{
+/* .header-user{
     position:absolute;
     right:80px;
 }
@@ -34,6 +34,15 @@ header{
 .header-dark-toggle{
     position:absolute;
     right:16px;
+} */
+
+.header-right{
+    position: absolute;
+    right: 16px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    gap:1rem;
 }
 
 .toggle-button{
@@ -55,13 +64,13 @@ header{
     background-color:var(--primary-dark);
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (orientation: portrait) {
     header{
         text-align:center;
         flex-direction:column;
     }
 
-    .header-logout, .header-user, .header-dark-toggle{
+    .header-logout, .header-user, .header-dark-toggle, .header-right{
         position:relative;
         left:0;
     }

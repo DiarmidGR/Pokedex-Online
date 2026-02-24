@@ -25,21 +25,28 @@ const Header: React.FC<HeaderProps> = ({toggleTheme, isDark}) => {
           Pokétracker Online
         </h1>
       </div>
-      <div className={styles["header-user"]}>
-        {getToken() && <p>Logged in: {getUsername()}</p>}
+      <div className={styles["header-right"]}>
+
+        <div className={styles["header-user"]}>
+          {getToken() && <p>Logged in: {getUsername()}</p>}
+        </div>
+
+        <div className={styles["header-dark-toggle"]}>
+          <button 
+            className={styles["toggle-button"]} 
+            onClick={toggleTheme}
+            title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+          >
+            <FontAwesomeIcon icon={isDark?faSun:faMoon}/>
+          </button>
+        </div>
+        
       </div>
+      
       <div className={styles["header-logout"]}>
         <SignoutButton label="Sign Out" />
       </div>
-      <div className={styles["header-dark-toggle"]}>
-        <button 
-          className={styles["toggle-button"]} 
-          onClick={toggleTheme}
-          title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-        >
-          <FontAwesomeIcon icon={isDark?faSun:faMoon}/>
-        </button>
-      </div>
+      
     </header>
   );
 };
