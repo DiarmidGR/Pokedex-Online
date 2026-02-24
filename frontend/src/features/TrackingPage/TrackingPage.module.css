@@ -102,6 +102,7 @@
 @media only screen and (max-width: 600px) {
     .encounters-layout{
         flex-direction:column-reverse;
+        width: 95%;
     }
     
     .controls-container{
