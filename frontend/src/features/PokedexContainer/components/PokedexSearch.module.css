@@ -1,5 +1,25 @@
+.search-pokedex-container{
+    position:relative;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
 .searchPokedex{
     border:none;
     font-size:large;
     border-radius:5px;
+}
+
+.search-clear{
+    position: absolute;
+    right: 8px;
+    font-size:20px;
+    cursor:pointer;
+    color: var(--secondary-lighter);
+    transition: color 0.1s ease;
+}
+
+.search-clear:hover{
+    color: var(--primary-dark);
 }
