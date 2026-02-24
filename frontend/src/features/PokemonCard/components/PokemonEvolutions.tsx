@@ -7,6 +7,7 @@ import { mapEvolutionToPokemonDetails } from "../pokemonCard.utils";
 const PokemonEvolutions: React.FC<PokemonEvolutionsProps> = ({
   pokemonId,
   versionId,
+  handlePokemonRightClick
 }) => {
   const { evolutionDetails, loading, error } =
     useFetchPokemonEvolutions(pokemonId);
@@ -32,6 +33,7 @@ const PokemonEvolutions: React.FC<PokemonEvolutionsProps> = ({
                   pokemon={mapEvolutionToPokemonDetails(item)}
                   versionId={versionId}
                   showHiddenPokemon={true}
+                  handlePokemonRightClick={handlePokemonRightClick}
                 />
                 <p>{item.evolutionTriggerDesc}</p>
                 {/* Display what level pokemon evolves at if field is not null */}
