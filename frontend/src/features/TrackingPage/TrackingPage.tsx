@@ -155,13 +155,22 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
 
   return (
     <div className={styles["tracker-container"]}>
-      <div className={styles["controls-child"]}>
+      <div className={styles["controls-container"]}>
+        <div className={styles["controls-child"]}>
           <p className="switzer-regular">{"Show uncaught pokemon?"}</p>
           <CheckboxComponent
             isChecked={showHiddenPokemon}
             setIsChecked={setShowHiddenPokemon}
           ></CheckboxComponent>
         </div>
+        <div className={styles["controls-child"]}>
+          <PokedexDropdown
+            versionId={versionId}
+            onPokedexChange={setSelectedPokedex}
+            defaultIndex={lastPokedexId != null ? lastPokedexId : "1"}
+          />
+        </div>
+      </div>
       <div
         className={styles["pokedex-container"]}
         style={{height: pokedexHeight ? `${pokedexHeight}px` : 'max-content'}}
@@ -190,14 +199,6 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
             isChecked={hideCaughtPokemon}
             setIsChecked={setHideCaughtPokemon}
           ></CheckboxComponent>
-        </div>
-        
-        <div className={styles["controls-child"]}>
-          <PokedexDropdown
-            versionId={versionId}
-            onPokedexChange={setSelectedPokedex}
-            defaultIndex={lastPokedexId != null ? lastPokedexId : "1"}
-          />
         </div>
 
         <div className={styles["controls-child"]}>
