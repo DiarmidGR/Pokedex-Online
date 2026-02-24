@@ -1,6 +1,7 @@
 .pokemon-list-item{
     max-width:56px;
     height:56px;
+    user-select: none;
 }
 
 .pokemon-sprite{
