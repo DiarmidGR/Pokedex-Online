@@ -11,7 +11,7 @@
     position:relative;
     border:solid transparent 3px;
     color:var(--secondary-color);
-    
+    max-width: 308px;
 }
 
 .pokedex-card-item-exit{
@@ -69,7 +69,7 @@
 
 .evolutionsContainer{
     display:flex;
-    flex-direction: row;
+    flex-wrap: wrap;
     gap:10px;
     text-align: center;
     justify-content: center;
