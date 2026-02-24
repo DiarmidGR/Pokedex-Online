@@ -49,8 +49,28 @@
         height:50vh;
     }
 
-    .controls-child{
+    .controls-child p{
+        width: auto;
+        text-align: center;
+    }
+
+    .encounters-layout{
         flex-direction:column-reverse;
+        width: 95%;
+    }
+    
+    .controls-container{
+        flex-direction:column;
+        align-items: center;
+        padding-top:10px;
+    }
+
+    .pokedex-container, .encounters-container{
+        width:98%;
+    }
+
+    .pokemon-container{
+        padding:0;
     }
 } 
 
@@ -97,25 +117,4 @@
     display:flex;
     align-items: flex-start;
     justify-content: center;
-}
-
-@media only screen and (max-width: 600px) {
-    .encounters-layout{
-        flex-direction:column-reverse;
-        width: 95%;
-    }
-    
-    .controls-container{
-        flex-direction:column;
-        align-items: center;
-        padding-top:10px;
-    }
-
-    .pokedex-container, .encounters-container{
-        width:98%;
-    }
-
-    .pokemon-container{
-        padding:0;
-    }
 }
