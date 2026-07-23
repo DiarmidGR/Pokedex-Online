@@ -10,6 +10,11 @@
     grid-template-columns:60% 40%;
 }
 
+.dark{
+    background-color:var(--secondary-dark);
+    color:var(--primary-color);
+}
+
 .login-layout h3{
     padding-bottom:10px;
 }
