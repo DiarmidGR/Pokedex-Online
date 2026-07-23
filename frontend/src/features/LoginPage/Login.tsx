@@ -4,7 +4,12 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast, {useToasterStore} from "react-hot-toast";
 
-function Login() {
+interface LoginProps {
+  isDark: boolean;
+  toggleTheme: () => void;
+}
+
+const Login: React.FC<LoginProps> = ({isDark, toggleTheme}) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -49,7 +54,7 @@ function Login() {
   };
 
   return (
-    <div className="login-layout">
+    <div className={`login-layout ${isDark ? 'dark' : 'light'}`}>
       <div className="login-container">
         <form onSubmit={handleSubmit} className="login-form">
           <h1 className="login-header switzer-bold">Login to Your Account</h1>
