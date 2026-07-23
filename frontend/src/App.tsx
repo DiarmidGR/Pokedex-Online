@@ -31,7 +31,7 @@ const App: React.FC = () => {
       <Toaster/>
       <Router>
         <Routes>
-          <Route path="/login" element={<Login isDark={isDark} toggleTheme={toggleTheme} />} />
+          <Route path="/login" element={<Login isDark={isDark} />} />
           <Route element={<Layout isDark={isDark} toggleTheme={toggleTheme} />}>
             <Route path="/" element={<Home />} />
             {versionRoutes(versions.versions)}

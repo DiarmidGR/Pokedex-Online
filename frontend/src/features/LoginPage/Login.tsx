@@ -6,10 +6,9 @@ import toast, {useToasterStore} from "react-hot-toast";
 
 interface LoginProps {
   isDark: boolean;
-  toggleTheme: () => void;
 }
 
-const Login: React.FC<LoginProps> = ({isDark, toggleTheme}) => {
+const Login: React.FC<LoginProps> = ({isDark}) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
