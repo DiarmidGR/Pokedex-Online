@@ -28,6 +28,42 @@ exports.login = async (req, res) => {
     });
 };
 
+exports.register = async (req, res) => {
+    const { username, password } = req.body;
+    if (!username || !password) {
+        return res.status(400).json({ message: 'Please provide both username and password.' });
+    }
+
+    if (password.length < 8) {
+        return res.status(400).json({ message: 'Password must be at least 8 characters long.' });
+    }
+
+    const checkQuery = 'SELECT id FROM users WHERE username = ?';
+    db.query(checkQuery, [username], async (err, results) => {
+        if (err) throw err;
+        if (results.length > 0) {
+            return res.status(409).json({ message: 'Username already taken.' });
+        }
+
+        try {
+            const hashedPassword = await bcrypt.hash(password, 10);
+
+            const insertQuery = 'INSERT INTO users (username, password) VALUES (?, ?)';
+            db.query(insertQuery, [username, hashedPassword], (err, result) => {
+                if (err) throw err;
+
+                const userId = result.insertId;
+                const accessToken = jwt.sign({ id: userId }, process.env.JWT_SECRET, { expiresIn: '300s' }); // Expires in 5 minutes
+                const refreshToken = jwt.sign({ id: userId }, process.env.JWT_REFRESH_SECRET, { expiresIn: '1d' });
+
+                res.status(201).json({ accessToken, refreshToken, user_id: userId });
+            });
+        } catch (hashErr) {
+            res.status(500).json({ message: 'Error creating account.' });
+        }
+    });
+};
+
 exports.refreshToken = async (req, res) => {
     const { refreshToken } = req.body;
     if (!refreshToken) {
