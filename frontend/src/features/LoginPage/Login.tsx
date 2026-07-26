@@ -32,6 +32,7 @@ const Login: React.FC<LoginProps> = ({isDark}) => {
     }
   }, []);
 
+  // Login handler
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     try {
@@ -98,6 +99,7 @@ const Login: React.FC<LoginProps> = ({isDark}) => {
         >
           Continue as Guest
         </button>
+        <button className="switzer-bold">Register User</button>
       </div>
     </div>
   );
