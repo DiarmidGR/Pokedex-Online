@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast, {useToasterStore} from "react-hot-toast";
+import RegisterModal from "./RegisterModal";
 
 interface LoginProps {
   isDark: boolean;
@@ -11,6 +12,7 @@ interface LoginProps {
 const Login: React.FC<LoginProps> = ({isDark}) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [isRegisterOpen, setIsRegisterOpen] = useState(false);
 
   // Code to limit toasts on screen to 1, obtained from https://stackoverflow.com/a/72932186
   const {toasts} = useToasterStore();
@@ -99,8 +101,18 @@ const Login: React.FC<LoginProps> = ({isDark}) => {
         >
           Continue as Guest
         </button>
-        <button className="switzer-bold">Register User</button>
+        <button
+         className="switzer-bold"
+         onClick={()=> setIsRegisterOpen(true)}
+         >
+          Register User
+        </button>
       </div>
+      <RegisterModal
+        isOpen={isRegisterOpen}
+        onClose={() => setIsRegisterOpen(false)}
+        isDark={isDark}
+      />
     </div>
   );
 }
