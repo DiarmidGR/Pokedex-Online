@@ -22,6 +22,7 @@ interface PokedexListProps {
     pokemonId: number
   ) => void;
   showHiddenPokemon: boolean;
+  isDark: boolean;
 }
 
 const PokedexList: React.FC<PokedexListProps> = ({
@@ -31,6 +32,7 @@ const PokedexList: React.FC<PokedexListProps> = ({
   handlePokemonClick,
   handlePokemonRightClick,
   showHiddenPokemon,
+  isDark,
 }) => {
   const [pokemonDetails, setPokemonDetails] = useState<PokemonDetails[]>([]);
   const [filteredPokemonDetails, setFilteredPokemonFetails] = useState<
@@ -81,9 +83,11 @@ const PokedexList: React.FC<PokedexListProps> = ({
     setFilteredPokemonFetails(filteredPokemonDetails);
   };
 
+  const pokedexItemsClassName = `${styles["pokedex-items"]} ${isDark ? styles.dark : ""}`;
+
   if (loading){
     return (
-      <div className={styles["pokedex-items"]}>
+      <div className={pokedexItemsClassName}>
         <div className={styles["pokedex-stats"]}>
           <div className={styles["statsItem"]}>
             {`Pokémon Caught: ${storedItems.length}/${pokemonDetails.length}`}
@@ -105,7 +109,7 @@ const PokedexList: React.FC<PokedexListProps> = ({
   };
 
   return (
-    <div className={styles["pokedex-items"]}>
+    <div className={pokedexItemsClassName}>
       <div className={styles["pokedex-stats"]}>
         <div className={styles["statsItem"]}>
           {`Pokémon Caught: ${storedItems.length}/${pokemonDetails.length}`}
