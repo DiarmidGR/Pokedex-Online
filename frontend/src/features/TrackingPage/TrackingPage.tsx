@@ -10,13 +10,18 @@ import useFetchUserPokemon from "./hooks/useFetchUserPokemon";
 import { handleDeletePokemon } from "./trackingPage.utils";
 import useDeleteUserPokemon from "./hooks/useDeleteUserPokemon";
 import useInsertUserPokemon from "./hooks/useInsertUserPokemon";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useOutletContext } from "react-router-dom";
+
+interface OutletContext {
+  isDark: boolean;
+}
 
 interface TrackingPageProps {
   version_id: string;
 }
 
 const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
+  const { isDark } = useOutletContext<OutletContext>();
   const versionId = version_id;
   const [selectedPokemonId, setSelectedPokemonId] = useState<string>("");
   const [searchParams, setSearchParams] = useSearchParams();
@@ -182,6 +187,7 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
           handlePokemonClick={handlePokemonClick}
           handlePokemonRightClick={handlePokemonRightClick}
           showHiddenPokemon={showHiddenPokemon}
+          isDark={isDark}
         />
         <div
           className={styles["resize-handle"]}

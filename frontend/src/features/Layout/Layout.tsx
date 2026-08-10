@@ -16,7 +16,7 @@ const Layout: React.FC<LayoutProps> = ({isDark, toggleTheme}) => {
         <Header toggleTheme={toggleTheme} isDark={isDark}/>
       </div>
       <div className="layout-content layout-child">
-        <Outlet />
+        <Outlet context={{ isDark }} />
       </div>
       <div className="layout-footer layout-child switzer-bold">
         © Copyright 2024 Diarmid Rendell. All rights reserved.

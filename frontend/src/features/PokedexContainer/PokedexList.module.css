@@ -21,6 +21,11 @@
     width:100%;
 }
 
+.dark{
+    background-color:var(--primary-color);
+    color:var(--third-light);
+}
+
 .pokedex-stats{
     display:flex;
     align-items: center;
