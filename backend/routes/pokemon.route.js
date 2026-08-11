@@ -144,7 +144,8 @@ router.get('/pokemon_evolutions', async (req, res) => {
         et.identifier as evolutionTrigger,
         etp.name as evolutionTriggerDesc,
         pe.minimum_level as evolutionLevel,
-        i.identifier as evolutionItem
+        i.identifier as evolutionItem,
+        pe.minimum_happiness as evolutionHappiness
         FROM pokemon_species ps
 
         INNER JOIN pokemon_species_names psn
@@ -168,7 +169,7 @@ router.get('/pokemon_evolutions', async (req, res) => {
             WHERE id = ?
         )
         
-        GROUP BY pokemonName, pokemonId, evolutionTrigger, evolutionTriggerDesc, evolutionLevel, evolutionItem
+        GROUP BY pokemonName, pokemonId, evolutionTrigger, evolutionTriggerDesc, evolutionLevel, evolutionItem, evolutionHappiness
 
         ORDER BY pokemonId
     `;
