@@ -39,6 +39,10 @@ const PokemonEvolutions: React.FC<PokemonEvolutionsProps> = ({
                 {/* Display what level pokemon evolves at if field is not null */}
                 <p>{item.evolutionLevel && `Lvl. ${item.evolutionLevel}`}</p>
                 <img src={`/sprites/evolution-items/${item.evolutionItem}.png`} style={{"width":"48px"}} alt="" title={item.evolutionItem}/>
+              
+                {/* Display what happiness level pokemon needs to evolve at if field is not null */}
+                <p>{item.evolutionHappiness && `Happiness: ${item.evolutionHappiness}`}</p>
+
               </div>
             ))}
           </div>
