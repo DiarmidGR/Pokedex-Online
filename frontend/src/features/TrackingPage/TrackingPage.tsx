@@ -33,7 +33,11 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
   const [selectedPokedex, setSelectedPokedex] = useState<string>(
     lastPokedexId != null ? lastPokedexId : "1"
   );
-  const [hideCaughtPokemon, setHideCaughtPokemon] = useState<boolean>(false); // used for CheckboxComponent and passed to EncountersContainer
+  const hideCaughtPokemonKey = versionId + "_hideCaughtPokemon";
+  const [hideCaughtPokemon, setHideCaughtPokemon] = useState<boolean>(() => {
+    const storedValue = localStorage.getItem(hideCaughtPokemonKey);
+    return storedValue !== null ? storedValue === "true" : false;
+  });
   const [showHiddenPokemon, setShowHiddenPokemon] = useState<boolean>(false); // used for CheckboxComponent and passed to PokedexList component
   const { userPokemon, setUserPokemon, error } =
     useFetchUserPokemon(versionId);
@@ -64,6 +68,11 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
   useEffect(() => {
     localStorage.setItem(versionLastPokedexString, selectedPokedex);
   }, [selectedPokedex]);
+
+  // Save hide caught pokemon preference to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem(hideCaughtPokemonKey, hideCaughtPokemon.toString());
+  }, [hideCaughtPokemon, hideCaughtPokemonKey]);
 
   // Save pokedex height to localStorage whenever it changes
   useEffect(() => {
