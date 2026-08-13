@@ -114,6 +114,12 @@
     min-width:200px;
 }
 
+.remember-row{
+    flex-direction: row;
+    align-items: center;
+    gap: 0.6rem;
+}
+
 .login-input{
     font-size:20px;
     border-radius:16px;
