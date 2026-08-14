@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast, {useToasterStore} from "react-hot-toast";
 import RegisterModal from "./RegisterModal";
-import CheckboxComponent from "../../shared/components/Checkbox";
 
 interface LoginProps {
   isDark: boolean;
@@ -14,7 +13,6 @@ const Login: React.FC<LoginProps> = ({isDark}) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
-  const [remember, setRemember] = useState(false);
 
   // Code to limit toasts on screen to 1, obtained from https://stackoverflow.com/a/72932186
   const {toasts} = useToasterStore();
@@ -47,18 +45,10 @@ const Login: React.FC<LoginProps> = ({isDark}) => {
           password,
         }
       );
-      const storage = remember ? localStorage : sessionStorage;
-      const otherStorage = remember ? sessionStorage : localStorage;
-
-      storage.setItem("token", res.data.accessToken);
-      storage.setItem("refreshToken", res.data.refreshToken);
-      storage.setItem("user_id", res.data.user_id);
-      storage.setItem("username", username);
-
-      otherStorage.removeItem("token");
-      otherStorage.removeItem("refreshToken");
-      otherStorage.removeItem("user_id");
-      otherStorage.removeItem("username");
+      localStorage.setItem("token", res.data.accessToken);
+      localStorage.setItem("refreshToken", res.data.refreshToken);
+      localStorage.setItem("user_id", res.data.user_id);
+      localStorage.setItem("username", username);
       navigate("/");
     } catch (err) {
       toast.error("Invalid credentials.");
@@ -94,10 +84,6 @@ const Login: React.FC<LoginProps> = ({isDark}) => {
               placeholder="Password"
             />
           </label>
-          <div className="login-child remember-row">
-            <CheckboxComponent isChecked={remember} setIsChecked={setRemember} />
-            <span className="switzer-regular">Remember me</span>
-          </div>
           <button type="submit" className="login-button switzer-bold">
             Sign In
           </button>
