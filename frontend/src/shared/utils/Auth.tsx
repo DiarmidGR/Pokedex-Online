@@ -16,6 +16,7 @@ export const getToken = () => {
 
 export const removeToken = () => {
   localStorage.removeItem("token");
+  localStorage.removeItem("remembered_username");
 };
 
 export const getUsername = () => {
