@@ -4,14 +4,20 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast, {useToasterStore} from "react-hot-toast";
 import RegisterModal from "./RegisterModal";
+import CheckboxComponent from "../../shared/components/Checkbox";
 
 interface LoginProps {
   isDark: boolean;
 }
 
 const Login: React.FC<LoginProps> = ({isDark}) => {
-  const [username, setUsername] = useState("");
+  const [username, setUsername] = useState(() => {
+    return localStorage.getItem("remembered_username") || "";
+  });
   const [password, setPassword] = useState("");
+  const [rememberUser, setRememberUser] = useState(() => {
+    return localStorage.getItem("remembered_username") !== null;
+  });
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
 
   // Code to limit toasts on screen to 1, obtained from https://stackoverflow.com/a/72932186
@@ -49,6 +55,13 @@ const Login: React.FC<LoginProps> = ({isDark}) => {
       localStorage.setItem("token", res.data.accessToken);
       localStorage.setItem("user_id", res.data.user_id);
       localStorage.setItem("username", username);
+
+      if (rememberUser) {
+        localStorage.setItem("remembered_username", username);
+      } else {
+        localStorage.removeItem("remembered_username");
+      }
+
       navigate("/");
     } catch (err) {
       toast.error("Invalid credentials.");
@@ -84,6 +97,15 @@ const Login: React.FC<LoginProps> = ({isDark}) => {
               placeholder="Password"
             />
           </label>
+          <div className="remember-row login-child">
+            <CheckboxComponent
+              isChecked={rememberUser}
+              setIsChecked={setRememberUser}
+            />
+            <label className="remember-label switzer-regular">
+              Remember this user
+            </label>
+          </div>
           <button type="submit" className="login-button switzer-bold">
             Sign In
           </button>
