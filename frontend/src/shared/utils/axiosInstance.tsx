@@ -6,6 +6,7 @@ const apiUrl = import.meta.env.VITE_API_ENDPOINT;
 
 const axiosInstance = axios.create({
   baseURL: apiUrl,
+  withCredentials: true,
 });
 
 // Structure definition for a retry queue item
@@ -23,15 +24,18 @@ let isRefreshing = false;
 
 const refreshAccessToken = async () => {
   try {
-    const refreshToken = localStorage.getItem("refreshToken");
-    if (!refreshToken) throw new Error("No refresh token found");
+    const res = await axios.post(
+      `${apiUrl}/refresh`,
+      {},
+      { withCredentials: true }
+    );
 
-    const res = await axios.post(`${apiUrl}/refresh`, {
-      refreshToken,
-    });
     localStorage.setItem("token", res.data.accessToken);
     return res.data.accessToken;
   } catch (err) {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user_id");
+    localStorage.removeItem("username");
     throw err;
   }
 };
@@ -74,12 +78,15 @@ axiosInstance.interceptors.response.use(
         const newAccessToken = await refreshAccessToken();
 
         // Update the request headers with the new access token
-        error.config.headers["Authorization"] = `Bearer ${newAccessToken}`;
+        error.config.headers = {
+          ...(error.config.headers ?? {}),
+          Authorization: `Bearer ${newAccessToken}`,
+        };
 
         // Retry all requests in queue with new token
         refreshAndRetryQueue.forEach(({ config, resolve, reject }) => {
           axiosInstance
-            .request(config)
+            .request({ ...config, headers: { ...(config.headers ?? {}), Authorization: `Bearer ${newAccessToken}` } })
             .then((response) => resolve(response))
             .catch((err) => reject(err));
         });
@@ -92,7 +99,8 @@ axiosInstance.interceptors.response.use(
       } catch (refreshError) {
         // Handle token refresh error
         localStorage.removeItem("token");
-        localStorage.removeItem("refreshToken");
+        localStorage.removeItem("user_id");
+        localStorage.removeItem("username");
         redirectToLogin();
         throw refreshError;
       } finally {

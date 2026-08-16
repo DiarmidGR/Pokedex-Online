@@ -43,10 +43,10 @@ const Login: React.FC<LoginProps> = ({isDark}) => {
         {
           username,
           password,
-        }
+        },
+        { withCredentials: true }
       );
       localStorage.setItem("token", res.data.accessToken);
-      localStorage.setItem("refreshToken", res.data.refreshToken);
       localStorage.setItem("user_id", res.data.user_id);
       localStorage.setItem("username", username);
       navigate("/");
