@@ -37,6 +37,7 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
   const showHiddenPokemonKey = versionId + "_showHiddenPokemon";
   const [hideCaughtPokemon, setHideCaughtPokemon] = useState<boolean>(() => {
     const storedValue = localStorage.getItem(hideCaughtPokemonKey);
+    console.log("hideCaughtPokemon storedValue:", storedValue);
     return storedValue !== null ? storedValue === "true" : false;
   });
   const [showHiddenPokemon, setShowHiddenPokemon] = useState<boolean>(() => {

@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 
 const app = express();
 const port = 3000;
@@ -12,8 +13,12 @@ const pokemonRoutes = require('./routes/pokemon.route');
 const locationsRoute = require('./routes/locations.route');
 const encountersRoute = require('./routes/encounters.route');
 
-app.use(cors());
+app.use(cors({
+    origin: true,
+    credentials: true,
+}));
 app.use(express.json());
+app.use(cookieParser());
 
 require('dotenv').config();
 

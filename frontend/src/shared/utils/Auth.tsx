@@ -44,7 +44,6 @@ export const logoutUser = async () => {
   let navigate = useNavigate();
   removeToken();
   localStorage.removeItem("token");
-  localStorage.removeItem("refreshToken");
   localStorage.removeItem("user_id");
   localStorage.removeItem("username");
   navigate("/login");

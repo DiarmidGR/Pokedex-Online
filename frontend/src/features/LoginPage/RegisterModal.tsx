@@ -41,7 +41,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose, isDark }
       await axios.post(`${import.meta.env.VITE_API_ENDPOINT}/register`, {
         username,
         password,
-      });
+      }, { withCredentials: true });
       toast.success("Account created! You can now log in.");
       handleClose();
     } catch (err) {
