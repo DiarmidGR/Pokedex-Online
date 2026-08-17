@@ -74,7 +74,7 @@ const Login: React.FC<LoginProps> = ({isDark}) => {
         <form onSubmit={handleSubmit} className="login-form">
           <h1 className="login-header switzer-bold">Login to Your Account</h1>
           <h3 className="login-subheader switzer-regular">
-            Login using admin provided info
+            Login to track user progress.
           </h3>
           <label htmlFor="" className="login-child">
             <input
@@ -115,19 +115,22 @@ const Login: React.FC<LoginProps> = ({isDark}) => {
       <div className="register-container">
         <h1 className="switzer-bold">No account?</h1>
         <p className="register-message switzer-regular">
-          No account? Continue as guest for now.
+          To track across multiple devices:
+        </p>
+        <button
+         className="switzer-bold"
+         onClick={()=> setIsRegisterOpen(true)}
+         >
+          Register User
+        </button>
+        <p className="register-message switzer-regular">
+          To track on this device only:
         </p>
         <button
           className="guest-button switzer-bold"
           onClick={() => navigate("/")}
         >
           Continue as Guest
-        </button>
-        <button
-         className="switzer-bold"
-         onClick={()=> setIsRegisterOpen(true)}
-         >
-          Register User
         </button>
       </div>
       <RegisterModal
