@@ -9,6 +9,7 @@ const PokemonCard: React.FC<PokemonCardProps & {togglePokemonCard: () => void}> 
   setSelectedLocation,
   versionId,
   isCaught,
+  isDark,
   togglePokemonCard,
   handlePokemonRightClick
 }) => {
@@ -50,8 +51,8 @@ const PokemonCard: React.FC<PokemonCardProps & {togglePokemonCard: () => void}> 
       {pokemonDetails.map((pokemon, index) => (
         <div
           className={`${styles["pokedex-card-item"]} ${
-            isCaught && styles["caught"]
-          }`}
+            isDark ? styles.dark : ""
+          } ${isCaught ? styles["caught"] : ""}`}
           key={index}
         >
           <div className={styles["pokedex-card-item-exit"]} onClick={togglePokemonCard}>

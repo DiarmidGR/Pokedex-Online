@@ -14,6 +14,11 @@
     max-width: 308px;
 }
 
+.dark{
+    background-color:var(--secondary-light);
+    color:var(--third-light);
+}
+
 .pokedex-card-item-exit{
     position:absolute;
     right:10px;

@@ -14,6 +14,7 @@ export interface PokemonCardProps {
     versionId: string;
     setSelectedLocation: (location: string) => void;
     isCaught: boolean;
+    isDark: boolean;
     handlePokemonRightClick: (event: React.MouseEvent<HTMLDivElement, MouseEvent>, pokemonId: number) => void;
 }
 
