@@ -252,6 +252,7 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
             versionId={version_id}
             setSelectedLocation={setSelectedLocation}
             isCaught={isItemStored(selectedPokemonId)}
+            isDark={isDark}
             togglePokemonCard={togglePokemonCard}
             handlePokemonRightClick={handlePokemonRightClick}
           />
