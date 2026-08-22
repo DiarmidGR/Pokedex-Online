@@ -2,7 +2,7 @@ import "./Login.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import toast, {useToasterStore} from "react-hot-toast";
+import toast, {Toaster, useToasterStore} from "react-hot-toast";
 import RegisterModal from "./RegisterModal";
 import CheckboxComponent from "../../shared/components/Checkbox";
 
@@ -70,6 +70,8 @@ const Login: React.FC<LoginProps> = ({isDark}) => {
 
   return (
     <div className={`login-layout ${isDark ? 'dark' : 'light'}`}>
+      {/* Toaster component to display toast notifications */}
+      <Toaster/>
       <div className="login-container">
         <form onSubmit={handleSubmit} className="login-form">
           <h1 className="login-header switzer-bold">Login to Your Account</h1>
