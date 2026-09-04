@@ -8,6 +8,8 @@ interface LayoutProps {
   toggleTheme: () => void;
 }
 
+const currentYear = new Date().getFullYear(); // Get the current year dynamically
+
 const Layout: React.FC<LayoutProps> = ({isDark, toggleTheme}) => {
 
   return (
@@ -19,7 +21,7 @@ const Layout: React.FC<LayoutProps> = ({isDark, toggleTheme}) => {
         <Outlet context={{ isDark }} />
       </div>
       <div className="layout-footer layout-child switzer-bold">
-        © Copyright 2024 Diarmid Rendell. All rights reserved.
+        © Copyright {currentYear} Diarmid Rendell. All rights reserved.
       </div>
     </div>
   );
