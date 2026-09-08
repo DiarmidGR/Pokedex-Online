@@ -11,7 +11,7 @@ COPY package*.json ./
 RUN npm install --production
 
 # Install PM2 globally
-RUN npm install -g pm2 cors
+RUN npm install -g pm2 cors express-rate-limit
 
 # Copy the rest of the application code
 COPY . .
