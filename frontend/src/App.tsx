@@ -34,6 +34,7 @@ const App: React.FC = () => {
           <Route path="/login" element={<Login isDark={isDark} />} />
           <Route element={<Layout isDark={isDark} toggleTheme={toggleTheme} />}>
             <Route path="/" element={<Home />} />
+            {/* Add version routes dynamically */}
             {versionRoutes(versions.versions)}
           </Route>
         </Routes>
