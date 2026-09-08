@@ -81,3 +81,10 @@ services:
     ports:
      - "6379:6379"
 ```
+
+## Potential Features To Implement
+Display moves learned by level up/tm in the Pokemon info card.
+
+Add item locations by description and possibly screenshot if available.
+
+Display pokemon breeding information in the Pokemon info card.
