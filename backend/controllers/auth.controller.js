@@ -25,6 +25,7 @@ const clearRefreshTokenCookie = (res) => {
 
 exports.login = async (req, res) => {
     const {username, password} = req.body;
+    console.log('Login request received:', { username });
     if (!username || !password) {
         return res.status(400).json({message: 'Please provide both username and password.'});
     }
