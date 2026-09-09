@@ -106,10 +106,6 @@
         flex-direction:column-reverse;
         width: 95%;
     }
-
-    .encounters-container{
-        /* flex-direction: row; */
-    }
     
     .controls-container{
         flex-direction:column;
