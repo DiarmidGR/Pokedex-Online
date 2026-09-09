@@ -71,6 +71,8 @@
     width:80%;
     gap:20px;
     justify-content: center;
+    margin-top:auto;
+    margin-bottom:auto;
 }
 
 .encounters-container{
@@ -106,7 +108,7 @@
     }
 
     .encounters-container{
-        flex-direction: row;
+        /* flex-direction: row; */
     }
     
     .controls-container{
