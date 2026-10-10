@@ -20,7 +20,7 @@ The backend is built with **Express** and uses the following key packages:
 | `cookie-parser` | Cookie parsing middleware |
 
 ### Frontend
-The frontend is a **React + TypeScript** SPA built with **Vite**. Key packages include:
+The frontend is a **React + TypeScript** application built with **Vite**. Key packages include:
 
 | Package | Purpose |
 | --- | --- |
