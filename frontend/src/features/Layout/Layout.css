@@ -5,6 +5,7 @@
     background-color:var(--third-light);
     min-height:100vh;
     height:max-content;
+    transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .dark{
