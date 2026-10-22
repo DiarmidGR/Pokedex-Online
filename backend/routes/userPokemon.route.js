@@ -60,9 +60,10 @@ router.post('/user-pokemon/insert', verifyToken, async (req, res) => {
             return res.status(500).json({ error: error.message });
         }
 
-        // Invalidate cache
-        const cacheKey = `user:${user_id}:version:${version_id}:pokemon`;
-        await redis.del(cacheKey);
+        // Invalidate pokemon list cache
+        await redis.del(`user:${user_id}:version:${version_id}:pokemon`);
+        // Invalidate homepage count cache
+        await redis.del(`version_details:user:${user_id}:version:${version_id}`);
 
         res.status(201).json({ message: 'Pokemon added successfully', id: results.insertId });
     });
@@ -89,9 +90,10 @@ router.post('/user-pokemon/delete', verifyToken, async (req, res) => {
             return res.status(404).json({ message: 'No entry found to delete' });
         }
 
-        // Invalidate cache
-        const cacheKey = `user:${user_id}:version:${version_id}:pokemon`;
-        await redis.del(cacheKey);
+        // Invalidate pokemon list cache
+        await redis.del(`user:${user_id}:version:${version_id}:pokemon`);
+        // Invalidate homepage count cache
+        await redis.del(`version_details:user:${user_id}:version:${version_id}`);
 
         res.status(200).json({ message: 'Pokemon removed successfully' });
     });
