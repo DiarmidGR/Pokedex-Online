@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styles from "./TrackingPage.module.css";
 import LocationDropdown from "./components/LocationDropdown";
 import EncountersList from "../EncountersContainer/EncountersList";
-import PokedexList from "../PokedexContainer/PokedexList";
+import PokedexList from "../PokedexList/PokedexList";
 import PokedexDropdown from "./components/PokedexDropdown";
 import CheckboxComponent from "../../shared/components/Checkbox";
 import PokemonCard from "../PokemonCard/PokemonCard";
