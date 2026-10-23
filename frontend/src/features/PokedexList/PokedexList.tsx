@@ -5,6 +5,7 @@ import { getToken } from "../../shared/utils/Auth";
 import PokedexItem from "./components/PokedexItem";
 import PokedexSearch from "./components/PokedexSearch";
 import { MoonLoader } from "react-spinners";
+import PokedexDropdown from "./components/PokedexDropdown";
 
 // interface for pokemon data received from api
 interface PokemonDetails {
@@ -15,7 +16,6 @@ interface PokemonDetails {
 interface PokedexListProps {
   versionId: string;
   storedItems: string[]; // array of pokemon to display passed to component in TrackingPage
-  selectedPokedex: string; // Prop for selected pokedex
   handlePokemonClick: (versionId: string, item: number) => void;
   handlePokemonRightClick: (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
@@ -25,10 +25,10 @@ interface PokedexListProps {
   isDark: boolean;
 }
 
+
 const PokedexList: React.FC<PokedexListProps> = ({
   storedItems,
   versionId,
-  selectedPokedex,
   handlePokemonClick,
   handlePokemonRightClick,
   showHiddenPokemon,
@@ -40,6 +40,16 @@ const PokedexList: React.FC<PokedexListProps> = ({
   >([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
+
+  const versionLastPokedexString = versionId + "_lastPokedexId";
+  const lastPokedexId = localStorage.getItem(versionLastPokedexString);
+  const [selectedPokedex, setSelectedPokedex] = useState<string>(
+    lastPokedexId != null ? lastPokedexId : "1"
+  );
+  // Save the selected pokedex region to localStorage
+  useEffect(() => {
+    localStorage.setItem(versionLastPokedexString, selectedPokedex);
+  }, [selectedPokedex]);
 
   // fetch data from API using selectedPokedex
   useEffect(() => {
@@ -114,9 +124,21 @@ const PokedexList: React.FC<PokedexListProps> = ({
         <div className={styles["statsItem"]}>
           {`Pokémon Caught: ${storedItems.length}/${pokemonDetails.length}`}
         </div>
+
+
         <div className={styles["statsItem"]}>
           <PokedexSearch onChange={handlePokedexSearchChange} />
         </div>
+
+        {/* Pokedex Selection Dropdown */}
+        <div className={styles["statsItem"]}>
+          <PokedexDropdown
+            versionId={versionId}
+            onPokedexChange={setSelectedPokedex}
+            defaultIndex={lastPokedexId != null ? lastPokedexId : "1"}
+          />
+        </div>
+
       </div>
 
       <div className={styles["pokemon-list-wrapper"]}>
