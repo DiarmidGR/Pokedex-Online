@@ -1,7 +1,7 @@
 import styles from "../PokemonCard.module.css";
 import useFetchPokemonEvolutions from "../hooks/useFetchPokemonEvolutions";
 import { PokemonEvolutionsProps } from "../PokemonCard.types";
-import PokedexItem from "../../PokedexContainer/components/PokedexItem";
+import PokedexItem from "../../PokedexList/components/PokedexItem";
 import { mapEvolutionToPokemonDetails } from "../pokemonCard.utils";
 
 const PokemonEvolutions: React.FC<PokemonEvolutionsProps> = ({
