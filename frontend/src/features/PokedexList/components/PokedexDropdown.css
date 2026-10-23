@@ -1,7 +1,6 @@
 .pokedex-select-dropdown{
     background-color:var(--primary-color);
     border:none;
-    padding:10px;
     font-size:larger;
     color: var(--third-light);
     cursor:pointer;

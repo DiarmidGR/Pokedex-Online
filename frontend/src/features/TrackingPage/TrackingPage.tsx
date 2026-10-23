@@ -3,7 +3,6 @@ import styles from "./TrackingPage.module.css";
 import LocationDropdown from "./components/LocationDropdown";
 import EncountersList from "../EncountersContainer/EncountersList";
 import PokedexList from "../PokedexList/PokedexList";
-import PokedexDropdown from "./components/PokedexDropdown";
 import CheckboxComponent from "../../shared/components/Checkbox";
 import PokemonCard from "../PokemonCard/PokemonCard";
 import useFetchUserPokemon from "./hooks/useFetchUserPokemon";
@@ -27,11 +26,6 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [selectedLocation, setSelectedLocation] = useState<string>(
     searchParams.get("location") ?? ""
-  );
-  const versionLastPokedexString = versionId + "_lastPokedexId";
-  const lastPokedexId = localStorage.getItem(versionLastPokedexString);
-  const [selectedPokedex, setSelectedPokedex] = useState<string>(
-    lastPokedexId != null ? lastPokedexId : "1"
   );
   const hideCaughtPokemonKey = versionId + "_hideCaughtPokemon";
   const showHiddenPokemonKey = versionId + "_showHiddenPokemon";
@@ -68,11 +62,6 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
       setSearchParams({}, {replace:true});
     }
   }, [selectedLocation]);
-
-  // Save the selected pokedex region to localStorage
-  useEffect(() => {
-    localStorage.setItem(versionLastPokedexString, selectedPokedex);
-  }, [selectedPokedex]);
 
   // Save hide caught pokemon preference to localStorage whenever it changes
   useEffect(() => {
@@ -187,13 +176,6 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
             setIsChecked={setShowHiddenPokemon}
           ></CheckboxComponent>
         </div>
-        <div className={styles["controls-child"]}>
-          <PokedexDropdown
-            versionId={versionId}
-            onPokedexChange={setSelectedPokedex}
-            defaultIndex={lastPokedexId != null ? lastPokedexId : "1"}
-          />
-        </div>
       </div>
       <div
         className={styles["pokedex-container"]}
@@ -202,7 +184,6 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
         <PokedexList
           versionId={version_id}
           storedItems={userPokemon}
-          selectedPokedex={selectedPokedex}
           handlePokemonClick={handlePokemonClick}
           handlePokemonRightClick={handlePokemonRightClick}
           showHiddenPokemon={showHiddenPokemon}
