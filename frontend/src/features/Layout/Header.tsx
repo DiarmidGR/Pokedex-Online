@@ -44,7 +44,7 @@ const Header: React.FC<HeaderProps> = ({toggleTheme, isDark}) => {
       </div>
       
       <div className={styles["header-logout"]}>
-        <SignoutButton label="Sign Out" />
+        <SignoutButton label={getToken() ? "Sign Out" : "Authenticate"} />
       </div>
       
     </header>
