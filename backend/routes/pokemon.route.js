@@ -126,8 +126,7 @@ router.get('/pokemon_evolutions', async (req, res) => {
         return res.status(400).send({error:'pokemon_id is required to fetch pokemon evolutions.'})
     };
 
-    const chainId = results[0]?.evolution_chain_id || pokemonId;
-    const cacheKey = `pokemon_evolutions:chain:${chainId}`;
+    const cacheKey = `pokemon_evolutions:${pokemonId}`;
 
     try {
         const cached = await redisClient.get(cacheKey);
