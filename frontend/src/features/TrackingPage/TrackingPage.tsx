@@ -28,16 +28,11 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
     searchParams.get("location") ?? ""
   );
   const hideCaughtPokemonKey = versionId + "_hideCaughtPokemon";
-  const showHiddenPokemonKey = versionId + "_showHiddenPokemon";
   const [hideCaughtPokemon, setHideCaughtPokemon] = useState<boolean>(() => {
     const storedValue = localStorage.getItem(hideCaughtPokemonKey);
     console.log("hideCaughtPokemon storedValue:", storedValue);
     return storedValue !== null ? storedValue === "true" : false;
   });
-  const [showHiddenPokemon, setShowHiddenPokemon] = useState<boolean>(() => {
-    const storedValue = localStorage.getItem(showHiddenPokemonKey);
-    return storedValue !== null ? storedValue === "true" : false;
-  }); // used for CheckboxComponent and passed to PokedexList component
   const { userPokemon, setUserPokemon, error } =
     useFetchUserPokemon(versionId);
   const { deleteUserPokemon } = useDeleteUserPokemon();
@@ -68,10 +63,7 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
     localStorage.setItem(hideCaughtPokemonKey, hideCaughtPokemon.toString());
   }, [hideCaughtPokemon, hideCaughtPokemonKey]);
 
-  // Save show hidden pokemon preference to localStorage whenever it changes
-  useEffect(() => {
-    localStorage.setItem(showHiddenPokemonKey, showHiddenPokemon.toString());
-  }, [showHiddenPokemon, showHiddenPokemonKey]);
+  
 
   // Save pokedex height to localStorage whenever it changes
   useEffect(() => {
@@ -168,15 +160,6 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
 
   return (
     <div className={styles["tracker-container"]}>
-      <div className={styles["controls-container"]}>
-        <div className={styles["controls-child"]}>
-          <p className="switzer-regular">{"Show uncaught pokemon?"}</p>
-          <CheckboxComponent
-            isChecked={showHiddenPokemon}
-            setIsChecked={setShowHiddenPokemon}
-          ></CheckboxComponent>
-        </div>
-      </div>
       <div
         className={styles["pokedex-container"]}
         style={{height: pokedexHeight ? `${pokedexHeight}px` : 'max-content'}}
@@ -186,7 +169,6 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
           storedItems={userPokemon}
           handlePokemonClick={handlePokemonClick}
           handlePokemonRightClick={handlePokemonRightClick}
-          showHiddenPokemon={showHiddenPokemon}
           isDark={isDark}
         />
         <div
