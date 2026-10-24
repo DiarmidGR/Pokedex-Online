@@ -6,6 +6,7 @@ import PokedexItem from "./components/PokedexItem";
 import PokedexSearch from "./components/PokedexSearch";
 import { MoonLoader } from "react-spinners";
 import PokedexDropdown from "./components/PokedexDropdown";
+import CheckboxComponent from "../../shared/components/Checkbox";
 
 // interface for pokemon data received from api
 interface PokemonDetails {
@@ -21,7 +22,6 @@ interface PokedexListProps {
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
     pokemonId: number
   ) => void;
-  showHiddenPokemon: boolean;
   isDark: boolean;
 }
 
@@ -31,7 +31,6 @@ const PokedexList: React.FC<PokedexListProps> = ({
   versionId,
   handlePokemonClick,
   handlePokemonRightClick,
-  showHiddenPokemon,
   isDark,
 }) => {
   const [pokemonDetails, setPokemonDetails] = useState<PokemonDetails[]>([]);
@@ -46,6 +45,18 @@ const PokedexList: React.FC<PokedexListProps> = ({
   const [selectedPokedex, setSelectedPokedex] = useState<string>(
     lastPokedexId != null ? lastPokedexId : "1"
   );
+
+  const showHiddenPokemonKey = versionId + "_showHiddenPokemon";
+  const [showHiddenPokemon, setShowHiddenPokemon] = useState<boolean>(() => {
+    const storedValue = localStorage.getItem(showHiddenPokemonKey);
+    return storedValue !== null ? storedValue === "true" : false;
+  }); // used for CheckboxComponent and passed to PokedexList component
+
+  // Save show hidden pokemon preference to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem(showHiddenPokemonKey, showHiddenPokemon.toString());
+  }, [showHiddenPokemon, showHiddenPokemonKey]);
+
   // Save the selected pokedex region to localStorage
   useEffect(() => {
     localStorage.setItem(versionLastPokedexString, selectedPokedex);
@@ -137,6 +148,16 @@ const PokedexList: React.FC<PokedexListProps> = ({
             onPokedexChange={setSelectedPokedex}
             defaultIndex={lastPokedexId != null ? lastPokedexId : "1"}
           />
+        </div>
+
+        {/* Show uncaught pokemon checkbox */}
+        <div className={styles["statsItem"]}>
+          <p>Show Hidden Pokemon?</p>
+          <CheckboxComponent
+            isChecked={showHiddenPokemon}
+            setIsChecked={setShowHiddenPokemon}
+          >
+          </CheckboxComponent>
         </div>
 
       </div>
