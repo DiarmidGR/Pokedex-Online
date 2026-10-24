@@ -38,7 +38,6 @@ const PokedexDropdown: React.FC<PokedexDropdownProps> = ({
         className="pokedex-select-dropdown switzer-regular"
         value={defaultIndex}
       >
-        <option value="">Please choose a Pokédex</option>
         <option value="1">National</option>
         {versionPokedexes.map((pokedex) => (
           <option key={pokedex.pokedexId} value={pokedex.pokedexId}>
