@@ -91,7 +91,7 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
       const newHeight = (startHeight + deltaY)-8;
 
       // Set minimum height of 100px, no maximum (allows max-content)
-      if (newHeight >= 100){
+      if (newHeight >= 130){
         setPokedexHeight(newHeight)
       }
     };
