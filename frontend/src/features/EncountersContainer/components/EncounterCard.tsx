@@ -88,6 +88,10 @@ const EncounterCard: React.FC<EncounterCardProps> = ({
     );
   };
 
+  const methodIcon = ["grass-spots", "dexnav"].includes(encounter.encounterMethod)
+    ? `/icons/${encounter.encounterMethod}.gif`
+    : `/icons/${encounter.encounterMethod}.png`;
+
   return (
     <div className={styles["pokemon-card-container"]}>
       {isCaught ? normalSprite() : darkSprite()}
@@ -101,18 +105,16 @@ const EncounterCard: React.FC<EncounterCardProps> = ({
           className={styles["pokemon-card-image"]}
         />
         <img
-          src={
-            encounter.encounterMethod == "grass-spots"
-              ? "/icons/grass-spots.gif"
-              : `/icons/${encounter.encounterMethod}.png`
-          }
+          src={methodIcon}
           alt=""
           className={styles["pokemon-card-method"]}
           title={encounter.encounterMethod}
         />
       </section>
       <section>#{encounter.pokemonId}</section>
-      <section>Rarity: {encounter.encounterRate}%</section>
+      {/* hide rarity section if encounter method is "dexnav" */}
+      {encounter.encounterMethod !== 'dexnav'? <section>Rarity: {encounter.encounterRate}%</section> : <section/>}
+
       <section>
         Levels: {encounter.minLevel} - {encounter.maxLevel}
       </section>
