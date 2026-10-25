@@ -112,8 +112,14 @@ const EncounterCard: React.FC<EncounterCardProps> = ({
         />
       </section>
       <section>#{encounter.pokemonId}</section>
-      {/* hide rarity section if encounter method is "dexnav" */}
-      {encounter.encounterMethod !== 'dexnav'? <section>Rarity: {encounter.encounterRate}%</section> : <section/>}
+      {/* dexnav: hide rarity; rate of 0: show "Horde Encounter"; otherwise show rarity */}
+      {encounter.encounterMethod === 'dexnav' ? (
+        <section />
+      ) : encounter.encounterRate === "0" ? (
+        <section className={styles["horde"]}>Horde</section>
+      ) : (
+        <section>Rarity: {encounter.encounterRate}%</section>
+      )}
 
       <section>
         Levels: {encounter.minLevel} - {encounter.maxLevel}
