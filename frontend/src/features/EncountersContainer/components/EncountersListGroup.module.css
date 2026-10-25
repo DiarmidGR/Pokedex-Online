@@ -5,6 +5,15 @@
     flex-wrap:wrap;
     justify-content: center;
     gap:8px;
+}
+
+/* 
+we need to add a bottom margin so that the encounter list titles start from the top
+while keeping the moonloader centered.
+We must apply this styling only to the last encounter list grouping, so that we dont
+have a big gap between the encounter list headers 
+*/
+:nth-last-child(1 of .list-container){
     margin-bottom:auto;
 }
 
