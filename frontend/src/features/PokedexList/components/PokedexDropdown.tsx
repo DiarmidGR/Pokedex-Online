@@ -17,7 +17,15 @@ const PokedexDropdown: React.FC<PokedexDropdownProps> = ({
     useFetchVersionPokedexes(versionId);
 
   if (loading) {
-    return <div>Loading pokedexes...</div>;
+    return (
+      <div>
+        <select
+          className="pokedex-select-dropdown switzer-regular"
+        >
+          <option value="1">National</option>
+        </select>
+      </div>
+    )
   }
 
   if (error) {
