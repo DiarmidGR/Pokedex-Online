@@ -71,8 +71,7 @@
     width:80%;
     gap:20px;
     justify-content: center;
-    margin-top:auto;
-    margin-bottom:auto;
+    flex:1;
 }
 
 .encounters-container{
@@ -80,6 +79,7 @@
     flex-direction:column;
     width:100%;
     align-items: center;
+    justify-content: center;
 }
 
 .encounters-container:empty{
