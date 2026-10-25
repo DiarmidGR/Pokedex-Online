@@ -113,9 +113,31 @@ const PokedexList: React.FC<PokedexListProps> = ({
           <div className={styles["statsItem"]}>
             {`Pokémon Caught: ${storedItems.length}/${pokemonDetails.length}`}
           </div>
+
+
           <div className={styles["statsItem"]}>
             <PokedexSearch onChange={handlePokedexSearchChange} />
           </div>
+
+          {/* Pokedex Selection Dropdown */}
+          <div className={styles["statsItem"]}>
+            <PokedexDropdown
+              versionId={versionId}
+              onPokedexChange={setSelectedPokedex}
+              defaultIndex={lastPokedexId != null ? lastPokedexId : "1"}
+            />
+          </div>
+
+          {/* Show uncaught pokemon checkbox */}
+          <div className={styles["statsItem"]}>
+            <p>Show Hidden Pokemon?</p>
+            <CheckboxComponent
+              isChecked={showHiddenPokemon}
+              setIsChecked={setShowHiddenPokemon}
+            >
+            </CheckboxComponent>
+          </div>
+
         </div>
 
         <div className={styles["pokemon-list-wrapper"]}>
