@@ -1,6 +1,6 @@
 import styles from "./Header.module.css";
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import SignoutButton from "./SignoutButton";
 import { getUsername, getToken } from "../../shared/utils/Auth";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -14,15 +14,36 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({toggleTheme, isDark}) => {
   // Click handler for home page button
   const navigate = useNavigate();
+  const location = useLocation();
+  const [titleSrc, setTitleSrc] = useState<string | null>(null);
 
   const handleHomeClick = () => {
     navigate("/");
   };
+
+  // Extract version from URL path (e.g., "/alpha-sapphire" -> "alpha-sapphire")
+  useEffect(() => {
+    const pathParts = location.pathname.split("/").filter(Boolean);
+    // If URL is like "/alpha-sapphire" or "/alpha-sapphire/something", use the first segment
+    if (pathParts.length > 0) {
+      const versionIdentifier = pathParts[0];
+      const imageSrc = `/images/titles/${versionIdentifier}.png`;
+      // Check if the image exists by attempting to load it
+      const img = new Image();
+      img.onload = () => setTitleSrc(imageSrc);
+      img.onerror = () => setTitleSrc(null);
+      img.src = imageSrc;
+    } else {
+      setTitleSrc(null);
+    }
+  }, [location.pathname]);
+
   return (
     <header>
       <div className={styles["header-title"]}>
-        <h1 onClick={handleHomeClick} title="Return to homepage">
+        <h1 onClick={handleHomeClick} title="Return to homepage" className={styles["title-with-image"]}>
           Pokétracker Online
+          {titleSrc && <img src={titleSrc} alt="" className={styles["title-image"]} />}
         </h1>
       </div>
       <div className={styles["header-right"]}>

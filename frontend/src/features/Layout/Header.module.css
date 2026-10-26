@@ -15,6 +15,13 @@ header{
     cursor:pointer;
     transition: color 0.2s ease;
     margin:6px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.title-image {
+    height: 44px;
 }
 
 .header-title:hover h1{
