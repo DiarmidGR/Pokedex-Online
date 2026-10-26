@@ -23,6 +23,7 @@ interface PokedexListProps {
     pokemonId: number
   ) => void;
   isDark: boolean;
+  onPokemonCountChange?: () => void;
 }
 
 
@@ -32,6 +33,7 @@ const PokedexList: React.FC<PokedexListProps> = ({
   handlePokemonClick,
   handlePokemonRightClick,
   isDark,
+  onPokemonCountChange,
 }) => {
   const [pokemonDetails, setPokemonDetails] = useState<PokemonDetails[]>([]);
   const [filteredPokemonDetails, setFilteredPokemonFetails] = useState<
@@ -91,6 +93,13 @@ const PokedexList: React.FC<PokedexListProps> = ({
       fetchPokedexData();
     }
   }, [selectedPokedex]);
+
+  // Notify parent when pokemon data changes (e.g., pokedex dropdown change)
+  useEffect(() => {
+    if (onPokemonCountChange) {
+      onPokemonCountChange();
+    }
+  }, [pokemonDetails]);
 
   // Event handler to filter pokemonDetails data according to search bar contents
   const handlePokedexSearchChange = (

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styles from "./TrackingPage.module.css";
 import LocationDropdown from "./components/LocationDropdown";
 import EncountersList from "../EncountersContainer/EncountersList";
@@ -48,6 +48,8 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
   const [isResizing, setIsResizing] = useState<boolean>(false);
   const [startY, setStartY] = useState<number>(0);
   const [startHeight, setStartHeight] = useState<number>(0);
+  const pokedexContainerRef = useRef<HTMLDivElement>(null);
+  const naturalHeightRef = useRef<number>(0);
 
   // Sync LocationDropdown selectedLocation with url search parameter for location
   useEffect(() => {
@@ -72,12 +74,55 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
     }
   }, [pokedexHeight]);
 
+  // Measure natural content height once when pokedex content changes
+  useEffect(() => {
+    if (pokedexContainerRef.current) {
+      const container = pokedexContainerRef.current;
+      const currentHeight = container.style.height;
+      container.style.height = '';
+      void container.offsetHeight; // Force reflow
+      naturalHeightRef.current = container.scrollHeight;
+      container.style.height = currentHeight;
+      
+      // If current height exceeds new natural height, auto-adjust
+      if (pokedexHeight !== null && pokedexHeight > naturalHeightRef.current) {
+        setPokedexHeight(naturalHeightRef.current);
+      }
+    }
+  }, [userPokemon]);
+
+  // Callback for when pokedex data changes (e.g., dropdown change)
+  const handlePokemonCountChange = () => {
+    // Defer measurement until after React has painted the new DOM
+    setTimeout(() => {
+      if (pokedexContainerRef.current && pokedexHeight !== null) {
+        const container = pokedexContainerRef.current;
+        const currentHeight = container.style.height;
+        container.style.height = '';
+        void container.offsetHeight; // Force reflow
+        const newNaturalHeight = container.scrollHeight;
+        container.style.height = currentHeight;
+        
+        if (pokedexHeight > newNaturalHeight) {
+          setPokedexHeight(newNaturalHeight);
+          naturalHeightRef.current = newNaturalHeight;
+        }
+      }
+    }, 0);
+  };
+
   // Resize event handlers
   const handleMouseDown = (e: React.MouseEvent) => {
     setIsResizing(true);
     setStartY(e.clientY);
-    const pokedexElement = document.querySelector(`.${styles["pokedex-container"]}`) as HTMLElement;
+    const pokedexElement = pokedexContainerRef.current;
     if (pokedexElement){
+      // Temporarily remove height constraint to measure natural height accurately
+      const currentHeight = pokedexElement.style.height;
+      pokedexElement.style.height = '';
+      void pokedexElement.offsetHeight; // Force reflow
+      naturalHeightRef.current = pokedexElement.scrollHeight;
+      pokedexElement.style.height = currentHeight;
       setStartHeight(pokedexElement.offsetHeight);
     }
   };
@@ -90,10 +135,10 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
       // I dont know why the -8 is necessary im assuming its to do with some border causing issues
       const newHeight = (startHeight + deltaY)-8;
 
-      // Set minimum height of 100px, no maximum (allows max-content)
-      if (newHeight >= 130){
-        setPokedexHeight(newHeight)
-      }
+      // Use cached natural height (measured when unconstrained) to prevent deadspace
+      const cappedHeight = Math.max(130, Math.min(newHeight, naturalHeightRef.current));
+
+      setPokedexHeight(cappedHeight);
     };
 
     const handleMouseUp = () => {
@@ -161,6 +206,7 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
   return (
     <div className={styles["tracker-container"]}>
       <div
+        ref={pokedexContainerRef}
         className={styles["pokedex-container"]}
         style={{height: pokedexHeight ? `${pokedexHeight}px` : 'max-content'}}
       >
@@ -170,6 +216,7 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
           handlePokemonClick={handlePokemonClick}
           handlePokemonRightClick={handlePokemonRightClick}
           isDark={isDark}
+          onPokemonCountChange={handlePokemonCountChange}
         />
         <div
           className={styles["resize-handle"]}
