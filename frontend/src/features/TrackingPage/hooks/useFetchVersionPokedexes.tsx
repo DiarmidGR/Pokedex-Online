@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { getToken } from "../../../shared/utils/Auth";
 import { PokedexProps } from "../trackingPage.types";
+import axiosInstance from "../../../shared/utils/axiosInstance";
 
 const useFetchVersionPokedexes = (versionId: string) => {
   const [versionPokedexes, setVersionPokedexes] = useState<PokedexProps[]>([]);
@@ -15,7 +16,7 @@ const useFetchVersionPokedexes = (versionId: string) => {
       if (versionId) {
         setLoading(true);
         try {
-          const response = await axios.get(
+          const response = await axiosInstance.get(
             `${
               import.meta.env.VITE_API_ENDPOINT
             }/pokedex_versions?version_id=${versionId}`,
