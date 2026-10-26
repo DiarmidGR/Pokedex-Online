@@ -25,7 +25,6 @@ const useDeleteUserPokemon = () => {
                         },
                     }
                 );
-                console.log("Pokemon deleted successfully!");
                 setError(null);
             } else {
                 throw new Error("Unauthorized: Token not found.");
