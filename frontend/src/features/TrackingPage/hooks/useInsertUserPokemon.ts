@@ -25,7 +25,6 @@ const useInsertUserPokemon = () => {
                         },
                       }
                 );
-                console.log("Pokemon inserted successfully!");
                 setError(null);
             }else{
                 throw new Error("Unauthorized: Token not found.");
