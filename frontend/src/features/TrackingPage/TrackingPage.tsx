@@ -40,16 +40,7 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
 
   const [isPokemonCardVisible, setIsPokemonCardVisible] = useState<boolean>(false);
 
-  // State variables for pokedex-container resizing function
-  const savedHeight = localStorage.getItem("pokedexHeight");
-  const [pokedexHeight, setPokedexHeight] = useState<number | null>(
-    savedHeight ? parseInt(savedHeight) : null
-  );
-  const [isResizing, setIsResizing] = useState<boolean>(false);
-  const [startY, setStartY] = useState<number>(0);
-  const [startHeight, setStartHeight] = useState<number>(0);
-  const pokedexContainerRef = useRef<HTMLDivElement>(null);
-  const naturalHeightRef = useRef<number>(0);
+  
 
   // Sync LocationDropdown selectedLocation with url search parameter for location
   useEffect(() => {
@@ -65,33 +56,25 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
     localStorage.setItem(hideCaughtPokemonKey, hideCaughtPokemon.toString());
   }, [hideCaughtPokemon, hideCaughtPokemonKey]);
 
-  
 
-  // Save pokedex height to localStorage whenever it changes
-  useEffect(() => {
-    if(pokedexHeight!==null){
-      localStorage.setItem("pokedexHeight", pokedexHeight.toString());
-    }
-  }, [pokedexHeight]);
 
-  // Measure natural content height once when pokedex content changes
-  useEffect(() => {
-    if (pokedexContainerRef.current) {
-      const container = pokedexContainerRef.current;
-      const currentHeight = container.style.height;
-      container.style.height = '';
-      void container.offsetHeight; // Force reflow
-      naturalHeightRef.current = container.scrollHeight;
-      container.style.height = currentHeight;
-      
-      // If current height exceeds new natural height, auto-adjust
-      if (pokedexHeight !== null && pokedexHeight > naturalHeightRef.current) {
-        setPokedexHeight(naturalHeightRef.current);
-      }
-    }
-  }, [userPokemon]);
 
-  // Callback for when pokedex data changes (e.g., dropdown change)
+  ////////////////////////////////////////////////////
+  // ALL CODE RELATING TO POKEDEX CONTAINER RESIZING//
+  ////////////////////////////////////////////////////
+  const savedHeight = localStorage.getItem("pokedexHeight");
+  const [pokedexHeight, setPokedexHeight] = useState<number | null>(
+    savedHeight ? parseInt(savedHeight) : null
+  );
+  const [isResizing, setIsResizing] = useState<boolean>(false);
+  const [startY, setStartY] = useState<number>(0);
+  const [startHeight, setStartHeight] = useState<number>(0);
+  const pokedexContainerRef = useRef<HTMLDivElement>(null);
+  const naturalHeightRef = useRef<number>(0);
+
+  // Reize pokedex container when pokedex changes / data length changes
+  // Used for when user switches from large data set to smaller, removes
+  //  deadspace automatically
   const handlePokemonCountChange = () => {
     // Defer measurement until after React has painted the new DOM
     setTimeout(() => {
@@ -126,6 +109,30 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
       setStartHeight(pokedexElement.offsetHeight);
     }
   };
+
+  // Save pokedex height to localStorage whenever it changes
+  useEffect(() => {
+    if(pokedexHeight!==null){
+      localStorage.setItem("pokedexHeight", pokedexHeight.toString());
+    }
+  }, [pokedexHeight]);
+
+  // Measure natural content height once when pokedex content changes
+  useEffect(() => {
+    if (pokedexContainerRef.current) {
+      const container = pokedexContainerRef.current;
+      const currentHeight = container.style.height;
+      container.style.height = '';
+      void container.offsetHeight; // Force reflow
+      naturalHeightRef.current = container.scrollHeight;
+      container.style.height = currentHeight;
+      
+      // If current height exceeds new natural height, auto-adjust
+      if (pokedexHeight !== null && pokedexHeight > naturalHeightRef.current) {
+        setPokedexHeight(naturalHeightRef.current);
+      }
+    }
+  }, [userPokemon]);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -163,6 +170,8 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ version_id }) => {
     };
   }, [isResizing, startY, startHeight])
 
+
+  
   // Insert/Delete pokemon from user-pokemon database
   const handlePokemonClick = (versionId: string, pokemonId: number) => {
     let updatedStoredItems = handleDeletePokemon(
