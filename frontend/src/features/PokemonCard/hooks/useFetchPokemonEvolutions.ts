@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { getToken } from "../../../shared/utils/Auth";
 import { EvolutionDetails } from "../PokemonCard.types";
+import axiosInstance from "../../../shared/utils/axiosInstance";
 
 const useFetchPokemonEvolutions = (pokemonId: string) => {
     const [evolutionDetails, setEvolutionDetails] = useState<EvolutionDetails[]>([]);
@@ -16,7 +17,7 @@ const useFetchPokemonEvolutions = (pokemonId: string) => {
             if(pokemonId !== ""){
                 setLoading(true);
                 try{
-                    const response = await axios.get(
+                    const response = await axiosInstance.get(
                         `${
                           import.meta.env.VITE_API_ENDPOINT
                         }/pokemon_evolutions?pokemon_id=${pokemonId}`,
