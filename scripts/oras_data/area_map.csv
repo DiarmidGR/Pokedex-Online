@@ -1,3 +1,6 @@
 slug,block,area_identifier,candidates,preview
 route104,1,south-oras,'' | 'north-oras' | 'south-oras',dexnav:Chatot; dexnav:Pidove; dexnav:Sewaddle; good-rod:Magikarp; horde:Wingull; horde:Zigzagoon
 route104,2,north-oras,'' | 'north-oras' | 'south-oras',good-rod:Magikarp; horde:Taillow; horde:Zigzagoon; old-rod:Magikarp; super-rod:Magikarp; surf:Pelipper
+granitecave,1,1f,'1f' | 'b1f' | 'b2f' | '1fsmall-room',dexnav:Axew; dexnav:Onix; dexnav:Timburr; horde:Geodude; horde:Makuhita; horde:Zubat
+granitecave,2,b1f,'1f' | 'b1f' | 'b2f' | '1fsmall-room',dexnav:Axew; dexnav:Onix; dexnav:Timburr; horde:Aron; horde:Zubat; walk:Abra
+granitecave,3,b2f,'1f' | 'b1f' | 'b2f' | '1fsmall-room',dexnav:Axew; dexnav:Onix; dexnav:Timburr; horde:Aron; horde:Mawile; horde:Sableye
