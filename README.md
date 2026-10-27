@@ -1,38 +1,7 @@
-# Pokedex-Online
+# Pokétracker
 An online pokedex useful for completionists who have a large pokemon collection spanning multiple games.
 
 Is currently being hosted by myself at https://pokemon.diarmid.ca/
-
-## Packages
-### Backend
-The backend is built with **Express** and uses the following key packages:
-
-| Package | Purpose |
-| --- | --- |
-| `express` | Web server framework |
-| `mysql2` | MySQL database driver |
-| `jsonwebtoken` | JWT authentication (access & refresh tokens) |
-| `bcrypt` / `bcryptjs` | Password hashing |
-| `cors` | Cross-origin resource sharing |
-| `dotenv` | Environment variable management |
-| `redis` | Redis client for caching & session storage |
-| `express-rate-limit` + `rate-limit-redis` | Rate limiting |
-| `cookie-parser` | Cookie parsing middleware |
-
-### Frontend
-The frontend is a **React + TypeScript** application built with **Vite**. Key packages include:
-
-| Package | Purpose |
-| --- | --- |
-| `react` / `react-dom` | UI library |
-| `react-router-dom` | Client-side routing |
-| `axios` | HTTP client for API calls |
-| `react-hot-toast` | Toast notifications |
-| `jwt-decode` | JWT token decoding |
-| `@fortawesome/react-fontawesome` | Icon library |
-| `react-spinners` | Loading spinners |
-| `vite` | Build tool & dev server |
-| `typescript` | Type safety |
 
 ## Setting Up Dev Environment
 ### Installing Required Packages
@@ -113,9 +82,42 @@ services:
      - "6379:6379"
 ```
 
+## Packages
+### Backend
+The backend is built with **Express** and uses the following key packages:
+
+| Package | Purpose |
+| --- | --- |
+| `express` | Web server framework |
+| `mysql2` | MySQL database driver |
+| `jsonwebtoken` | JWT authentication (access & refresh tokens) |
+| `bcrypt` / `bcryptjs` | Password hashing |
+| `cors` | Cross-origin resource sharing |
+| `dotenv` | Environment variable management |
+| `redis` | Redis client for caching & session storage |
+| `express-rate-limit` + `rate-limit-redis` | Rate limiting |
+| `cookie-parser` | Cookie parsing middleware |
+
+### Frontend
+The frontend is a **React + TypeScript** application built with **Vite**. Key packages include:
+
+| Package | Purpose |
+| --- | --- |
+| `react` / `react-dom` | UI library |
+| `react-router-dom` | Client-side routing |
+| `axios` | HTTP client for API calls |
+| `react-hot-toast` | Toast notifications |
+| `jwt-decode` | JWT token decoding |
+| `@fortawesome/react-fontawesome` | Icon library |
+| `react-spinners` | Loading spinners |
+| `vite` | Build tool & dev server |
+| `typescript` | Type safety |
+
 ## Potential Features To Implement
 Display moves learned by level up/tm in the Pokemon info card.
 
 Add item locations by description and possibly screenshot if available.
 
 Display pokemon breeding information in the Pokemon info card.
+
+Develop CDN to serve image data to lighten the apps network load.
