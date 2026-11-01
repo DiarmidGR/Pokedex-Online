@@ -123,11 +123,6 @@ const PokedexList: React.FC<PokedexListProps> = ({
             {`Pokémon Caught: ${storedItems.length}/${pokemonDetails.length}`}
           </div>
 
-
-          <div className={styles["statsItem"]}>
-            <PokedexSearch onChange={handlePokedexSearchChange} />
-          </div>
-
           {/* Pokedex Selection Dropdown */}
           <div className={styles["statsItem"]}>
             <PokedexDropdown
@@ -135,6 +130,10 @@ const PokedexList: React.FC<PokedexListProps> = ({
               onPokedexChange={setSelectedPokedex}
               defaultIndex={lastPokedexId != null ? lastPokedexId : "1"}
             />
+          </div>
+
+          <div className={styles["statsItem"]}>
+            <PokedexSearch onChange={handlePokedexSearchChange} />
           </div>
 
           {/* Show uncaught pokemon checkbox */}
@@ -167,11 +166,6 @@ const PokedexList: React.FC<PokedexListProps> = ({
           {`Pokémon Caught: ${storedItems.length}/${pokemonDetails.length}`}
         </div>
 
-
-        <div className={styles["statsItem"]}>
-          <PokedexSearch onChange={handlePokedexSearchChange} />
-        </div>
-
         {/* Pokedex Selection Dropdown */}
         <div className={styles["statsItem"]}>
           <PokedexDropdown
@@ -179,6 +173,10 @@ const PokedexList: React.FC<PokedexListProps> = ({
             onPokedexChange={setSelectedPokedex}
             defaultIndex={lastPokedexId != null ? lastPokedexId : "1"}
           />
+        </div>
+
+        <div className={styles["statsItem"]}>
+          <PokedexSearch onChange={handlePokedexSearchChange} />
         </div>
 
         {/* Show uncaught pokemon checkbox */}
